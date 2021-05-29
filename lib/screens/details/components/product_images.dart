@@ -1,3 +1,4 @@
+import 'package:commerce/utilities/const.dart';
 import 'package:flutter/material.dart';
 import 'package:commerce/models/Product.dart';
 
@@ -10,7 +11,7 @@ class ProductImages extends StatefulWidget {
     @required this.product,
   }) : super(key: key);
 
-  final  product;
+  final product;
 
   @override
   _ProductImagesState createState() => _ProductImagesState();
@@ -20,6 +21,7 @@ class _ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
   @override
   Widget build(BuildContext context) {
+    print(widget.product["images"]);
     return Column(
       children: [
         SizedBox(
@@ -28,7 +30,8 @@ class _ProductImagesState extends State<ProductImages> {
             aspectRatio: 1,
             child: Hero(
               tag: widget.product["id"].toString(),
-              child: Image.asset(widget.product["images"][selectedImage]),
+              child: Image.network("$rootUrl/images/product/" +
+                  widget.product["images"][selectedImage]["image"]),
             ),
           ),
         ),
@@ -63,7 +66,8 @@ class _ProductImagesState extends State<ProductImages> {
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.asset(widget.product.images[index]),
+        child: Image.network("$rootUrl/images/product/" +
+            widget.product["images"][index]["image"]),
       ),
     );
   }

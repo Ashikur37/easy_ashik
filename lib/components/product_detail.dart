@@ -15,11 +15,11 @@ class ProductDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.pushNamed(
-        //   context,
-        //   DetailsScreen.routeName,
-        //   arguments: ProductDetailsArguments(product["id"]),
-        // );
+        Navigator.pushNamed(
+          context,
+          DetailsScreen.routeName,
+          arguments: ProductDetailsArguments(product["id"]),
+        );
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

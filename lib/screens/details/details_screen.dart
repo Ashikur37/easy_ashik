@@ -1,4 +1,5 @@
 import 'package:commerce/helper/http.dart';
+import 'package:commerce/utilities/const.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/Product.dart';
@@ -18,7 +19,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   void loadProduct(id) async {
     if (isLoading) {
-      var prod = await getHttp("http://192.168.1.107/easy/api/products/$id");
+      var prod = await getHttp("$baseUrl/products/$id");
       setState(() {
         product = prod["data"];
         isLoading = false;
@@ -38,7 +39,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       appBar: CustomAppBar(
         rating: isLoading ? 1.0 : product["rating"].toDouble(),
       ),
-      body: isLoading?SizedBox():Body(product: product),
+      body: isLoading ? SizedBox() : Body(product: product),
     );
   }
 }
