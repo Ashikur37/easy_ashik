@@ -2,6 +2,7 @@ import 'package:commerce/helper/http.dart';
 import 'package:commerce/screens/shop/shops_screen.dart';
 import 'package:commerce/utilities/const.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShopScreen extends StatefulWidget {
   @override
@@ -48,7 +49,18 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
           Expanded(
             child: isLoading
-                ? CircularProgressIndicator()
+                ? Shimmer.fromColors(
+                    baseColor: Colors.red,
+                    highlightColor: Colors.yellow,
+                    child: Text(
+                      'Easymert',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
                 : GridView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: shops.length,

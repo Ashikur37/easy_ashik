@@ -39,7 +39,7 @@ class _ShopsScreenState extends State<ShopsScreen> {
       isLoadingMore = false;
     });
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     ScrollController _scrollController = ScrollController();
