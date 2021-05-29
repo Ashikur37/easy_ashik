@@ -1,0 +1,146 @@
+
+.login__page .login-box {
+    margin: 80px 0;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 10px 20px #2946781a;
+            box-shadow: 0px 10px 20px #2946781a;
+}
+
+@media screen and (max-width: 991px) {
+    .login__page .login-box {
+        margin: 50px 0;     
+    }
+}
+
+@media screen and (max-width:767px) {
+    .login__page .login-box {
+        margin: 30px 0;
+        -webkit-box-shadow: none;
+                box-shadow: none;
+    }
+}
+@media screen and (max-width:575px) {
+    .login__page .login-box {
+      margin: 15px 0;
+    }
+}
+
+.login__page .email-login-box {
+    padding: 40px 25px;
+}
+
+.login__page .title {
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #202020;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 575px) {
+
+    .login__page .email-login-box {
+        padding: 30px 10px;
+    }
+
+    .login__page .title {
+        font-size: 20px;
+    }
+}
+
+.login__page .forget-password-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    font-size: 14px;
+}
+
+.login__page .forget__link {
+    color: #08f;
+    color: var(--dynamic-color);
+}
+
+.login__page .login__btn {
+    width: 100%;
+}
+
+@media (min-width:992px){
+    .login__page .create-account-section {
+        background: #0b1323;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+}
+
+.login__page .create-account-box {
+    padding: 40px 25px;
+    background: #0b1323;
+    border-radius: 4px;
+}
+
+.login__page .color-white {
+    color: #fff;
+    margin-bottom: 35px;
+}
+
+@media screen and (max-width: 575px) {
+    .login__page .create-account-box {
+        padding: 30px 10px;
+        margin-top: 25px;
+        min-height: 355px;
+    }
+}
+
+.login__page .create-account-box a {
+    display: block;
+    width: 85%;
+    margin: 0 auto;
+    font-size: 18px;
+    border-radius: 4px;
+    text-transform: capitalize;
+    position: relative;
+    text-align: center;
+    height:40px; 
+    line-height:38px;  
+}
+
+.login__page .create-account-box a i {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+
+.login__page .mail__address {
+    background: #fff;
+    color: #202020;
+    margin-bottom: 60px!important;
+}
+
+.login__page .google {
+    background: #0160ff;
+    color: #ffffff;
+    margin-bottom: 60px !important;
+}
+
+.login__page .facebook {
+    background: #2b498f;
+    color: #fff;
+}
+
+.password-reset-btn{
+    width: 190px;
+    background: #08f;
+    background: var(--dynamic-color);
+    color: #fff!important;
+    padding: 8px 5px;
+    text-align: center;
+    border-radius: 4px;
+    margin: 0 auto;
+    display: block;
+}

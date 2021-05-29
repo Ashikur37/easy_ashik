@@ -1,0 +1,192 @@
+.product-compare-page{   
+    width:100%;
+    min-height: calc(100vh - 590px);
+    margin: 20px 0;
+}
+
+@media(max-width:575px){
+    .product-compare-page{   
+        margin: 10px 0;
+    }
+}
+
+.header-title{
+    text-transform: uppercase;
+    margin: 30px 0;
+    text-align: center;
+    font-weight: 500;
+    color: #202020;
+}
+
+.product-compare-page .empty-product{
+    text-align:center;
+}
+
+.product-compare-page .empty-product svg{
+    width: 140px;
+    height: 140px;
+    fill-rule:evenodd;
+    clip-rule:evenodd;
+    stroke-linejoin:round;
+    stroke-miterlimit:2;
+}
+.product-compare-page .empty-product svg g path{
+    fill:#08f;
+    fill:var(--dynamic-color);
+}
+
+.product-compare-page .empty-product h4{
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+    font-weight: 500;
+}
+
+.product-compare-page .gray {
+    background-color: #f7f8fa;
+}
+
+.product-compare-page .same-height {
+    height: 50px;
+}
+
+.product-compare-page .content-left {
+    width: 260px;
+}
+
+@media screen and (max-width: 767px) {
+    .product-compare-page .content-left {
+        width: 140px;
+    }
+}
+.product-compare-page .content-left span {
+    font-size: 18px;
+    color: #4e4e4e;
+    font-weight: 500;
+    display: block;
+    padding: 0 20px;
+    line-height: 52px;
+}
+.add__wishlist.active{
+    color: #dc0345;
+}
+.product-compare-page .content-left span.image {
+    height: 190px;
+}
+
+.product-compare-page .content-left span.desc {
+    height: 106px;
+    line-height: 106px;
+}
+
+.product-compare-page .content-right {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    overflow-x: auto;
+}
+
+.product-compare-page .all-products {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+}
+
+.product-compare-page .single-product {
+    position: relative;
+    -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+    text-align: center;
+    min-width:33%;
+}
+@media(max-width:991px){
+    .product-compare-page .single-product {
+        min-width:48%;
+    }
+}
+
+@media(max-width:720px){
+    .product-compare-page .single-product {
+        min-width:95%;
+    }
+}
+
+.product-compare-page .single-product img {
+    width: 190px;
+}
+
+@media screen and (max-width: 767px) {
+    .product-compare-page .content-left span.image {
+        height: 120px;
+    }
+    .product-compare-page .single-product img {
+        width: 120px;
+    }
+}
+
+.product-compare-page .single-product .desc {
+    color: #4e4e4e;
+    font-size: 16px;
+    padding-top: 20px;
+    margin-right: 22px;
+    overflow: hidden;
+    height: 96px;
+    margin-bottom: 10px;
+}
+
+.empty-stars::before, .full-stars::before {
+    font-size: 13px;
+}
+.product-compare-page .single-product .title,
+.product-compare-page .single-product .rating,
+.product-compare-page .single-product .price,
+.product-compare-page .single-product .availability,
+.product-compare-page .single-product .size,
+.product-compare-page .single-product .color,
+.product-compare-page .single-product .brand,
+.product-compare-page .single-product .actions {
+    color: #4e4e4e;
+    font-size: 16px;
+    padding: 13px 0;
+}
+.product-compare-page .single-product .title{
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+    overflow: hidden;
+}
+.product-compare-page .single-product .price{
+    font-size: 18px;
+    font-weight: 500;
+}
+.product-compare-page .single-product .availability{
+    color:#02cb87;
+}
+.product-compare-page .single-product .out-of-stock{
+    color: #e40d0db8;
+}
+
+.product-compare-page .single-product .actions{
+    font-size: 20px;
+}
+
+.product-compare-page .single-product .actions i {
+    cursor: pointer;
+}
+
+.product-compare-page .single-product .actions .add__wishlist {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.product-compare-page .close__icon {
+    position: absolute;
+    font-size: 22px;
+    color: #4e4e4e;
+    right: 1%;
+    top: 1%;
+    cursor: pointer;
+    z-index: 55;
+}

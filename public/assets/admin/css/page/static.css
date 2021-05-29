@@ -1,0 +1,36 @@
+
+.social-link .flex-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.card {
+    border: 1px solid #eaeaea;
+}
+
+.card .card-header {
+    font-weight: 500;
+    font-size: 16px;
+    background: #fff;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 10px 17px;
+}
+
+.site-customization {
+    padding: 10px;
+}
+
+.all-notification-section .float-sm-right {
+    overflow-x: auto !important;
+}
+
+.all-notification-section .float-sm-right nav {
+    margin-bottom: 20px !important;
+}

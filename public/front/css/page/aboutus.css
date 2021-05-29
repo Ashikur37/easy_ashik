@@ -1,0 +1,51 @@
+
+ul {
+    margin: 0;
+    padding-left: 15px!important;
+}
+
+b, strong {
+    font-weight: 600;
+    font-size: 20px;
+    color:#4e4e4e;
+}
+
+.about__us__page,.terms-condition-page{
+    min-height: calc(100vh - 590px);
+    margin: 20px 0;
+}
+
+.about__us__page .header-title,
+.terms-condition-page .header-title  {
+    text-transform: uppercase;
+    margin: 30px 0;
+    text-align: center;
+    font-weight: 500;
+    color: #202020;
+    line-height: 30px;
+}
+
+.about__us__page .content-wrapper,
+.terms-condition-page .content-wrapper,
+.custom-page .content-wrapper{
+    font-size: 16px;
+}
+
+.about__us__page .content-wrapper img,
+.terms-condition-page .content-wrapper img,
+.custom-page .content-wrapper img,
+.custom-page .content-wrapper img {
+    width: 100%!important;
+    height: auto!important;
+}
+
+.custom-page{
+    padding: 35px 0;
+    margin:20px 0;
+}
+
+@media(max-width:575px){
+    .custom-page,.about__us__page,.terms-condition-page{
+        margin: 10px 0;
+    }
+}

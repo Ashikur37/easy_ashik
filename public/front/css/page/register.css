@@ -1,0 +1,118 @@
+
+.register__page .register-box {
+    margin: 60px 0;
+    -webkit-box-shadow: 0px 10px 20px #2946781a;
+            box-shadow: 0px 10px 20px #2946781a;
+}
+
+@media screen and (max-width: 991px) {
+    .register__page .register-box {
+        margin-top: 40px;
+        -webkit-box-shadow: 0px 10px 20px #2946781a;
+                box-shadow: 0px 10px 20px #2946781a;
+    }
+}
+
+@media screen and (max-width: 767px) {
+
+    .register__page .register-box {
+        margin: 30px 0;
+        -webkit-box-shadow: none;
+                box-shadow: none;
+    }
+
+    .register__page .register-box .register-form {
+        padding: 10px 15px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+
+    .register__page .register-box {
+        margin: 15px 0;
+    }
+}
+
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 14px;
+    color: #dc3545;
+}
+
+.register__page .register-box .register-form {
+    padding: 10px 40px;
+}
+
+@media screen and (max-width: 767px) {
+    .register__page .register-box .register-form {
+        padding: 10px 15px;
+    }
+}
+
+.register__page .register-title {
+    text-align: center;
+    color: #202020;
+    font-size: 30px;
+    padding: 15px 0;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.captcha-group img{
+    cursor: pointer;
+    width: 180px;
+    height: 45px!important;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+
+.register__page .login-button-div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.register__page .login-button-div span {
+    color: #4e4e4e;
+    font-size: 16px;
+    margin-right: 15px;
+    text-transform: capitalize;
+}
+
+.register__page .login-button-div .login-btn {
+    color: #08f;
+    color: var(--dynamic-color);
+    font-size: 18px;
+    text-align: center;
+}
+
+.register__page .submit-btn {
+    width: 100%;
+    line-height: 38px;
+}
+
+@media screen and (max-width: 767px) {
+    .register__page .submit-btn {
+        margin-bottom: 10px;
+    }
+}
+
+.reset-password-page{
+    width: 100%;
+    min-height: calc(100vh - 550px);
+    margin: 40px 0;
+}
+
+.reset-password-page .reset-btn{
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.p-40{
+    padding: 40px;
+}

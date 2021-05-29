@@ -1,0 +1,124 @@
+
+.report-filter-wrapper {
+    width: 370px;
+    position: fixed;
+    top: 0;
+    right: 0%;
+    z-index: 99;
+    background: #fff;
+    height: 100%;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 21px 36px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 21px 36px;
+    visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+        transform: translateX(100%);
+    -webkit-transition: -webkit-transform 0.3s 0s, visibility .3s .2s;
+    -webkit-transition: visibility .3s .2s, -webkit-transform 0.3s 0s;
+    transition: visibility .3s .2s, -webkit-transform 0.3s 0s;
+    -o-transition: transform 0.3s 0s, visibility .3s .2s;
+    transition: transform 0.3s 0s, visibility .3s .2s;
+    transition: transform 0.3s 0s, visibility .3s .2s, -webkit-transform 0.3s 0s;
+}
+
+.report-filter-wrapper.is-active {
+    visibility: visible;
+    -webkit-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+        transform: translateX(0%);
+    -webkit-transition: -webkit-transform 0.3s 0s, visibility 0s 0s;
+    -webkit-transition: visibility 0s 0s, -webkit-transform 0.3s 0s;
+    transition: visibility 0s 0s, -webkit-transform 0.3s 0s;
+    -o-transition: transform 0.3s 0s, visibility 0s 0s;
+    transition: transform 0.3s 0s, visibility 0s 0s;
+    transition: transform 0.3s 0s, visibility 0s 0s, -webkit-transform 0.3s 0s;
+}
+
+.report-filter-wrapper .header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 15px 30px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.report-filter-wrapper .header h4 {
+    font-weight: 500;
+    color: #0088ff;
+    margin-bottom: 0;
+    font-size: 22px;
+    margin-top: 3px;
+    display: inline-block;
+}
+
+.report-filter-wrapper .header .aside-report-closer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+    opacity: .8;
+    -webkit-transition: .15s ease-in-out;
+    -o-transition: .15s ease-in-out;
+    transition: .15s ease-in-out;
+    font-size: 20px;
+    color: #4e4e4e;
+}
+
+.report-filter-wrapper .report-filter-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 60px;
+    bottom: 100px;
+    padding: 0 30px;
+    overflow-y: auto;
+}
+
+.report-filter-action {
+    padding: 0 30px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+}
+
+.report-filter-action .apply-btn {
+    width: 100%;
+    display: block;
+    background: #0088ff;
+    border: 1px solid #0088ff;
+    color: #fff;
+    height: 38px;
+    line-height: 37px;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 30px 0;
+    outline: none;
+    text-align: center;
+    -webkit-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+.report-filter-action .apply-btn:hover {
+    background: #067de6;
+    color: #fff;
+    text-decoration: none
+}
+
+@media screen and (max-width: 575px) {
+    .report-filter-wrapper {
+        width: 100%;
+        max-width: 100%;
+    }
+}

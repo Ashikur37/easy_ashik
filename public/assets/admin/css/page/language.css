@@ -1,0 +1,64 @@
+
+.dataTables_length {
+    display: none
+}
+
+#takwa-table_wrapper>div:nth-child(1) {
+    display: none;
+}
+
+table.dataTable tbody tr.odd>.sorting_1,
+table.dataTable tbody tr.even>.sorting_1 {
+    background-color: #fff;
+}
+
+thead th.sorting_asc,
+thead th.sorting_desc {
+    background-color: #F8F9FB;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 35px;
+}
+
+.select2-container .select2-selection--single {
+    height: 35px;
+    line-height: 35px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 35px;
+}
+
+@media(min-width:768px) {
+    .search-word-wrapper {
+        margin-top: 30px;
+    }
+
+    #takwa-table_paginate {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: end;
+            -ms-flex-pack: end;
+                justify-content: flex-end;
+    }
+}
+
+@media(max-width:767px) {
+    #takwa-table_info {
+        text-align: center;
+    }
+}
+
+@media (max-width:370px){
+    .search-word-wrapper{
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
+tr {
+    cursor: pointer;
+}
+
