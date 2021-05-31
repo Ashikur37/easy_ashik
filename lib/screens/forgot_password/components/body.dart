@@ -86,15 +86,72 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               return null;
             },
             decoration: InputDecoration(
-              labelText: "Email",
-              hintText: "Enter your email",
+              labelText: "Phone",
+              hintText: "Enter your phone",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+              suffixIcon: TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
+                onPressed: () {},
+                child: const Text('Send OTP'),
+              ),
             ),
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
+          TextFormField(
+            obscureText: true,
+            onSaved: (newValue) {},
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+              } else if (value.length >= 8) {}
+              return null;
+            },
+            validator: (value) {
+              if (value.isEmpty) {
+                return "";
+              } else if (value.length < 8) {
+                return "";
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              labelText: "OTP",
+              hintText: "Enter OTP",
+              // If  you are using latest version of flutter then lable text and hint text shown like this
+              // if you r using flutter less then 1.20.* then maybe this is not working properly
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+            ),
+          ),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          TextFormField(
+            obscureText: true,
+            onSaved: (newValue) {},
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+              } else if (value.length >= 8) {}
+              return null;
+            },
+            validator: (value) {
+              if (value.isEmpty) {
+                return "";
+              } else if (value.length < 8) {
+                return "";
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              labelText: "Password",
+              hintText: "Enter your password",
+              // If  you are using latest version of flutter then lable text and hint text shown like this
+              // if you r using flutter less then 1.20.* then maybe this is not working properly
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+            ),
+          ),
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
