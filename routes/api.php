@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('categories', 'Api\CategoryController')->only('index');
 Route::get('category/{category}/products', 'Api\CategoryController@product')->name('category_products');
+Route::get('sub_category/{subCategory}/products', 'Api\CategoryController@subCatProduct')->name('sub_category_products');
+
+//
+Route::get('category/{category}/sub_categories', 'Api\CategoryController@subCategory')->name('category_sub_categories');
 Route::apiResource('shops', 'Api\ShopController')->only('index');
 Route::get('shop/{shop}/products', 'Api\ShopController@product')->name('shop_products');
 Route::apiResource('campaigns', 'Api\CampaignController')->only('index');
