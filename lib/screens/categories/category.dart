@@ -38,16 +38,38 @@ class CategoriesScreen extends StatelessWidget {
     _loadSubCategories(catId) async {
       var provider = Provider.of<CategoryProvider>(context, listen: false);
       provider.isLoadingProduct = true;
-      var prods = await getHttp("$baseUrl/category/$catId/sub_categories");
-      provider.setSubCategories(prods["data"]);
+      var prods = await getHttp("$baseUrl/category/$catId/products");
+      provider.setProducts(prods["data"]);
       provider.isLoadingProduct = false;
+      provider.nextPageURL = prods["links"]["next"];
       provider.notifyListeners();
     }
 
-  
+    _loadMoreProducts() async {
+      var provider = Provider.of<CategoryProvider>(context, listen: false);
+      _globalKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Loading more products"),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      var prods = await getHttp(provider.nextPageURL);
+
+      provider.mergeProducts(prods["data"]);
+      // _globalKey.currentState.hideCurrentSnackBar();
+
+      provider.notifyListeners();
+    }
 
     _loadCategories();
-  
+    _scrollController.addListener(() {
+      if (_scrollController.hasClients) {
+        if (_scrollController.offset ==
+            _scrollController.position.maxScrollExtent) {
+          _loadMoreProducts();
+        }
+      }
+    });
     return Consumer<CategoryProvider>(builder: (context, value, child) {
       return Scaffold(
         key: _globalKey,

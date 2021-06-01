@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 
 class CategoryList extends StatelessWidget {
   final List categories;
-  final Function loadProducts;
+  final Function loadSubCategories;
   final String activeCategory;
   const CategoryList({
     this.categories,
-    this.loadProducts,
+    this.loadSubCategories,
     this.activeCategory,
   });
   @override
@@ -26,7 +26,7 @@ class CategoryList extends StatelessWidget {
                     Provider.of<CategoryProvider>(context, listen: false);
                 provider.activeCategory = categories[index]["name"];
                 var catId = categories[index]["id"];
-                loadProducts(catId);
+                loadSubCategories(catId);
                 provider.notifyListeners();
               },
               child: Container(

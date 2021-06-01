@@ -2,10 +2,10 @@ import 'package:commerce/components/product_detail.dart';
 import 'package:flutter/material.dart';
 
 class CategoryProduct extends StatelessWidget {
-  final List products;
+  final List subCategories;
   final ScrollController scrollController;
   const CategoryProduct({
-    this.products,
+    this.subCategories,
     this.scrollController,
   });
   @override
@@ -13,14 +13,14 @@ class CategoryProduct extends StatelessWidget {
     return Expanded(
       child: GridView.builder(
         controller: scrollController,
-        itemCount: products.length,
+        itemCount: subCategories.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 2.0,
           mainAxisSpacing: 5.0,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return ProductDetail(product: products[index]);
+          return ProductDetail(product: subCategories[index]);
         },
       ),
     );
