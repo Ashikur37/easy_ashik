@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('categories', 'Api\CategoryController')->only('index');
 Route::get('category/{category}/products', 'Api\CategoryController@product')->name('category_products');
+Route::get('sub_category/{subCategory}/products', 'Api\CategoryController@subCatProduct')->name('sub_category_products');
+
+//
+Route::get('category/{category}/sub_categories', 'Api\CategoryController@subCategory')->name('category_sub_categories');
 Route::apiResource('shops', 'Api\ShopController')->only('index');
 Route::get('shop/{shop}/products', 'Api\ShopController@product')->name('shop_products');
 Route::apiResource('campaigns', 'Api\CampaignController')->only('index');
@@ -27,3 +31,10 @@ Route::get('campaign/{campaign}/products', 'Api\CampaignController@product')->na
 Route::apiResource('products', 'Api\ProductController')->only('show');
 Route::get('products/search/{key}', 'Api\ProductController@search')->name('search_product');
 Route::apiResource('slides', 'Api\SliderController')->only('index');
+
+//login routes
+
+Route::post('login', 'Api\UserController@login');
+Route::post('register', 'Api\UserController@register');
+
+Route::post('register-otp','Api\UserController@registerOtp');

@@ -10,9 +10,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\URL;
+use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
-    use Notifiable,HasRoles;
+    use Notifiable,HasRoles,HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
