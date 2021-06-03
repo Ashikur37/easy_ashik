@@ -26,14 +26,21 @@ class UserController extends Controller
             ];
             return response()->json($response);
         }
-        
+        $otp=UserOtp::where('mobile_number',$request->mobile)->where('otp',$request->otp)->first();
+        if(!$otp){
+            $response = [
+                'success' =>false,
+                'message' => "Invalid otp",
+            ];
+            return response()->json($response);
+        }
         try {
             $user= User::create([
                 'name' => $request->name,
                 'lastname' => $request->lastname,
-                'email' => $request->email,
+                'email' => $request->mobile,
                 'password' => Hash::make($request->password),
-                'affiliate_link'=>md5($request->email),
+                'affiliate_link'=>md5($request->mobile),
                 'affiliate_balance'=>0
             ]);
             Notification::newUser($user->id);
@@ -68,8 +75,10 @@ class UserController extends Controller
             return response()->json($response);
         }
         $otp=rand(1000,9999);
-        UserOtp::create([
+        UserOtp::updateOrCreate([
             'mobile_number'=>$request->mobile,
+            
+        ],[
             'otp'=>$otp
         ]);
         $text = "Your otp is ".$otp;
@@ -111,7 +120,9 @@ class UserController extends Controller
             $success = true;
             $message = 'User login successfully';
             return [
-                "success"=>Auth::user()->createToken('MyApp')->plainTextToken
+                "user"=>Auth::user(),
+                "success"=>true,
+                "token"=>Auth::user()->createToken('MyApp')->plainTextToken
             ];
         } else {
             $success = false;
