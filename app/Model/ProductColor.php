@@ -24,4 +24,7 @@ class ProductColor extends Model
     protected $fillable = [
         'product_id', 'color_id','price'
     ];
+    public function color(){
+       return $this->belongsTo(Color::class);
+    }
 }

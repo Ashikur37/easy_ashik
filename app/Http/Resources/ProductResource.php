@@ -24,6 +24,11 @@ class ProductResource extends JsonResource
             'old_price'=>$this->actualPrice(),
             "images"=>$this->images,
             "details"=>$this->details,
+            "colors"=>$this->colors,
+            "sizes"=>$this->sizes,
+            "options"=>$this->options,
+
+
         ];
     }
 }

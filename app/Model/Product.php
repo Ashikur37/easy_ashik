@@ -144,11 +144,11 @@ class Product extends Model
     }
     public function colors()
     {
-        return $this->hasMany(ProductColor::class);
+        return $this->hasMany(ProductColor::class)->with('color');
     }
     public function sizes()
     {
-        return $this->hasMany(ProductSize::class);
+        return $this->hasMany(ProductSize::class)->with('size');
     }
     public function productSizes()
     {
@@ -194,7 +194,7 @@ class Product extends Model
 
     public function options()
     {
-        return $this->hasMany(ProductOption::class);
+        return $this->hasMany(ProductOption::class)->with('option');
     }
     public function comments()
     {
@@ -309,14 +309,14 @@ class Product extends Model
     public static function currencyPrice($price) {
 
             $curr = Session::get('currency');
-            return $curr->sign.$price;
+            return $price;
         
     }
     public static function currencyPriceRate($price) {
             $curr = Session::get('currency');
            
             $price=$curr->rate*$price;
-            return $curr->sign.$price;
+            return $price;
         
     }
     public static function currencyPriceRateWithoutSign($price) {

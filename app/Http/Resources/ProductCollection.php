@@ -18,7 +18,7 @@ class ProductCollection extends ResourceCollection
                     'name' => $data->name,
                     'image' => URL::to('/images/product/'.$data->image), 
                     'price'=>Product::currencyPrice($data->price),
-                    'old_price'=>$data->actualPrice(),
+                    'old_price'=>"৳".$data->actualPrice(),
                     'slug'=>route('product.show',$data->slug),
                 ];
             })
