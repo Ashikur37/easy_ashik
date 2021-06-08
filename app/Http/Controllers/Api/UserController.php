@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddressRequest;
 use App\Services\Notification;
 use App\Model\Setting;
+use App\Model\UserAddress;
 use App\Model\UserOtp;
 
 class UserController extends Controller
@@ -67,7 +69,7 @@ class UserController extends Controller
 
     public function registerOtp(Request $request){
 
-        if(User::where('email',$request->email)->first()){
+        if(User::where('email',$request->mobile)->first()){
             $response = [
                 'success' =>false,
                 'message' => "Mobile number already registered",
@@ -135,6 +137,34 @@ class UserController extends Controller
             'message' => $message,
         ];
         return response()->json($response);
+    }
+
+    public function createAddress(AddressRequest $request){
+
+        $user=Auth::user();
+
+        $address=UserAddress::create([
+                "user_id"=>$user->id,
+                "first_name"=>$request->first_name,
+                "last_name"=>$request->last_name,
+                "mobile"=>$request->mobile,
+                "city"=>$request->city,
+                "email"=>$request->email,
+                "zip"=>$request->zip,
+                "street_address"=>$request->street_address,
+                "region"=>$request->region,
+        ]);
+        return [
+            "success"=>true,
+            "address"=>$address
+        ];
+    }
+
+    public function getAddress(){
+        $addresses= UserAddress::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
+        return [
+            "data"=>$addresses
+        ];
     }
 
     /**

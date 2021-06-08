@@ -4,6 +4,7 @@ namespace App;
 
 use App\Model\HasRoles;
 use App\Model\Order;
+use App\Model\UserAddress;
 use App\Model\Withdraw;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -45,6 +46,10 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class,'customer_id');
+    }
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class);
     }
     public function wishListProducts()
     {

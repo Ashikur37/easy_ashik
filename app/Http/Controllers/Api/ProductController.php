@@ -13,10 +13,17 @@ class ProductController extends Controller
 {
 
     public function show(Product $product){
+        $product->update([
+            "viewed"=>$product->viewed+1
+        ]);
         return new ProductResource($product);
     }
     public function search($key){
         $products=Product::where('name','like','%'.$key.'%')->where('is_active',1)->orderBy('name')->paginate(10);
+        return new ProductCollection($products);
+    }
+    public function topProducts(){
+        $products=Product::orderBy('viewed','desc')->paginate(10);
         return new ProductCollection($products);
     }
  

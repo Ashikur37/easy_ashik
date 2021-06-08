@@ -30,6 +30,8 @@ Route::apiResource('campaigns', 'Api\CampaignController')->only('index');
 Route::get('campaign/{campaign}/products', 'Api\CampaignController@product')->name('campaign_products');
 Route::apiResource('products', 'Api\ProductController')->only('show');
 Route::get('products/search/{key}', 'Api\ProductController@search')->name('search_product');
+Route::get('top-products', 'Api\ProductController@topProducts')->name('top_product');
+
 Route::apiResource('slides', 'Api\SliderController')->only('index');
 
 //login routes
@@ -38,3 +40,14 @@ Route::post('login', 'Api\UserController@login');
 Route::post('register', 'Api\UserController@register');
 
 Route::post('register-otp','Api\UserController@registerOtp');
+
+//auth routes
+
+Route::group([ 'middleware' => 'auth:sanctum'], function () {
+    Route::post('create-address','Api\UserController@createAddress');
+    Route::get('get-address','Api\UserController@getAddress');
+});
+
+
+Route::post('/cart/get-item-price', 'Api\CartController@getItemPrice')->name('cart.get_price');
+

@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'price'=>Product::currencyPrice($this->price),
             'old_price'=>$this->actualPrice(),
             "images"=>$this->images,
-            "details"=>$this->details,
+            "details"=>$this->details?$this->details:"",
             "colors"=>$this->colors,
             "sizes"=>$this->sizes,
             "options"=>$this->options,
