@@ -11,6 +11,7 @@ class ProductCollection extends ResourceCollection
 {
     public function toArray($request)
     {
+        //50-10*100/50
         return [
             'data' => $this->collection->map(function($data) {
                 return [
@@ -20,6 +21,8 @@ class ProductCollection extends ResourceCollection
                     'price'=>Product::currencyPrice($data->price),
                     'old_price'=>"৳".$data->actualPrice(),
                     'slug'=>route('product.show',$data->slug),
+                    'stock'=>$data->inStock(),
+                    "discount_percent"=>$data->price!=$data->actualPrice()?round((($data->actualPrice()-$data->price)*100)/$data->actualPrice()):0
                 ];
             })
         ];

@@ -28,7 +28,7 @@ class ProductResource extends JsonResource
             "sizes"=>$this->sizes,
             "options"=>$this->options,
 
-
+            
         ];
     }
 }

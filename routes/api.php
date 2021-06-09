@@ -46,6 +46,9 @@ Route::post('register-otp','Api\UserController@registerOtp');
 Route::group([ 'middleware' => 'auth:sanctum'], function () {
     Route::post('create-address','Api\UserController@createAddress');
     Route::get('get-address','Api\UserController@getAddress');
+    Route::get('/user',function(Request $request){
+        return $request->user();
+    });
 });
 
 
