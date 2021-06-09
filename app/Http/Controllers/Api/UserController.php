@@ -139,8 +139,7 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-    public function createAddress(AddressRequest $request){
-
+    public function createAddress(Request $request){
         $user=Auth::user();
 
         $address=UserAddress::create([
