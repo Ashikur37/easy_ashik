@@ -44,8 +44,13 @@ Route::post('register-otp','Api\UserController@registerOtp');
 //auth routes
 
 Route::group([ 'middleware' => 'auth:sanctum'], function () {
+    Route::resource('checkout','Api\CheckoutController');
     Route::post('create-address','Api\UserController@createAddress');
+    Route::post('update-basic','Api\UserController@updateBasic');
     Route::get('get-address','Api\UserController@getAddress');
+    Route::get('get-address/{userAddress}','Api\UserController@getSingleAddress');
+    Route::get('orders/{order}','Api\OrderController@show');
+    Route::get('orders','Api\OrderController@index');
     Route::get('/user',function(Request $request){
         return $request->user();
     });

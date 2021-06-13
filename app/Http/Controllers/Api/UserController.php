@@ -155,16 +155,34 @@ class UserController extends Controller
         ]);
         return [
             "success"=>true,
-            "address"=>$address
+            "address"=>$address,
+            
         ];
     }
+    public function updateBasic(Request $request){
+        $user=Auth::user();
+        $user->update([
+            "name"=>$request->first_name,
+            "lastname"=>$request->last_name,
 
+        ]);
+        return [
+            "success"=>true,
+            "msg"=>"Profile updated successfully",
+            "user"=>$user
+        ];
+    }
     public function getAddress(){
         $addresses= UserAddress::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
         return [
             "data"=>$addresses
         ];
     }
+    public function getSingleAddress(UserAddress $userAddress){
+        return $userAddress;
+       
+    }
+    
 
     /**
      * Logout
