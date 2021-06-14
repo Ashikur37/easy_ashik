@@ -26,6 +26,8 @@ Route::get('sub_category/{subCategory}/products', 'Api\CategoryController@subCat
 Route::get('category/{category}/sub_categories', 'Api\CategoryController@subCategory')->name('category_sub_categories');
 Route::apiResource('shops', 'Api\ShopController')->only('index');
 Route::get('shop/{shop}/products', 'Api\ShopController@product')->name('shop_products');
+Route::get('store/{product}/products', 'Api\ShopController@storeProduct')->name('store_products');
+Route::get('store/{product}', 'Api\ShopController@store')->name('store_products');
 Route::apiResource('campaigns', 'Api\CampaignController')->only('index');
 Route::get('campaign/{campaign}/products', 'Api\CampaignController@product')->name('campaign_products');
 Route::apiResource('products', 'Api\ProductController')->only('show');
@@ -39,23 +41,28 @@ Route::apiResource('slides', 'Api\SliderController')->only('index');
 Route::post('login', 'Api\UserController@login');
 Route::post('register', 'Api\UserController@register');
 
-Route::post('register-otp','Api\UserController@registerOtp');
+Route::post('register-otp', 'Api\UserController@registerOtp');
 
 //auth routes
 
-Route::group([ 'middleware' => 'auth:sanctum'], function () {
-    Route::resource('checkout','Api\CheckoutController');
-    Route::post('create-address','Api\UserController@createAddress');
-    Route::post('update-basic','Api\UserController@updateBasic');
-    Route::get('get-address','Api\UserController@getAddress');
-    Route::get('get-address/{userAddress}','Api\UserController@getSingleAddress');
-    Route::get('orders/{order}','Api\OrderController@show');
-    Route::get('orders','Api\OrderController@index');
-    Route::get('/user',function(Request $request){
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::resource('checkout', 'Api\CheckoutController');
+    Route::post('create-address', 'Api\UserController@createAddress');
+    Route::post('change-password', 'Api\UserController@changePassword');
+
+    Route::post('update-basic', 'Api\UserController@updateBasic');
+    Route::get('get-address', 'Api\UserController@getAddress');
+    Route::get('get-messages/{product}', 'Api\MessageController@getMessages');
+    Route::post('send-message/{product}', 'Api\MessageController@sendMessage');
+
+
+    Route::get('get-address/{userAddress}', 'Api\UserController@getSingleAddress');
+    Route::get('orders/{order}', 'Api\OrderController@show');
+    Route::get('orders', 'Api\OrderController@index');
+    Route::get('/user', function (Request $request) {
         return $request->user();
     });
 });
 
 
 Route::post('/cart/get-item-price', 'Api\CartController@getItemPrice')->name('cart.get_price');
-

@@ -109,54 +109,64 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = [
-        'customer_id','customer_email','customer_phone','customer_first_name','customer_last_name','billing_first_name','billing_last_name','billing_address_1','billing_address_2','billing_city','billing_state','billing_zip','billing_country','shipping_first_name','shipping_last_name','shipping_address_1','shipping_address_2','shipping_city','shipping_state','shipping_zip','shipping_country','sub_total','shipping_method','shipping_cost','coupon_id','discount','total','payment_method','currency','currency_rate','locale','status','note','cart','payment_status','tax','order_number','affiliator','transaction_id','cashback'
+        'customer_id', 'customer_email', 'customer_phone', 'customer_first_name', 'customer_last_name', 'billing_first_name', 'billing_last_name', 'billing_address_1', 'billing_address_2', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'shipping_first_name', 'shipping_last_name', 'shipping_address_1', 'shipping_address_2', 'shipping_city', 'shipping_state', 'shipping_zip', 'shipping_country', 'sub_total', 'shipping_method', 'shipping_cost', 'coupon_id', 'discount', 'total', 'payment_method', 'currency', 'currency_rate', 'locale', 'status', 'note', 'cart', 'payment_status', 'tax', 'order_number', 'affiliator', 'transaction_id', 'cashback'
     ];
-    private  $status=["Pending","Processing","OnHold","Completed","OnDelivery","Refunded","Canceled"];
-    private static  $statusArray=["Pending","Processing","OnHold","Completed","OnDelivery","Refunded","Canceled"];
-    public function  getStatusDropDown($class="",$id=""){
-        $html="<select id='".$id."' class='".$class."'>";
-        for($i=0;$i<count($this->status);$i++){
-            $selected=$this->attributes["status"]==$i?'selected':'';
-            $html.="<option $selected value='$i'>".$this->status[$i]."</option>";
+    private  $status = ["Pending", "Confirmed", "Processing", "Completed", "Shipped", "Delivered", "Canceled"];
+    private static  $statusArray = ["Pending", "Confirmed", "Processing", "Picked", "Shipped", "Delivered", "Canceled"];
+    public function  getStatusDropDown($class = "", $id = "")
+    {
+        $html = "<select id='" . $id . "' class='" . $class . "'>";
+        for ($i = 0; $i < count($this->status); $i++) {
+            $selected = $this->attributes["status"] == $i ? 'selected' : '';
+            $html .= "<option $selected value='$i'>" . $this->status[$i] . "</option>";
         }
-        $html.="</select>";
+        $html .= "</select>";
         return $html;
     }
-    public static function  statusDropDown($class="",$id="",$route){
-        $html="<select id='".$id."' class='".$class."' data-route='".$route."'>";
-        for($i=0;$i<count(self::$statusArray);$i++){
-           
-            $html.="<option  value='$i'>".self::$statusArray[$i]."</option>";
+    public static function  statusDropDown($class = "", $id = "", $route)
+    {
+        $html = "<select id='" . $id . "' class='" . $class . "' data-route='" . $route . "'>";
+        for ($i = 0; $i < count(self::$statusArray); $i++) {
+
+            $html .= "<option  value='$i'>" . self::$statusArray[$i] . "</option>";
         }
-        $html.="</select>";
+        $html .= "</select>";
         return $html;
     }
-    public function statusText(){
+    public function statusText()
+    {
         return LanguageService::getTranslate($this->status[$this->attributes["status"]]);
     }
-    public function statusClass(){
-        return ["warning","info","primary","success","","danger","danger"][$this->attributes["status"]];
+    public function statusClass()
+    {
+        return ["warning", "info", "primary", "success", "", "danger", "danger"][$this->attributes["status"]];
     }
-    public function paymentStatusText(){
-        return LanguageService::getTranslate(["Unpaid","Paid"][$this->attributes["payment_status"]]) ;
+    public function paymentStatusText()
+    {
+        return LanguageService::getTranslate(["Unpaid", "Paid"][$this->attributes["payment_status"]]);
     }
-    public function paymentStatusClass(){
-        return ["status__pending","status__paid"][$this->attributes["payment_status"]];
+    public function paymentStatusClass()
+    {
+        return ["status__pending", "status__paid"][$this->attributes["payment_status"]];
     }
-    public function coupon(){
+    public function coupon()
+    {
         return $this->belongsTo(Coupon::class);
     }
-    public function user(){
-        return $this->belongsTo(User::class,'customer_id');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
     }
-    public function tracks(){
+    public function tracks()
+    {
         return $this->hasMany(OrderTrack::class);
     }
-    public function products(){
+    public function products()
+    {
         return $this->hasMany(OrderProduct::class);
     }
-    public function additionals(){
+    public function additionals()
+    {
         return $this->hasMany(OrderAddtional::class);
     }
-    
 }

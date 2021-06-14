@@ -17,7 +17,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'is_admin'], function () {
     Route::get('attribute/remove-value/{attribute}/{value}', 'Admin\AttributeController@removeValue');
     Route::post('attribute/multi/{status}/{ids}', 'Admin\AttributeController@multiStatus');
     Route::delete('attribute/multi/{ids}', 'Admin\AttributeController@multiDelete');
-  
+
 
     /*Attribute Set Routes*/
     Route::resource('attribute-set', 'Admin\AttributeSetController');
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'is_admin'], function () {
     /*Category Routes*/
     Route::resource('category', 'Admin\CategoryController');
     Route::get('category/status/{category}/{status}', 'Admin\CategoryController@updateStatus');
- 
+
     Route::get('category/feature/{category}/{status}', 'Admin\CategoryController@updateFeature');
     Route::delete('category/multi/{ids}', 'Admin\CategoryController@multiDelete');
     Route::post('category/multi/{status}/{ids}', 'Admin\CategoryController@multiStatus');
@@ -149,11 +149,11 @@ Route::group(['prefix' => 'admin',  'middleware' => 'is_admin'], function () {
     /*SOcial Setting Routes*/
     Route::get('social-setting/social-login', 'Admin\SocialLoginController@socialLogin');
     Route::post('social-setting/social-login-update', 'Admin\SocialLoginController@updateSocialLogin');
-    
+
     /*Product Routes*/
     Route::resource('product', 'Admin\ProductController');
-    Route::get('product-import', 'Admin\ProductController@import'); 
-    Route::post('product-import', 'Admin\ProductController@importSubmit'); 
+    Route::get('product-import', 'Admin\ProductController@import');
+    Route::post('product-import', 'Admin\ProductController@importSubmit');
 
 
     Route::get('product/status/{product}/{status}', 'Admin\ProductController@updateStatus');
@@ -329,12 +329,12 @@ Route::get('load-attribute-value/{attribute}', 'Admin\AttributeController@loadVa
 
 //password/mobile
 
-Route::post('/reset/mobile','Auth\LoginController@resetMobile')->name('password.mobile');
-Route::get('reset/password/mobile','Auth\LoginController@showMobileReset');
+Route::post('/reset/mobile', 'Auth\LoginController@resetMobile')->name('password.mobile');
+Route::get('reset/password/mobile', 'Auth\LoginController@showMobileReset');
 
 ///
 //mobile_update
-Route::post('/update/mobile','Auth\Logincontroller@updatePasswordMobile')->name('password.mobile_update');
+Route::post('/update/mobile', 'Auth\Logincontroller@updatePasswordMobile')->name('password.mobile_update');
 
 Route::view('password/mobile', 'auth.passwords.mobile');
 
@@ -357,9 +357,9 @@ Route::group(['prefix' => 'user',  'middleware' => 'is_user'], function () {
     /*Change Password Routes*/
     Route::get('/change-password', 'User\ProfileController@changePassword')->name('user.change-password');
     Route::post('/change-password', 'User\ProfileController@updatePassword')->name('user.update-password');
-    
-    
-     Route::get('/change-profile', 'User\ProfileController@changeProfile')->name('user.change-profile');
+
+
+    Route::get('/change-profile', 'User\ProfileController@changeProfile')->name('user.change-profile');
     Route::post('/change-password', 'User\ProfileController@updateProfile')->name('user.update-profile');
 
     /*Change Password Routes*/
@@ -394,19 +394,19 @@ Route::group(['prefix' => 'user',  'middleware' => 'is_user'], function () {
 Route::group(['prefix' => 'vendor',  'middleware' => 'is_vendor'], function () {
 
     Route::get('/', 'Vendor\HomeController@index')->name('vendor.home');
-    Route::get('/products','Vendor\ProductController@index')->name('vendor.product_list');
-    Route::get('/products/create','Vendor\ProductController@create')->name('vendor.product_create');
-    Route::post('/products/create','Vendor\ProductController@store')->name('vendor.product_store');
-    Route::get('/products/edit/{product}','Vendor\ProductController@edit')->name('vendor.product_edit');
-    Route::patch('/products/edit/{product}','Vendor\ProductController@update')->name('vendor.product_update');
-    Route::delete('/products/{product}','Vendor\ProductController@destroy')->name('vendor.product_delete');
+    Route::get('/products', 'Vendor\ProductController@index')->name('vendor.product_list');
+    Route::get('/products/create', 'Vendor\ProductController@create')->name('vendor.product_create');
+    Route::post('/products/create', 'Vendor\ProductController@store')->name('vendor.product_store');
+    Route::get('/products/edit/{product}', 'Vendor\ProductController@edit')->name('vendor.product_edit');
+    Route::patch('/products/edit/{product}', 'Vendor\ProductController@update')->name('vendor.product_update');
+    Route::delete('/products/{product}', 'Vendor\ProductController@destroy')->name('vendor.product_delete');
 
     Route::get('product/status/{product}/{status}', 'Vendor\ProductController@updateStatus');
     Route::delete('product/multi/{ids}', 'Vendor\ProductController@multiDelete');
     Route::post('product/multi/{status}/{ids}', 'Vendor\ProductController@multiStatus');
     Route::get('remove-option/{product_id}/{option_id}', 'Vendor\ProductController@removeOption');
     Route::get('remove-option-value/{value_id}', 'Vendor\ProductController@removeOptionValue');
-    Route::get('product-import', 'Vendor\ProductController@import'); 
+    Route::get('product-import', 'Vendor\ProductController@import');
     Route::post('product-import', 'Vendor\ProductController@importSubmit');
 
 
@@ -417,11 +417,9 @@ Route::group(['prefix' => 'vendor',  'middleware' => 'is_vendor'], function () {
     Route::get('order/payment-status/{order}/{status}', 'Vendor\OrderController@updatePaymentStatus');
     Route::delete('order/multi/{ids}', 'Vendor\OrderController@multiDelete');
     Route::post('order/multi/{status}/{ids}', 'Vendor\OrderController@multiStatus');
-    
+
     Route::get('/change-profile', 'Vendor\ProfileController@changeProfile')->name('vendor.change-profile');
     Route::post('/change-password', 'Vendor\ProfileController@updateProfile')->name('vendor.update-profile');
-
-
 });
 // Print Order
 Route::get('/order/print/{order_number}', 'User\OrderController@print')->name('user.order.print');
@@ -440,7 +438,7 @@ Route::get('/order-track/{number}', 'User\OrderController@orderTrack')->name('or
 /*load Dynamic Content By Ajax Call*/
 Route::get('/load-header', 'Front\HomeController@loadHeader')->name('header.load');
 Route::get('/load-cart', 'Front\HomeController@loadAsideCart')->name('aside.cart.load');
-Route::get('/load-sub-product/{subCategory}','Front\HomeController@loadSubProduct');
+Route::get('/load-sub-product/{subCategory}', 'Front\HomeController@loadSubProduct');
 
 /*load Trending Category Products*/
 Route::get('/load-trending-products/{category}', 'Front\HomeController@loadTrendingProducts')->name('trending.product.load');
@@ -491,7 +489,7 @@ Route::get('/cart', 'Front\CartController@index')->name('cart');
 /*Checkout Routes*/
 Route::get('/checkout', 'Front\CheckoutController@index')->name('checkout');
 Route::group(['middleware' => ['XssSanitizer']], function () {
-Route::post('/checkout/submit', 'Front\CheckoutController@checkoutSubmit')->name('checkout.submit');
+    Route::post('/checkout/submit', 'Front\CheckoutController@checkoutSubmit')->name('checkout.submit');
 });
 /*Update Shipping Method in checkout page*/
 Route::get('/shipping-update/{shippingMethod}', 'Front\CheckoutController@shippingMethod');

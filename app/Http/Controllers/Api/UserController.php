@@ -21,36 +21,36 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        if(User::where('email',$request->email)->first()){
+        if (User::where('email', $request->email)->first()) {
             $response = [
-                'success' =>false,
+                'success' => false,
                 'message' => "Mobile number already registered",
             ];
             return response()->json($response);
         }
-        $otp=UserOtp::where('mobile_number',$request->mobile)->where('otp',$request->otp)->first();
-        if(!$otp){
+        $otp = UserOtp::where('mobile_number', $request->mobile)->where('otp', $request->otp)->first();
+        if (!$otp) {
             $response = [
-                'success' =>false,
+                'success' => false,
                 'message' => "Invalid otp",
             ];
             return response()->json($response);
         }
         try {
-            $user= User::create([
+            $user = User::create([
                 'name' => $request->firstname,
                 'lastname' => $request->lastname,
                 'email' => $request->mobile,
                 'password' => Hash::make($request->password),
-                'affiliate_link'=>md5($request->mobile),
-                'affiliate_balance'=>0
+                'affiliate_link' => md5($request->mobile),
+                'affiliate_balance' => 0
             ]);
             Notification::newUser($user->id);
-            $setting=Setting::first();
-            if($setting->email_verification){
+            $setting = Setting::first();
+            if ($setting->email_verification) {
                 $user->sendEmailVerificationNotification();
             }
-            
+
 
             $success = true;
             $message = 'User register successfully';
@@ -67,46 +67,64 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-    public function registerOtp(Request $request){
+    public function registerOtp(Request $request)
+    {
 
-        if(User::where('email',$request->mobile)->first()){
+        if (User::where('email', $request->mobile)->first()) {
             $response = [
-                'success' =>false,
+                'success' => false,
                 'message' => "Mobile number already registered",
             ];
             return response()->json($response);
         }
-        $otp=rand(1000,9999);
+        $otp = rand(1000, 9999);
         UserOtp::updateOrCreate([
-            'mobile_number'=>$request->mobile,
-            
-        ],[
-            'otp'=>$otp
+            'mobile_number' => $request->mobile,
+
+        ], [
+            'otp' => $otp
         ]);
-        $text = "Your otp is ".$otp;
+        $text = "Your otp is " . $otp;
 
         // $smsresult = file_get_contents("http://66.45.237.70/api.php?username=01531173930&password=5X6HC8M3&number=$request->email&message=$text");
-        
+
         $url = "http://66.45.237.70/api.php";
-        $number=$request->mobile;
+        $number = $request->mobile;
         // $text="Hello Bangladesh";
-        $data= array(
-        'username'=>"01531173930",
-        'password'=>"5X6HC8M3",
-        'number'=>"$number",
-        'message'=>"$text"
+        $data = array(
+            'username' => "01531173930",
+            'password' => "5X6HC8M3",
+            'number' => "$number",
+            'message' => "$text"
         );
-        
+
         $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $smsresult = curl_exec($ch);
         $response = [
-            'success' =>true,
+            'success' => true,
             'message' => "OTP Sent successfully",
         ];
         return response()->json($response);
+    }
+
+    public function changePassword(Request $request)
+    {
+        if (!(Hash::check($request->old_password, Auth::user()->password))) {
+            return [
+                "success" => false,
+                "msg" => "Wrong old password"
+            ];
+        }
+        $user = Auth::User();
+        $user->password = Hash::make($request['password']);
+        $user->save();
+        return [
+            "success" => true,
+            "msg" => "Password updated successfully"
+        ];
     }
     /**
      * Login
@@ -122,9 +140,9 @@ class UserController extends Controller
             $success = true;
             $message = 'User login successfully';
             return [
-                "user"=>Auth::user(),
-                "success"=>true,
-                "token"=>Auth::user()->createToken('MyApp')->plainTextToken
+                "user" => Auth::user(),
+                "success" => true,
+                "token" => Auth::user()->createToken('MyApp')->plainTextToken
             ];
         } else {
             $success = false;
@@ -139,50 +157,53 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-    public function createAddress(Request $request){
-        $user=Auth::user();
+    public function createAddress(Request $request)
+    {
+        $user = Auth::user();
 
-        $address=UserAddress::create([
-                "user_id"=>$user->id,
-                "first_name"=>$request->first_name,
-                "last_name"=>$request->last_name,
-                "mobile"=>$request->mobile,
-                "city"=>$request->city,
-                "email"=>$request->email,
-                "zip"=>$request->zip,
-                "street_address"=>$request->street_address,
-                "region"=>$request->region,
+        $address = UserAddress::create([
+            "user_id" => $user->id,
+            "first_name" => $request->first_name,
+            "last_name" => $request->last_name,
+            "mobile" => $request->mobile,
+            "city" => $request->city,
+            "email" => $request->email,
+            "zip" => $request->zip,
+            "street_address" => $request->street_address,
+            "region" => $request->region,
         ]);
         return [
-            "success"=>true,
-            "address"=>$address,
-            
+            "success" => true,
+            "address" => $address,
+
         ];
     }
-    public function updateBasic(Request $request){
-        $user=Auth::user();
+    public function updateBasic(Request $request)
+    {
+        $user = Auth::user();
         $user->update([
-            "name"=>$request->first_name,
-            "lastname"=>$request->last_name,
+            "name" => $request->first_name,
+            "lastname" => $request->last_name,
 
         ]);
         return [
-            "success"=>true,
-            "msg"=>"Profile updated successfully",
-            "user"=>$user
+            "success" => true,
+            "msg" => "Profile updated successfully",
+            "user" => $user
         ];
     }
-    public function getAddress(){
-        $addresses= UserAddress::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
+    public function getAddress()
+    {
+        $addresses = UserAddress::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         return [
-            "data"=>$addresses
+            "data" => $addresses
         ];
     }
-    public function getSingleAddress(UserAddress $userAddress){
+    public function getSingleAddress(UserAddress $userAddress)
+    {
         return $userAddress;
-       
     }
-    
+
 
     /**
      * Logout

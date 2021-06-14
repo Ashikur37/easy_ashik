@@ -25,22 +25,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                    <label for="confirmpassword">Email</label>
-                        <input value="{{auth()->user()->email}}" required type="email" class="form-control" id="confirmpassword" name="email" placeholder="" />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                    <label for="confirmpassword">Phone</label>
-                        <input value="{{auth()->user()->contact_number}}" required type="text" class="form-control" id="confirmpassword" name="contact_number" placeholder="" />
-                    </div>
-                </div>
-            </div>
+   
+            
             <div class="row">
                 <div class="col">
                     <div class="form-group">
