@@ -321,6 +321,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'is_admin'], function () {
     Route::post('email-config', 'Admin\EmailController@updateSetting');
     Route::post('send-email', 'Admin\EmailController@sendEmail');
     Route::get('subscriber', 'Admin\EmailController@subscriber');
+
 });
 // ************************************End ADMIN SECTION **********************************************
 Route::get('admin/load-sub-category/{category}', 'Admin\CategoryController@loadSubCategory');
@@ -559,6 +560,11 @@ Route::get('/cart/load', 'Front\CartController@loadCart');
 /*Compare Routes*/
 Route::get('/compare/add-item', 'Front\CompareListController@addItem')->name('compare.add');
 Route::get('/compare/remove/{row}', 'Front\CompareListController@removeItem');
+
+// offer shop
+Route::get('/single-voucher','Front\OfferController@singleVoucher');
+Route::get('/rocket-shop','Front\OfferController@rocketShop');
+Route::get('/campaigns','Front\OfferController@campaigns');
 
 /*Auth Routes*/
 Auth::routes();
