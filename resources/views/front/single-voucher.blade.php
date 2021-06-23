@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="row my-5">
-            <div class="col-md-6 mb-20">
+        <div class="row my-20">
+            <div class="col-md-6 mb-20 prl-10">
                 <div class="single-card d-flex">
                     <div class="img-wrap">
                         <img src="{{asset('images/voucher/voucher.png')}}" alt="" class="img-fluid">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-20">
+            <div class="col-md-6 mb-20 prl-10">
                 <div class="single-card d-flex">
                     <div class="img-wrap">
                         <img src="{{asset('images/voucher/voucher.png')}}" alt="" class="img-fluid">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-20">
+            <div class="col-md-6 mb-20 prl-10">
                 <div class="single-card d-flex">
                     <div class="img-wrap">
                         <img src="{{asset('images/voucher/voucher.png')}}" alt="" class="img-fluid">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-20">
+            <div class="col-md-6 mb-20 prl-10">
                 <div class="single-card d-flex">
                     <div class="img-wrap">
                         <img src="{{asset('images/voucher/voucher.png')}}" alt="" class="img-fluid">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-20">
+            <div class="col-md-6 mb-20 prl-10">
                 <div class="single-card d-flex">
                     <div class="img-wrap">
                         <img src="{{asset('images/voucher/voucher.png')}}" alt="" class="img-fluid">
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-20">
+            <div class="col-md-6 mb-20 prl-10">
                 <div class="single-card d-flex">
                     <div class="img-wrap">
                         <img src="{{asset('images/voucher/voucher.png')}}" alt="" class="img-fluid">
@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 mb-20">
+            <div class="col-md-6 mb-20 prl-10">
                 <div class="single-card d-flex">
                     <div class="img-wrap">
                         <img src="{{asset('images/voucher/voucher.png')}}" alt="" class="img-fluid">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-20">
+            <div class="col-md-6 mb-20 prl-10">
                 <div class="single-card d-flex">
                     <div class="img-wrap">
                         <img src="{{asset('images/voucher/voucher.png')}}" alt="" class="img-fluid">

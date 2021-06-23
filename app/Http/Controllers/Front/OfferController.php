@@ -18,4 +18,8 @@ class OfferController extends Controller
     public function campaigns(){
         return view('Front/campaigns');
     }
+
+    public function singleCampaign(){
+        return view('Front/single-campaign');
+    }
 }

@@ -562,9 +562,10 @@ Route::get('/compare/add-item', 'Front\CompareListController@addItem')->name('co
 Route::get('/compare/remove/{row}', 'Front\CompareListController@removeItem');
 
 // offer shop
-Route::get('/single-voucher','Front\OfferController@singleVoucher');
-Route::get('/rocket-shop','Front\OfferController@rocketShop');
-Route::get('/campaigns','Front\OfferController@campaigns');
+Route::get('/single-voucher','Front\OfferController@singleVoucher')->name('single-voucher');
+Route::get('/rocket-shop','Front\OfferController@rocketShop')->name('rocket-shop');
+Route::get('/campaigns','Front\OfferController@campaigns')->name('campaign');
+Route::get('/single-campaign','Front\OfferController@singleCampaign');
 
 /*Auth Routes*/
 Auth::routes();

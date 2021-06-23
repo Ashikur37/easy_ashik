@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+
 html,
 body {
     font-family: 'Open Sans', sans-serif;
@@ -8,6 +13,8 @@ body {
     scroll-behavior: smooth;
     outline: 0;
     overflow-x: hidden;
+    padding: 0;
+    margin: 0;
 }
 
 h1 {
@@ -378,6 +385,11 @@ img {
     padding: 40px 0;
 }
 
+.my-20 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 @media(min-width:768px) {
     .md-mt-40 {
         margin-top: 40px;
@@ -724,10 +736,10 @@ img {
 .ts__dropdown.dropdown-category ul.ts__dropdown__content:before {
     position: absolute;
     content: "";
-    right: 0;
+    left: 0;
     border-style: solid;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -webkit-transform: translateX(50%);
+    transform: translateX(50%);
     z-index: 1;
 }
 
@@ -747,7 +759,7 @@ img {
     .ts__dropdown.dropdown-category {
         position: absolute;
         top: calc(100% - 0px);
-        top: 75px;
+        top: 70px;
         height: auto;
         width: auto;
         -webkit-transform: translateX(0);
@@ -1348,7 +1360,7 @@ ul.ts__dropdown__content li a>img {
 }
 
 .middle-nav {
-    padding: 24px 0;
+    padding: 15px 0;
     position: relative;
 }
 
@@ -3764,62 +3776,110 @@ body {
 
 /* timer set  */
 
-#timer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+#clockdiv {
+    color: #000;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
     position: absolute;
-    top: -39px;
-    right: 0;
+    top: -40px;
+    right: 10px;
 }
 
-.number-list {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+#clockdiv>div {
+    padding: 12px;
+    padding-top: 0;
+    background: #f7f8fa;
+    display: inline-block;
+    border-radius: 0 0 50% 50%;
+    margin-left: -5px;
 }
 
-.number-list .item {
-    width: 40px;
-    margin-right: 25px;
+#clockdiv div>span {
+    color: #fff;
     border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    color: white;
-    position: relative;
+    display: inline-block;
     background: linear-gradient(to bottom, #1a0201 50%, #e62d26 50%) !important;
+    min-width: 40px;
+    padding: 2px;
+    font-weight: bold;
 }
 
-.unit-list {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
+.smalltext {
+    padding-top: 5px;
+    padding-bottom: 2px;
+    font-size: 13px;
 }
 
-.unit-list .item {
-    width: 40px;
-    margin-right: 25px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    color: #006741;
-    font-weight: 500;
-    font-family: sans-serif;
+
+/* offers section  */
+
+.offers-wrapper {
+    margin-left: 290px;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    padding-top: 10px;
 }
 
-.timer-end {
+.offers-wrapper ul li {
+    list-style: none;
+    margin-right: 27px;
+}
+
+.offers-wrapper ul li:last-child {
+    margin-right: 0;
+}
+
+.offers-wrapper ul a {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: #006741;
-    font-weight: 700;
-    font-family: sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.offers-wrapper ul a>img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.middle-nav .sticky-nav-trigger {
+    width: 270px;
+    cursor: pointer;
+}
+
+.middle-nav .offers-wrapper,
+.middle-nav .sticky-nav-trigger {
+    padding-top: 15px;
+}
+
+.sticky-nav-trigger h5.ts__dropdown__trigger {
+    display: flex;
+    align-items: center;
+    background: #f81d1d;
+    color: #fff;
+    padding: 8px;
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.sticky-nav-trigger .ri-function-line {
+    margin-right: 7px;
+    display: inline-block;
+}
+
+.sticky-nav-trigger .ri-arrow-down-s-line {
+    margin-left: 30px;
+    display: inline-block;
+    font-size: 25px;
+}
+
+.hero-section .category-title {
+    margin-bottom: 0;
+    height: 42px;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ececec;
 }
