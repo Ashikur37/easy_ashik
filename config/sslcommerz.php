@@ -22,5 +22,5 @@ return [
     'success_url' => '/success',
     'failed_url' => '/fail',
     'cancel_url' => '/cancel',
-    'ipn_url' => '/ipn', 
+    'ipn_url' => '/ipn',
 ];

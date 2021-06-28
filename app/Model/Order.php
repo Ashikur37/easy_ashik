@@ -109,9 +109,9 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = [
-        'customer_id', 'customer_email', 'customer_phone', 'customer_first_name', 'customer_last_name', 'billing_first_name', 'billing_last_name', 'billing_address_1', 'billing_address_2', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'shipping_first_name', 'shipping_last_name', 'shipping_address_1', 'shipping_address_2', 'shipping_city', 'shipping_state', 'shipping_zip', 'shipping_country', 'sub_total', 'shipping_method', 'shipping_cost', 'coupon_id', 'discount', 'total', 'payment_method', 'currency', 'currency_rate', 'locale', 'status', 'note', 'cart', 'payment_status', 'tax', 'order_number', 'affiliator', 'transaction_id', 'cashback'
+        'cancel_reason', 'shipping_paid', 'customer_id', 'delivery_trx_id', 'customer_email', 'customer_phone', 'customer_first_name', 'customer_last_name', 'billing_first_name', 'billing_last_name', 'billing_address_1', 'billing_address_2', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'shipping_first_name', 'shipping_last_name', 'shipping_address_1', 'shipping_address_2', 'shipping_city', 'shipping_state', 'shipping_zip', 'shipping_country', 'sub_total', 'shipping_method', 'shipping_cost', 'coupon_id', 'discount', 'total', 'payment_method', 'currency', 'currency_rate', 'locale', 'status', 'note', 'cart', 'payment_status', 'tax', 'order_number', 'affiliator', 'transaction_id', 'cashback'
     ];
-    private  $status = ["Pending", "Confirmed", "Processing", "Completed", "Shipped", "Delivered", "Canceled"];
+    private  $status = ["Pending", "Confirmed", "Processing", "Picked", "Shipped", "Delivered", "Canceled"];
     private static  $statusArray = ["Pending", "Confirmed", "Processing", "Picked", "Shipped", "Delivered", "Canceled"];
     public function  getStatusDropDown($class = "", $id = "")
     {
@@ -135,7 +135,7 @@ class Order extends Model
     }
     public function statusText()
     {
-        return LanguageService::getTranslate($this->status[$this->attributes["status"]]);
+        return $this->status[$this->attributes["status"]];
     }
     public function statusClass()
     {
@@ -159,7 +159,7 @@ class Order extends Model
     }
     public function tracks()
     {
-        return $this->hasMany(OrderTrack::class);
+        return $this->hasMany(OrderTrack::class)->orderBy('id', 'desc');
     }
     public function products()
     {

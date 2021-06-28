@@ -11,7 +11,7 @@
         <i class="ri-arrow-right-s-line"></i>
         <a href="#">{{ $lng->AddProduct }}</a>
     </li>
-@endsection
+@endsection 
 @section('content')
     <div class="container-fluid">
         <form onsubmit="return validateProduct()" method="post" action="{{ route('product.store') }}">
@@ -176,6 +176,17 @@
                                     <label for="checkBestDeal">{{ $lng->BestDeal }}
                                     </label>
                                 </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label>Inside Dhaka charge</label>
+                                    <input name="inside_charge" type="number" class="form-control" value="0">
+                                  
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label>Outside Dhaka charge</label>
+                                        <input name="outside_charge" type="number" class="form-control" value="0">
+                                      
+                                    </div>
                             </div>
                         </div>
                     </div>

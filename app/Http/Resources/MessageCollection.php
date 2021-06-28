@@ -17,6 +17,7 @@ class MessageCollection extends ResourceCollection
                 return [
                     'id' => $data->id,
                     'sender_id' => $data->sender_id,
+                    'sender' => $data->sender_id == auth()->user()->id ? true : false,
                     'message' => $data->message,
                     'seen' => $data->seen,
                     'sent' => $data->created_at->format('h:i a d-M-y')

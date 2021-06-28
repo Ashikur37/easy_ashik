@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Model;
+
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
 use Cache;
+
 /**
  * App\Model\Product
  *
@@ -113,15 +115,16 @@ use Cache;
 class Product extends Model
 {
     protected $fillable = [
-        'shop_id','name','brand_id', 'slug','price','special_price','special_price_start','special_price_end','selling_price','sku','manage_stock','qty','in_stock','viewed','is_active','details','special_price_type','category_id','sub_category_id','child_category_id','meta_title','meta_description','image','price_type','is_trending','is_hot','is_top','best_deal','rating','user_id','cashback'
+        'shop_id', 'name', 'inside_charge', 'outside_charge', 'brand_id', 'slug', 'price', 'special_price', 'special_price_start', 'special_price_end', 'selling_price', 'sku', 'manage_stock', 'qty', 'in_stock', 'viewed', 'is_active', 'details', 'special_price_type', 'category_id', 'sub_category_id', 'child_category_id', 'meta_title', 'meta_description', 'image', 'price_type', 'is_trending', 'is_hot', 'is_top', 'best_deal', 'rating', 'user_id', 'cashback'
     ];
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
     protected $appends = [
-         'rating_percent'
+        'rating_percent'
     ];
-    
+
     public function images()
     {
         return $this->hasMany(ProductImage::class);
@@ -152,20 +155,20 @@ class Product extends Model
     }
     public function productSizes()
     {
-        return $this->belongsToMany('App\Model\Size','App\Model\ProductSize');
+        return $this->belongsToMany('App\Model\Size', 'App\Model\ProductSize');
     }
     public function productColors()
     {
-        return $this->belongsToMany('App\Model\Color','App\Model\ProductColor');
+        return $this->belongsToMany('App\Model\Color', 'App\Model\ProductColor');
     }
 
     public function getRatingPercentAttribute()
     {
-            return $this->ratingPercent();
+        return $this->ratingPercent();
     }
     public function ratingPercent()
     {
-        return ($this->rating / 5) * 100; 
+        return ($this->rating / 5) * 100;
     }
     public function tags()
     {
@@ -173,7 +176,7 @@ class Product extends Model
     }
     public function productTags()
     {
-        return $this->belongsToMany('App\Model\Tag','App\Model\ProductTag');
+        return $this->belongsToMany('App\Model\Tag', 'App\Model\ProductTag');
     }
     public function badges()
     {
@@ -181,7 +184,7 @@ class Product extends Model
     }
     public function productBadges()
     {
-        return $this->belongsToMany('App\Model\Badge','App\Model\BadgeProduct')->where('status', '=', 1);
+        return $this->belongsToMany('App\Model\Badge', 'App\Model\BadgeProduct')->where('status', '=', 1);
     }
     public function attributes()
     {
@@ -189,7 +192,7 @@ class Product extends Model
     }
     public function attributeValues()
     {
-        return $this->hasManyThrough('App\Model\ProductAttributeValue','App\Model\ProductAttribute');
+        return $this->hasManyThrough('App\Model\ProductAttributeValue', 'App\Model\ProductAttribute');
     }
 
     public function options()
@@ -204,49 +207,49 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
-    public function inStock($num=0)
+    public function inStock($num = 0)
     {
-        if(Cache::get('flashSaleProducts')){
+        if (Cache::get('flashSaleProducts')) {
 
-            if(in_array($this->attributes["id"],Cache::get('flashSaleProducts'))){
-                $flashSale=Cache::get('flashSale');
-                $flashSaleProduct=$flashSale->products->where('product_id',$this->attributes["id"])->first();
-                if($flashSaleProduct->qty>=$num){
+            if (in_array($this->attributes["id"], Cache::get('flashSaleProducts'))) {
+                $flashSale = Cache::get('flashSale');
+                $flashSaleProduct = $flashSale->products->where('product_id', $this->attributes["id"])->first();
+                if ($flashSaleProduct->qty >= $num) {
                     return true;
                 }
-            }
-            else{
-                if(($this->attributes['in_stock']==1&&($this->attributes['qty']>=$num||!$this->attributes['qty']))){
+            } else {
+                if (($this->attributes['in_stock'] == 1 && ($this->attributes['qty'] >= $num || !$this->attributes['qty']))) {
                     return true;
                 }
                 return false;
             }
-        }
-        else if(($this->attributes['in_stock']==1&&($this->attributes['qty']>=$num||!$this->attributes['qty']))){
-           
+        } else if (($this->attributes['in_stock'] == 1 && ($this->attributes['qty'] >= $num || !$this->attributes['qty']))) {
+
             return true;
         }
         return false;
     }
-    public function canReview(){
-        return Order::where('customer_id',auth()->user()->id)->where('status',3)->whereHas('products', function (Builder $query) {
-            $query->where('product_id',$this->attributes["id"]);
+    public function canReview()
+    {
+        return Order::where('customer_id', auth()->user()->id)->where('status', 3)->whereHas('products', function (Builder $query) {
+            $query->where('product_id', $this->attributes["id"]);
         })->count();
     }
-    public function hadReview(){
-        return Review::where('reviewer_id',auth()->user()->id)->where('product_id',$this->attributes["id"])->count(); 
+    public function hadReview()
+    {
+        return Review::where('reviewer_id', auth()->user()->id)->where('product_id', $this->attributes["id"])->count();
     }
     public function getSpecialPrice()
-    {   
+    {
         $specialPrice = $this->attributes['special_price'];
-        if(Cache::get('flashSaleProducts')){
-            if(in_array($this->attributes["id"],Cache::get('flashSaleProducts'))){
-                $flashSale=Cache::get('flashSale');
-                $flashSaleProduct=$flashSale->products->where('product_id',$this->attributes["id"])->first();
+        if (Cache::get('flashSaleProducts')) {
+            if (in_array($this->attributes["id"], Cache::get('flashSaleProducts'))) {
+                $flashSale = Cache::get('flashSale');
+                $flashSaleProduct = $flashSale->products->where('product_id', $this->attributes["id"])->first();
                 return $flashSaleProduct->price;
             }
         }
-       
+
         if ($this->special_price_type === 'percent') {
             $discountedPrice = ($specialPrice / 100) * $this->attributes['price'];
 
@@ -256,17 +259,16 @@ class Product extends Model
         if ($specialPrice < 0) {
             $specialPrice = 0;
         }
-        if($this->price_type=='discount'&&(today() >= $this->special_price_start||!$this->special_price_start)&&(today() <= $this->special_price_end||!$this->special_price_end)){
+        if ($this->price_type == 'discount' && (today() >= $this->special_price_start || !$this->special_price_start) && (today() <= $this->special_price_end || !$this->special_price_end)) {
 
             return $specialPrice;
-        }
-        else{
+        } else {
             return $this->attributes['price'];
         }
     }
     public function getDiscount()
     {
-            return floor(100-($this->price/$this->actualPrice())*100);
+        return floor(100 - ($this->price / $this->actualPrice()) * 100);
     }
     public function getSpecialPriceCurrency()
     {
@@ -281,60 +283,61 @@ class Product extends Model
         if ($specialPrice < 0) {
             $specialPrice = 0;
         }
-        if($this->price_type=='discount'&&(today() >= $this->special_price_start||!$this->special_price_start)&&(today() <= $this->special_price_end||!$this->special_price_end)){
+        if ($this->price_type == 'discount' && (today() >= $this->special_price_start || !$this->special_price_start) && (today() <= $this->special_price_end || !$this->special_price_end)) {
 
             return $this->currencyPrice($specialPrice);
-        }
-        else{
+        } else {
             return $this->currencyPrice($this->attributes['price']);
         }
     }
-    public static function highlight($str, $search){
+    public static function highlight($str, $search)
+    {
         $highlightcolor = Setting::first()->theme_color;
         //theme_color
         $occurrences = substr_count(strtolower($str), strtolower($search));
         $newstring = $str;
         $match = array();
-     
-        for ($i=0;$i<$occurrences;$i++) {
+
+        for ($i = 0; $i < $occurrences; $i++) {
             $match[$i] = stripos($str, $search, $i);
             $match[$i] = substr($str, $match[$i], strlen($search));
-            $newstring = str_replace($match[$i], '[#]'.$match[$i].'[@]', strip_tags($newstring));
+            $newstring = str_replace($match[$i], '[#]' . $match[$i] . '[@]', strip_tags($newstring));
         }
-     
+
         $newstring = str_replace('[#]', '<span class="search-highlight">', $newstring);
         $newstring = str_replace('[@]', '</span>', $newstring);
         return $newstring;
     }
-    public static function currencyPrice($price) {
+    public static function currencyPrice($price)
+    {
 
-            $curr = Session::get('currency');
-            return $price;
-        
-    }
-    public static function currencyPriceRate($price) {
-            $curr = Session::get('currency');
-           
-            $price=$curr->rate*$price;
-            return $price;
-        
-    }
-    public static function currencyPriceRateWithoutSign($price) {
         $curr = Session::get('currency');
-        return $curr->rate*$price;
+        return $price;
+    }
+    public static function currencyPriceRate($price)
+    {
+        $curr = Session::get('currency');
+
+        $price = $curr->rate * $price;
+        return $price;
+    }
+    public static function currencyPriceRateWithoutSign($price)
+    {
+        $curr = Session::get('currency');
+        return $curr->rate * $price;
     }
     public function getPriceAttribute()
     {
         $curr = Session::get('currency');
         $specialPrice = $this->attributes['special_price'];
-        $flashSaleProducts=[];
-        if(Cache::get('flashSaleProducts')){
-            $flashSaleProducts=Cache::get('flashSaleProducts');
+        $flashSaleProducts = [];
+        if (Cache::get('flashSaleProducts')) {
+            $flashSaleProducts = Cache::get('flashSaleProducts');
         }
-        if(in_array($this->attributes["id"],$flashSaleProducts)){
-            $flashSale=Cache::get('flashSale');
-            $flashSaleProduct=$flashSale->products->where('product_id',$this->attributes["id"])->first();
-            return $flashSaleProduct->price*$curr->rate;
+        if (in_array($this->attributes["id"], $flashSaleProducts)) {
+            $flashSale = Cache::get('flashSale');
+            $flashSaleProduct = $flashSale->products->where('product_id', $this->attributes["id"])->first();
+            return $flashSaleProduct->price * $curr->rate;
         }
         if ($this->special_price_type === 'percent') {
             $discountedPrice = ($specialPrice / 100) * $this->attributes['price'];
@@ -344,30 +347,29 @@ class Product extends Model
         if ($specialPrice < 0) {
             $specialPrice = 0;
         }
-        if($this->price_type=='discount'&&(today() >= $this->special_price_start||!$this->special_price_start)&&(today() <= $this->special_price_end||!$this->special_price_end)){
-            return $specialPrice*$curr->rate;
+        if ($this->price_type == 'discount' && (today() >= $this->special_price_start || !$this->special_price_start) && (today() <= $this->special_price_end || !$this->special_price_end)) {
+            return $specialPrice * $curr->rate;
+        } else {
+
+            return $this->attributes['price'] * $curr->rate;
         }
-        else{
-            
-            return $this->attributes['price']*$curr->rate;
-        }
-        
     }
     public function actualPrice()
     {
         $curr = Session::get('currency');
-        return $this->attributes['price']*$curr->rate;
-
+        return $this->attributes['price'] * $curr->rate;
     }
-    public function orders(){ 
+    public function orders()
+    {
         return $this->hasMany(OrderProduct::class);
     }
-    public function getSoldAttribute(){ 
+    public function getSoldAttribute()
+    {
         return $this->hasMany(OrderProduct::class)->sum('qty');
     }
-    public function getSpecialPriceInRange($min,$max)
+    public function getSpecialPriceInRange($min, $max)
     {
-   
+
         $curr = Session::get('currency');
         $specialPrice = $this->attributes['special_price'];
 
@@ -380,14 +382,12 @@ class Product extends Model
         if ($specialPrice < 0) {
             $specialPrice = 0;
         }
-        if($this->price_type=='discount'&&(today() >= $this->special_price_start||!$this->special_price_start)&&(today() <= $this->special_price_end||!$this->special_price_end)){
+        if ($this->price_type == 'discount' && (today() >= $this->special_price_start || !$this->special_price_start) && (today() <= $this->special_price_end || !$this->special_price_end)) {
 
-            $price= $specialPrice*$curr->rate;
+            $price = $specialPrice * $curr->rate;
+        } else {
+            $price = $this->attributes['price'] * $curr->rate;
         }
-        else{
-            $price= $this->attributes['price']*$curr->rate;
-        }
-        return $price>=$min&&$price<=$max;
+        return $price >= $min && $price <= $max;
     }
-
 }

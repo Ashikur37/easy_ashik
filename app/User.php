@@ -12,9 +12,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\HasApiTokens;
+
 class User extends Authenticatable
 {
-    use Notifiable,HasRoles,HasApiTokens;
+    use Notifiable, HasRoles, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -22,8 +23,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','lastname', 'email', 'password','avatar', 'provider_id', 'provider',
-        'access_token','type','affiliate_link','affiliate_balance','email_verified_at','is_vendor','contact_number','gender','dob'
+        'name', 'lastname', 'email', 'password', 'avatar', 'provider_id', 'provider', 'easy_balance',
+        'access_token', 'type', 'affiliate_link', 'affiliate_balance', 'email_verified_at', 'is_vendor', 'contact_number', 'gender', 'dob'
     ];
 
     /**
@@ -45,7 +46,7 @@ class User extends Authenticatable
     ];
     public function orders()
     {
-        return $this->hasMany(Order::class,'customer_id');
+        return $this->hasMany(Order::class, 'customer_id');
     }
     public function addresses()
     {
@@ -53,11 +54,11 @@ class User extends Authenticatable
     }
     public function wishListProducts()
     {
-        return $this->belongsToMany('App\Model\Product','App\Model\WishList');
+        return $this->belongsToMany('App\Model\Product', 'App\Model\WishList');
     }
     public function spent()
     {
-        return $this->hasMany(Order::class,'customer_id')->where('payment_method','affiliate')->sum('total');
+        return $this->hasMany(Order::class, 'customer_id')->where('payment_method', 'affiliate')->sum('total');
     }
     public function withdrawAmount()
     {
@@ -72,13 +73,12 @@ class User extends Authenticatable
     {
         $this->notify(new VerifyEmail);
     }
-    public function getImageUrl(){
-        if($this->attributes['provider']){
+    public function getImageUrl()
+    {
+        if ($this->attributes['provider']) {
             return $this->attributes['avatar'];
-        } 
-        else{
+        } else {
             return URL::to('/images/avatar.png');
         }
     }
-
 }

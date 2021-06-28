@@ -9,6 +9,7 @@ use App\Services\AffiliateService;
 use App\Services\Datatable;
 use App\Services\LanguageService;
 use App\Services\Notification;
+use App\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -29,7 +30,7 @@ class OrderController extends Controller
             $sign = $curr->sign;
             $rate = $curr->rate;
             $table = new Datatable('Order', 'order');
-            return $table->get(['id','order_number', 'cart', 'customer_first_name', 'customer_email', 'customer_last_name', 'status', 'payment_status', 'sub_total'])->addColumn('index', function ($row) {
+            return $table->get(['id', 'order_number', 'cart', 'customer_first_name', 'customer_email', 'customer_last_name', 'status', 'payment_status', 'sub_total'])->addColumn('index', function ($row) {
                 return '<div class="icheck-primary d-inline">
                 <input data-id="' . $row->id . '" class="check-element check-id"  type="checkbox" id="checkboxPrimary' . $row->id . '" >
                 <label for="checkboxPrimary' . $row->id . '">
@@ -46,7 +47,7 @@ class OrderController extends Controller
                     foreach ($items as $item) {
                         $price = $sign . ($item->subtotal * $rate);
                         $details .= "<tr><td style='border:1px solid #f1f1f1'>
-                    ".Str::limit($item->name,20,'')."   
+                    " . Str::limit($item->name, 20, '') . "   
                     </td><td style='border:1px solid #f1f1f1'>
                     $item->qty   
                     </td><td style='border:1px solid #f1f1f1'>
@@ -98,11 +99,12 @@ class OrderController extends Controller
         $items = unserialize(bzdecompress(utf8_decode($order->cart)));
         return view('admin.order.show', compact('order', 'items'));
     }
-    public function updateAddress(Order $order){
+    public function updateAddress(Order $order)
+    {
         $order->update([
-            "billing_address_1"=>request()->billing_address_1
-            ]);
-        return back()->with('success','Address updated successfully');
+            "billing_address_1" => request()->billing_address_1
+        ]);
+        return back()->with('success', 'Address updated successfully');
     }
 
     public function printOrder(Order $order)
@@ -125,12 +127,13 @@ class OrderController extends Controller
     }
     public function updateStatus(Order $order, $status)
     {
+
         $order->update([
             "status" => $status
         ]);
         $order->tracks()->create([
-            "title" => "Order status update",
-            "details" => "OrderStatusUpdatedTo" . $order->statusText(),
+            "title" => $order->statusText(),
+            "details" => "Order " . $order->statusText(),
         ]);
         /**
          * Notify user
@@ -155,6 +158,12 @@ class OrderController extends Controller
                 }
             }
         }
+        // if ($status == 5) {
+        //     $user = User::find($order->customer_id);
+
+        //     $user->easy_balance = $user->easy_balance + $order->cashback;
+        //     $user->save();
+        // }
         return LanguageService::getTranslate("OrderUpdatedSuccessfully");
     }
     public function updatePaymentStatus(Order $order, $status)
@@ -165,7 +174,7 @@ class OrderController extends Controller
         Notification::orderUpdateUser($order->id);
         $affiliateService = new AffiliateService();
         $affiliateService->payToAffiliator($order->id);
-        
+
         $order->tracks()->create([
             "title" => "Payment update",
             "details" => "Payment status updated to " . $order->paymentStatusText(),

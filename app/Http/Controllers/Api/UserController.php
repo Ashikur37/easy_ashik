@@ -13,6 +13,9 @@ use App\Services\Notification;
 use App\Model\Setting;
 use App\Model\UserAddress;
 use App\Model\UserOtp;
+use App\Http\Resources\ProductCollection;
+use App\Model\Product;
+use App\Model\WishList;
 
 class UserController extends Controller
 {
@@ -204,6 +207,36 @@ class UserController extends Controller
         return $userAddress;
     }
 
+    public function wishListProduct()
+    {
+        $productIds = WishList::where('user_id', auth()->user()->id)->pluck('product_id')->toArray();
+        $products = Product::whereIn('id', $productIds)->paginate(10);
+        return new ProductCollection($products);
+    }
+    public function addWishListProduct($id)
+    {
+        $wishlist = WishList::where('product_id', $id)->where('user_id', auth()->user()->id)->first();
+        if ($wishlist) {
+            WishList::where('product_id', $id)->where('user_id', auth()->user()->id)->delete();
+            Session::put('wishCount', WishList::where('user_id', auth()->user()->id)->count());
+            Session::put('wishProducts', WishList::where('user_id', auth()->user()->id)->pluck('product_id')->toArray());
+            return [
+                "success" => false,
+                "msg" => "Product removed from wishlist"
+            ];
+        } else {
+            WishList::updateOrCreate([
+                'user_id' => auth()->user()->id,
+                'product_id' => $id
+            ]);
+            Session::put('wishCount', WishList::where('user_id', auth()->user()->id)->count());
+            Session::put('wishProducts', WishList::where('user_id', auth()->user()->id)->pluck('product_id')->toArray());
+            return [
+                "success" => true,
+                "msg" => "Product added to wishlist"
+            ];
+        }
+    }
 
     /**
      * Logout

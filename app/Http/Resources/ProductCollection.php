@@ -13,16 +13,17 @@ class ProductCollection extends ResourceCollection
     {
         //50-10*100/50
         return [
-            'data' => $this->collection->map(function($data) {
+            'data' => $this->collection->map(function ($data) {
                 return [
-                    'id'=>$data->id,
+                    'id' => $data->id,
                     'name' => $data->name,
-                    'image' => URL::to('/images/product/'.$data->image), 
-                    'price'=>Product::currencyPrice($data->price),
-                    'old_price'=>"৳".$data->actualPrice(),
-                    'slug'=>route('product.show',$data->slug),
-                    'stock'=>$data->inStock(),
-                    "discount_percent"=>$data->price!=$data->actualPrice()?round((($data->actualPrice()-$data->price)*100)/$data->actualPrice()):0
+                    'image' => URL::to('/images/product/' . $data->image),
+                    'price' => Product::currencyPrice($data->price),
+                    'old_price' => "৳" . $data->actualPrice(),
+                    'slug' => route('product.show', $data->slug),
+                    'stock' => $data->inStock(),
+                    "cashback" => $data->cashback ? $data->cashback : 0,
+                    "discount_percent" => $data->price != $data->actualPrice() ? round((($data->actualPrice() - $data->price) * 100) / $data->actualPrice()) : 0
                 ];
             })
         ];

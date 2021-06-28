@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ShopCollection;
+use App\Http\Resources\VendorCollection;
 use App\Model\Category;
 use App\Model\Product;
 use App\Model\Shop;
@@ -19,6 +20,10 @@ class ShopController extends Controller
     public function index()
     {
         return new ShopCollection(Shop::where('is_active', 1)->limit(6)->get());
+    }
+    public function vendorList()
+    {
+        return new VendorCollection(Vendor::orderBy('id', 'desc')->paginate(10));
     }
     public function product(Shop $shop)
     {
@@ -68,6 +73,36 @@ class ShopController extends Controller
         } else {
             $products = Product::where('shop_id', 1)->orderBy('id', 'desc')->paginate(10);
         }
+        return new ProductCollection($products);
+    }
+
+    public function merchant(User $user)
+    {
+        $name = "";
+        $image = "";
+        $phone = "";
+        $address = "";
+
+        $vendor = Vendor::where('user_id', $user->id)->first();
+        $name = $vendor->store_name;
+        $phone = $vendor->phone;
+        $address = $vendor->address;
+        $image = URL::to('images/user/' . User::find($user->id)->avatar);
+
+        return [
+            "data" => [
+                "name" => $name,
+                "image" => $image,
+                "phone" => $phone,
+                "address" => $address
+            ]
+        ];
+    }
+    public function merchantProduct(User $user)
+    {
+
+
+        $products = Product::where('user_id', $user->id)->orderBy('id', 'desc')->paginate(10);
         return new ProductCollection($products);
     }
 }

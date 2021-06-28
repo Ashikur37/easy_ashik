@@ -16,19 +16,22 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id"=>$this->id,
-            "name"=>$this->name,
-            "rating"=>$this->rating,
-            "image"=>$this->image,
-            'price'=>Product::currencyPrice($this->price),
-            'old_price'=>$this->actualPrice(),
-            "images"=>$this->images,
-            "details"=>$this->details?$this->details:"",
-            "colors"=>$this->colors,
-            "sizes"=>$this->sizes,
-            "options"=>$this->options,
+            "id" => $this->id,
+            "name" => $this->name,
+            "rating" => $this->rating,
+            "image" => $this->image,
+            'price' => Product::currencyPrice($this->price),
+            'old_price' => $this->actualPrice(),
+            "images" => $this->images,
+            "details" => $this->details ? $this->details : "",
+            "colors" => $this->colors,
+            "sizes" => $this->sizes,
+            "options" => $this->options,
+            "inside_charge" => $this->inside_charge,
+            "outside_charge" => $this->outside_charge,
+            "cashback" => $this->cashback ? $this->cashback : 0
 
-            
+
         ];
     }
 }

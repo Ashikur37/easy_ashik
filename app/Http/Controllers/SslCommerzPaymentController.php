@@ -6,9 +6,12 @@ use DB;
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
 use App\Model\Order;
+use App\Model\PartialPayment;
 use App\Model\Transaction;
 use App\Services\AffiliateService;
+use App\User;
 use Illuminate\Support\Facades\Session;
+
 class SslCommerzPaymentController extends Controller
 {
 
@@ -88,7 +91,6 @@ class SslCommerzPaymentController extends Controller
             print_r($payment_options);
             $payment_options = array();
         }
-
     }
 
     public function payViaAjax(Request $request)
@@ -150,7 +152,7 @@ class SslCommerzPaymentController extends Controller
         //         'transaction_id' => $post_data['tran_id'],
         //         'currency' => $post_data['currency']
         //     ]);
-        
+
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
         $payment_options = $sslc->makePayment($post_data, 'checkout', 'json');
@@ -159,7 +161,6 @@ class SslCommerzPaymentController extends Controller
             print_r($payment_options);
             $payment_options = array();
         }
-
     }
 
     public function success(Request $request)
@@ -172,26 +173,67 @@ class SslCommerzPaymentController extends Controller
         $sslc = new SslCommerzNotification();
 
         #Check order status in order tabel against the transaction id or order id.
-        $order =Order::where('transaction_id',$tran_id)->first();
+        $order = Order::where('transaction_id', $tran_id)->first();
+        if ($order) {
             $order->update([
-                "payment_status"=>1
+                "payment_status" => 1
             ]);
-            $affiliateService=new AffiliateService();
+            $affiliateService = new AffiliateService();
             $affiliateService->payToAffiliator($order->id);
             Transaction::create([
-                "order_id"=>$order->id,
-                "payment_method"=>"Razorpay",
-                "transaction_id"=>$request->bank_tran_id
+                "order_id" => $order->id,
+                "payment_method" => "Razorpay",
+                "transaction_id" => $request->bank_tran_id
             ]);
             $order->tracks()->create([
-                "title"=>"Payment Complete",
-                "details"=>"Order payment completed via Razorpay ",
+                "title" => "Payment Complete",
+                "details" => "Order payment completed via Razorpay ",
             ]);
             Session::put('order_id', $order->id);
             return redirect()->route('order.success');
+        } else {
+            $payment = PartialPayment::where('trans_id', $tran_id)->first();
+            if ($payment) {
+                $order = Order::find($payment->order_id);
+                $order->paid_amount = $order->paid_amount + $payment->amount;
+                $order->save();
+                if ($order->paid_amount >= $order->total) {
+                    $user = User::find($order->customer_id);
 
-
-
+                    $user->easy_balance = $user->easy_balance + $order->cashback;
+                    $user->save();
+                    if ($order->cashback > 0) {
+                        $order->tracks()->create([
+                            "title" => "Cashback",
+                            "details" => "BDT " . $order->cashback . " added to easy balance.",
+                        ]);
+                    }
+                    $order->update([
+                        "payment_status" => 1,
+                        "status" => 2
+                    ]);
+                }
+                $order->tracks()->create([
+                    "title" => "Payment",
+                    "details" => "BDT " . $payment->amount . " paid successfully",
+                ]);
+                $payment->update([
+                    "status" => 1
+                ]);
+            } else {
+                $order = Order::where('delivery_trx_id', $tran_id)->first();
+                if ($order) {
+                    $order->update([
+                        "shipping_paid" => 1,
+                        "status" => 1,
+                    ]);
+                    $order->tracks()->create([
+                        "title" => "Payment Success",
+                        "details" => "BDT " . $order->shipping_cost . " paid for shipping charge",
+                    ]);
+                }
+            }
+        }
     }
 
     public function fail(Request $request)
@@ -212,29 +254,26 @@ class SslCommerzPaymentController extends Controller
         } else {
             echo "Transaction is Invalid";
         }
-
     }
 
     public function cancel(Request $request)
     {
-        $tran_id = $request->input('tran_id');
+        // $tran_id = $request->input('tran_id');
 
-        $order_detials = DB::table('orders')
-            ->where('transaction_id', $tran_id)
-            ->select('transaction_id', 'status', 'currency', 'amount')->first();
+        // $order_detials = DB::table('orders')
+        //     ->where('transaction_id', $tran_id)
+        //     ->select('transaction_id', 'status', 'currency', 'amount')->first();
 
-        if ($order_detials->status == 'Pending') {
-            $update_product = DB::table('orders')
-                ->where('transaction_id', $tran_id)
-                ->update(['status' => 'Canceled']);
-            echo "Transaction is Cancel";
-        } else if ($order_detials->status == 'Processing' || $order_detials->status == 'Complete') {
-            echo "Transaction is already Successful";
-        } else {
-            echo "Transaction is Invalid";
-        }
-
-
+        // if ($order_detials->status == 'Pending') {
+        //     $update_product = DB::table('orders')
+        //         ->where('transaction_id', $tran_id)
+        //         ->update(['status' => 'Canceled']);
+        //     echo "Transaction is Cancel";
+        // } else if ($order_detials->status == 'Processing' || $order_detials->status == 'Complete') {
+        //     echo "Transaction is already Successful";
+        // } else {
+        //     echo "Transaction is Invalid";
+        // }
     }
 
     public function ipn(Request $request)
@@ -275,7 +314,6 @@ class SslCommerzPaymentController extends Controller
 
                     echo "validation Fail";
                 }
-
             } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
 
                 #That means Order status already updated. No need to udate database.
@@ -290,5 +328,4 @@ class SslCommerzPaymentController extends Controller
             echo "Invalid Data";
         }
     }
-
 }

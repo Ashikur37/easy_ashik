@@ -30,6 +30,7 @@ use Str;
 use App\Services\LanguageService;
 use Request;
 use Validator;
+
 class ProductController extends Controller
 {
     /**
@@ -41,8 +42,8 @@ class ProductController extends Controller
     {
         $route = "product";
         $user = auth()->user();
-       if (request()->ajax()) {
-                return Datatables::of(Product::latest()->get())
+        if (request()->ajax()) {
+            return Datatables::of(Product::latest()->get())
                 ->editColumn('image', function ($row) {
                     return "<img class='data-table-img' src='" . asset('images/product/' . $row->image) . "'>";
                 })
@@ -66,20 +67,20 @@ class ProductController extends Controller
                 ->addColumn('created', function ($row) {
                     return $row->created_at->diffForHumans();
                 })
-                ->editColumn('qty',function($row){
-                    if($row->qty<0){
+                ->editColumn('qty', function ($row) {
+                    if ($row->qty < 0) {
                         return "";
                     }
                     return $row->qty;
                 })
                 ->editColumn('selling_price', function ($row) {
                     $curr = Session::get('currency');
-                    $oldPrice=$row->selling_price;
-                    $oldHtml="";
-                    if($row->price !=($oldPrice*$curr->rate)){
-                        $oldHtml="<span class='old-price'>".$curr->sign .$oldPrice*$curr->rate."</span>"; 
+                    $oldPrice = $row->selling_price;
+                    $oldHtml = "";
+                    if ($row->price != ($oldPrice * $curr->rate)) {
+                        $oldHtml = "<span class='old-price'>" . $curr->sign . $oldPrice * $curr->rate . "</span>";
                     }
-                    return $curr->sign . $row->price.$oldHtml; 
+                    return $curr->sign . $row->price . $oldHtml;
                 })
                 ->addColumn('action', function ($row) use ($route, $user) {
                     $btn = '';
@@ -94,9 +95,9 @@ class ProductController extends Controller
                                 </span>';
                     }
                     return $btn;
-                })->rawColumns(['action', 'index', 'status', 'image','selling_price'])
+                })->rawColumns(['action', 'index', 'status', 'image', 'selling_price'])
                 ->make(true);
-       }
+        }
 
         return view('admin.product.index');
     }
@@ -115,8 +116,8 @@ class ProductController extends Controller
         $attributeSets = AttributeSet::orderBy('name')->with('attributes')->get();
         $colors = Color::orderBy('name')->get();
         $sizes = Size::orderBy('name')->get();
-        $shops=Shop::all();
-        return view('admin.product.create', compact('colors', 'sizes', 'brands','shops', 'badges', 'categories', 'tags', 'attributeSets'));
+        $shops = Shop::all();
+        return view('admin.product.create', compact('colors', 'sizes', 'brands', 'shops', 'badges', 'categories', 'tags', 'attributeSets'));
     }
 
     /**
@@ -135,7 +136,7 @@ class ProductController extends Controller
         if ($prod) {
             $slug = $slug . rand(10, 100);
         }
-        
+
         $product = Product::create([
             'name' => $request->name,
             'brand_id' => $request->brand_id,
@@ -164,10 +165,12 @@ class ProductController extends Controller
             "is_top" => $request->top ? 1 : 0,
             "is_trending" => $request->trending ? 1 : 0,
             "is_hot" => $request->hot ? 1 : 0,
-            "best_deal" => $request->best_deal ? 1 : 0, 
-            "shop_id"=>$request->shop_id
+            "best_deal" => $request->best_deal ? 1 : 0,
+            "shop_id" => $request->shop_id,
+            "inside_charge" => $request->inside_charge,
+            "outside_charge" => $request->outside_charge
         ]);
-       
+
         if ($request["option"]) {
             for ($i = 0; $i < count($request["option"]); $i++) {
                 if (isset($request["option"][$i]["name"])) {
@@ -221,7 +224,7 @@ class ProductController extends Controller
                 if ($request->color[$i]) {
                     $product->colors()->create([
                         "color_id" => $request->color[$i],
-                        "price" => $request->color_price[$i]?$request->color_price[$i]:0
+                        "price" => $request->color_price[$i] ? $request->color_price[$i] : 0
                     ]);
                 }
             }
@@ -231,7 +234,7 @@ class ProductController extends Controller
                 if ($request->size[$i]) {
                     $product->sizes()->create([
                         "size_id" => $request->size[$i],
-                        "price" => $request->size_price[$i]?$request->size_price[$i]:0
+                        "price" => $request->size_price[$i] ? $request->size_price[$i] : 0
                     ]);
                 }
             }
@@ -275,8 +278,8 @@ class ProductController extends Controller
         $attributeSets = AttributeSet::orderBy('name')->with('attributes')->get();
         $colors = Color::orderBy('name')->get();
         $sizes = Size::orderBy('name')->get();
-        $shops=Shop::all();
-        return view('admin.product.edit', compact('productTags','shops', 'productBadges', 'colors', 'sizes', 'brands', 'badges', 'categories', 'tags', 'attributeSets', 'product'));
+        $shops = Shop::all();
+        return view('admin.product.edit', compact('productTags', 'shops', 'productBadges', 'colors', 'sizes', 'brands', 'badges', 'categories', 'tags', 'attributeSets', 'product'));
     }
 
     /**
@@ -292,7 +295,7 @@ class ProductController extends Controller
         $slug = $request->slug ? $request->slug : $request->name;
         $slug = Str::slug($slug);
         //checking if slug exist
-        if(Product::whereSlug($slug)->where('id','!=',$product->id)->first()){
+        if (Product::whereSlug($slug)->where('id', '!=', $product->id)->first()) {
             $slug = $slug . rand(10, 100);
         }
         $product->update([
@@ -323,7 +326,10 @@ class ProductController extends Controller
             "is_trending" => $request->trending ? 1 : 0,
             "is_hot" => $request->hot ? 1 : 0,
             "best_deal" => $request->best_deal ? 1 : 0,
-            "shop_id"=>$request->shop_id
+            "shop_id" => $request->shop_id,
+            "inside_charge" => $request->inside_charge,
+            "outside_charge" => $request->outside_charge
+
 
         ]);
         if ($request["option"]) {
@@ -397,7 +403,7 @@ class ProductController extends Controller
                 if ($request->color[$i]) {
                     $product->colors()->create([
                         "color_id" => $request->color[$i],
-                        "price" => $request->color_price[$i]?$request->color_price[$i]:0
+                        "price" => $request->color_price[$i] ? $request->color_price[$i] : 0
                     ]);
                 }
             }
@@ -410,7 +416,7 @@ class ProductController extends Controller
                 if ($request->size[$i]) {
                     $product->sizes()->create([
                         "size_id" => $request->size[$i],
-                        "price" => $request->size_price[$i]?$request->size_price[$i]:0
+                        "price" => $request->size_price[$i] ? $request->size_price[$i] : 0
                     ]);
                 }
             }
@@ -440,10 +446,12 @@ class ProductController extends Controller
         $product->delete();
         return LanguageService::getTranslate("ProductDeletedSuccessfully");
     }
-    public function import(){
+    public function import()
+    {
         return view('admin.product.import');
     }
-    public function importSubmit(Request $request){
+    public function importSubmit(Request $request)
+    {
         $rules = [
             'file'      => 'required|mimes:csv,txt',
         ];
@@ -451,86 +459,82 @@ class ProductController extends Controller
         $validator = Validator::make(request()->all(), $rules);
 
         if ($validator->fails()) {
-            return back()->with('error','Invalid file');
+            return back()->with('error', 'Invalid file');
         }
         $filename = '';
-        if ($file = request()->file('file'))
-        {
-            $filename = time().'-'.$file->getClientOriginalName();
-            $file->move('assets',$filename);
+        if ($file = request()->file('file')) {
+            $filename = time() . '-' . $file->getClientOriginalName();
+            $file->move('assets', $filename);
         }
         $datas = "";
 
-        $file = fopen('assets/'.$filename,"r");
+        $file = fopen('assets/' . $filename, "r");
         $i = 1;
         while (($line = fgetcsv($file)) !== FALSE) {
-            
 
-            if($i!=1){
- $product = Product::create([
-                'name' => $line[0],
-                'slug' => Str::slug($line[0]).rand(10,90),
-                'price' => $line[2],
-                'selling_price' => $line[2],
-                'special_price' => $line[1],
-                'price_type'=>'discount',
-                'sku' => $line[3]?$line[3]:rand(1000,9999),
-                'manage_stock' => 1,
-                'qty' => $line[4],
-                'in_stock' => 1,
-                'viewed' => 0,
-                'is_active' => 1,
-                'details' => $line[5],
-                // 'special_price_type' => $request->special_price_type,
-                'category_id' => Category::whereName($line[6])->first()->id,
-                'sub_category_id' => SubCategory::whereName($line[7])->first()?SubCategory::whereName($line[7])->first()->id:0,
-                'child_category_id' => ChildCategory::whereName($line[8])->first()?ChildCategory::whereName($line[8])->first()->id:0,
 
-                'image' => $line[9],
-                "is_top" =>  0,
-                "is_trending" =>  0,
-                "is_hot" =>  0,
-                "best_deal" =>  0, 
-    
-            ]);
-            $images=explode(",",$line[10]);
-             $colors=explode(",",$line[11]);
-              $sizes=explode(",",$line[12]);
-              foreach($colors as $cname){
-                  
-                  $color=Color::whereName($cname)->first();
-                  if($color){
-                   $product->colors()->create([
-                        "color_id" => $color->id,
-                        "price" => 0
-                    ]);   
-                  }
-                   
-              }
-              foreach($sizes as $sname){
-                  $size=Size::whereName($sname)->first();
-                   if($size){
-                       $product->sizes()->create([
-                        "size_id" => $size->id,
-                        "price" => 0
-                    ]);
-                   }
-              }
-            foreach($images as $image){
-                if($image){
-                    $product->images()->create([
-                    "image" => $image
+            if ($i != 1) {
+                $product = Product::create([
+                    'name' => $line[0],
+                    'slug' => Str::slug($line[0]) . rand(10, 90),
+                    'price' => $line[2],
+                    'selling_price' => $line[2],
+                    'special_price' => $line[1],
+                    'price_type' => 'discount',
+                    'sku' => $line[3] ? $line[3] : rand(1000, 9999),
+                    'manage_stock' => 1,
+                    'qty' => $line[4],
+                    'in_stock' => 1,
+                    'viewed' => 0,
+                    'is_active' => 1,
+                    'details' => $line[5],
+                    // 'special_price_type' => $request->special_price_type,
+                    'category_id' => Category::whereName($line[6])->first()->id,
+                    'sub_category_id' => SubCategory::whereName($line[7])->first() ? SubCategory::whereName($line[7])->first()->id : 0,
+                    'child_category_id' => ChildCategory::whereName($line[8])->first() ? ChildCategory::whereName($line[8])->first()->id : 0,
+
+                    'image' => $line[9],
+                    "is_top" =>  0,
+                    "is_trending" =>  0,
+                    "is_hot" =>  0,
+                    "best_deal" =>  0,
+
                 ]);
+                $images = explode(",", $line[10]);
+                $colors = explode(",", $line[11]);
+                $sizes = explode(",", $line[12]);
+                foreach ($colors as $cname) {
+
+                    $color = Color::whereName($cname)->first();
+                    if ($color) {
+                        $product->colors()->create([
+                            "color_id" => $color->id,
+                            "price" => 0
+                        ]);
+                    }
+                }
+                foreach ($sizes as $sname) {
+                    $size = Size::whereName($sname)->first();
+                    if ($size) {
+                        $product->sizes()->create([
+                            "size_id" => $size->id,
+                            "price" => 0
+                        ]);
+                    }
+                }
+                foreach ($images as $image) {
+                    if ($image) {
+                        $product->images()->create([
+                            "image" => $image
+                        ]);
+                    }
                 }
             }
-            }
-            
-            $i++; 
-           
 
+            $i++;
         }
         fclose($file);
-        return redirect('/admin/product')->with('success','Product imported successfully');
+        return redirect('/admin/product')->with('success', 'Product imported successfully');
     }
 
     public function multiDelete($ids)

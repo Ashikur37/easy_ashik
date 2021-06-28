@@ -184,7 +184,18 @@
                                 <label for="checkBestDeal">{{$lng->BestDeal}}
                                 </label>
                             </div>
-                        </div>                     
+                        </div> 
+                        <div class="form-group mt-3">
+                            <label>Inside Dhaka charge</label>
+                                <input name="inside_charge" type="number" class="form-control" value="{{$product->inside_charge}}">
+                              
+                            </div>
+                            <div class="form-group mt-3">
+                                <label>Outside Dhaka charge</label>
+                                    <input name="outside_charge" type="number" class="form-control" value="{{$product->outside_charge}}">
+                                  
+                                </div>
+                        </div>                   
                     </div>
                 </div>
             </div>
