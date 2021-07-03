@@ -16,6 +16,7 @@ use App\Model\UserOtp;
 use App\Http\Resources\ProductCollection;
 use App\Model\Product;
 use App\Model\WishList;
+use App\Services\MailService;
 
 class UserController extends Controller
 {
@@ -88,24 +89,9 @@ class UserController extends Controller
             'otp' => $otp
         ]);
         $text = "Your otp is " . $otp;
-
-        // $smsresult = file_get_contents("http://66.45.237.70/api.php?username=01531173930&password=5X6HC8M3&number=$request->email&message=$text");
-
-        $url = "http://66.45.237.70/api.php";
         $number = $request->mobile;
-        // $text="Hello Bangladesh";
-        $data = array(
-            'username' => "01531173930",
-            'password' => "5X6HC8M3",
-            'number' => "$number",
-            'message' => "$text"
-        );
 
-        $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $smsresult = curl_exec($ch);
+        $data =  MailService::singleSms($number, $text, uniqid());
         $response = [
             'success' => true,
             'message' => "OTP Sent successfully",
@@ -179,6 +165,20 @@ class UserController extends Controller
             "success" => true,
             "address" => $address,
 
+        ];
+    }
+    public function uploadImage(Request $request)
+    {
+        $realImage = base64_decode($request->image);
+        $imageName = rand(1, 99) . time() . '.png';
+        auth()->user()->update([
+            "provider" => "Easy",
+            "avatar" => $imageName
+        ]);
+        file_put_contents(public_path() . "/images/user/" . $imageName, $realImage);
+        return [
+            "success" => true,
+            "msg" => "Profile image updated successfully"
         ];
     }
     public function updateBasic(Request $request)

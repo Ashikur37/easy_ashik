@@ -2,12 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Model\Product;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Utility\CategoryUtility;
 use Illuminate\Support\Facades\URL;
 
-class ShopCollection extends ResourceCollection
+class OfferCollection extends ResourceCollection
 {
     public function toArray($request)
     {
@@ -15,11 +13,9 @@ class ShopCollection extends ResourceCollection
             'data' => $this->collection->map(function ($data) {
                 return [
                     'id' => $data->id,
-                    'name' => $data->name,
-                    'image' => URL::to('/images/shop/' . $data->image),
-                    'phone' => $data->phone,
-                    'location' => $data->location,
-                    'is_merchant' => false,
+                    'name' => $data->title,
+                    'image' => URL::to('/images/flash-sale/' . $data->image),
+                    
                 ];
             })
         ];

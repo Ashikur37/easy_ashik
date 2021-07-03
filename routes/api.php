@@ -28,6 +28,8 @@ Route::apiResource('shops', 'Api\ShopController')->only('index');
 Route::get('shop/{shop}/products', 'Api\ShopController@product')->name('shop_products');
 Route::get('store/{product}/products', 'Api\ShopController@storeProduct');
 Route::get('merchant/{user}/products', 'Api\ShopController@merchantProduct');
+Route::get('stores/{store}/products', 'Api\ShopController@storeProducts');
+
 Route::get('store/{product}', 'Api\ShopController@store');
 Route::get('merchant/{user}', 'Api\ShopController@merchant');
 Route::get('vendors', 'Api\ShopController@vendorList');
@@ -39,6 +41,14 @@ Route::get('products/search/{key}', 'Api\ProductController@search')->name('searc
 Route::get('top-products', 'Api\ProductController@topProducts')->name('top_product');
 
 Route::apiResource('slides', 'Api\SliderController')->only('index');
+Route::apiResource('offers', 'Api\OfferController')->only('index');
+Route::get('offer/{flashSale}/products', 'Api\OfferController@product')->name('offer_products');
+Route::get('offer/{flashSale}/shops', 'Api\OfferController@shops')->name('offer_shops');
+
+Route::get('offer/{flashSale}/brands', 'Api\OfferController@brands')->name('offer_brands');
+Route::get('brand/{brand}/products', 'Api\BrandController@product');
+
+
 
 //login routes
 
@@ -55,6 +65,7 @@ Route::get('order/{order}/pay-delivery', 'Api\OrderController@deliveryPayment');
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('checkout', 'Api\CheckoutController');
     Route::post('create-address', 'Api\UserController@createAddress');
+    Route::post('upload-image', 'Api\UserController@uploadImage');
     Route::post('change-password', 'Api\UserController@changePassword');
 
     Route::post('update-basic', 'Api\UserController@updateBasic');

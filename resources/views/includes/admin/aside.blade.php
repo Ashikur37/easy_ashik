@@ -129,7 +129,7 @@
         @can('flash-sale.index')
         <li class="nav-item">
             <a class="nav-link" href="{{route('flash-sale.index')}}"><i
-                    class="ri-flashlight-line"></i>{{$lng->FlashSale}}</a>
+                    class="ri-flashlight-line"></i>Offer</a>
         </li>
         @endcan
         @can('campaign.index')

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Cache;
 use Illuminate\Support\Facades\Schema;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -52,9 +53,9 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {  
+    {
         Schema::defaultStringLength(191);
-       
+
         $flashSaleProducts = [];
         if (!Cache::has('flashSaleProducts')) {
             $flashSale = FlashSale::where('is_active', 1)->where('end', '>', today())->with(['products', 'flashProducts'])->orderBy('id', 'desc')->first();
@@ -69,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
             Session::put('currency', $curr);
         }
         view()->share('setting', Setting::first());
-      
+
         view()->share('showPages', Page::whereActive(1)->get(['name', 'slug']));
         view()->share('currencies', Currency::orderBy('is_default', 'desc')->get());
         view()->share('topProducts', Product::orderBy('viewed', 'desc')->limit(5)->get());
@@ -81,23 +82,22 @@ class AppServiceProvider extends ServiceProvider
         }])->take(10)->get());
         view()->share('langs', Language::whereIsActive(1)->get());
         view()->composer('*', function ($settings) {
-              
+
             $wishCount = 0;
             $wishProducts = [];
             if (auth()->check()) {
                 if (!Session::has('wishCount')) {
-                    Session::put('wishCount',WishList::where('user_id', auth()->user()->id)->count());
-                    Session::put('wishProducts',WishList::where('user_id', auth()->user()->id)->pluck('product_id')->toArray());
-
+                    Session::put('wishCount', WishList::where('user_id', auth()->user()->id)->count());
+                    Session::put('wishProducts', WishList::where('user_id', auth()->user()->id)->pluck('product_id')->toArray());
                 }
                 $wishCount = Session::get('wishCount');
-                $wishProducts =Session::get('wishProducts');
+                $wishProducts = Session::get('wishProducts');
             }
-            $settings->with('wishCount',$wishCount);
-            $settings->with('wishProducts',$wishProducts);
+            $settings->with('wishCount', $wishCount);
+            $settings->with('wishProducts', $wishProducts);
         });
         view()->composer('*', function ($settings) {
-       
+
             if (!Session::has('currency')) {
                 $curr = Currency::where('is_default', '=', 1)->first();
                 Session::put('currency', $curr);
@@ -106,13 +106,12 @@ class AppServiceProvider extends ServiceProvider
             if (!Cache::has('paymentSetting')) {
                 Cache::put('paymentSetting', PaymentSetting::first());
             }
-            
+
             if (Session::has('language')) {
                 $data = Session::get('language');
-                if(file_exists(public_path() . '/assets/lang/' . $data->file)){
+                if (file_exists(public_path() . '/assets/lang/' . $data->file)) {
                     $data_results = file_get_contents(public_path() . '/assets/lang/' . $data->file);
-                }
-                else{
+                } else {
                     $data = DB::table('languages')->where('is_default', '=', 1)->first();
                     Session::put('language', $data);
                     $data_results = file_get_contents(public_path() . '/assets/lang/' . $data->file);

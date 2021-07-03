@@ -3,32 +3,54 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BrandCollection;
 use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\OfferCollection;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ShopCollection;
 use App\Http\Resources\VendorCollection;
+use App\Model\Brand;
 use App\Model\Category;
+use App\Model\FlashSale;
 use App\Model\Product;
 use App\Model\Shop;
 use App\Model\Vendor;
 use App\User;
 use URL;
 
-class ShopController extends Controller
+class OfferController extends Controller
 {
 
     public function index()
     {
-        return new ShopCollection(Shop::where('is_active', 1)->limit(6)->get());
+        return new OfferCollection(FlashSale::where('is_active', 1)->limit(6)->get());
     }
     public function vendorList()
     {
         return new VendorCollection(Vendor::orderBy('id', 'desc')->paginate(10));
     }
-    public function product(Shop $shop)
+    public function shops(FlashSale $flashSale)
+    {
+        $userIds =  $flashSale->flashProducts->pluck('user_id')->unique()->toArray();
+        $shopIds =  $flashSale->flashProducts->pluck('shop_id')->unique()->toArray();
+        $vendors = new VendorCollection(Vendor::whereIn('user_id', $userIds)->get());
+        $shops = new ShopCollection(Shop::whereIn('id', $shopIds)->get());
+        return [
+            "shops" => $shops,
+            "vendors" => $vendors
+        ];
+    }
+    public function brands(FlashSale $flashSale)
+    {
+        $brands = Brand::whereIn('id', $flashSale->flashProducts->pluck('brand_id')->unique()->toArray())->get();
+        return new BrandCollection($brands);
+    }
+
+    public function product(FlashSale $flashSale)
     {
 
-        return new ProductCollection(Product::where('shop_id', $shop->id)->orderBy('id', 'desc')->paginate(10));
+
+        return new ProductCollection($flashSale->flashProducts);
     }
     public function store(Product $product)
     {
@@ -73,15 +95,6 @@ class ShopController extends Controller
         } else {
             $products = Product::where('shop_id', 1)->orderBy('id', 'desc')->paginate(10);
         }
-        return new ProductCollection($products);
-    }
-
-    public function storeProducts($id)
-    {
-
-
-        $products = Product::where('shop_id', $id)->orderBy('id', 'desc')->paginate(10);
-
         return new ProductCollection($products);
     }
 

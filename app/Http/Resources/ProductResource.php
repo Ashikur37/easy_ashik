@@ -29,8 +29,7 @@ class ProductResource extends JsonResource
             "options" => $this->options,
             "inside_charge" => $this->inside_charge,
             "outside_charge" => $this->outside_charge,
-            "cashback" => $this->cashback ? $this->cashback : 0
-
+            "cashback" => $this->cashback ? $this->cashback : 0, 'stock' => $this->inStock(),
 
         ];
     }

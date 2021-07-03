@@ -22,7 +22,7 @@
                             </label>
                         </div>
                         <div class="flex-item">
-                            <label class="mt-2">{{ $lng->FlashSale}} </label>
+                            <label class="mt-2">Offer </label>
                             <label class="ts-swich-label">
                                 <input {{ $setting->is_flash_deal ? 'checked' : '' }} type="checkbox"
                                     class="switch ts-swich-input" name="is_flash_deal">

@@ -17,6 +17,7 @@ class VendorCollection extends ResourceCollection
                     'id' => $data->user->id,
                     'name' => $data->store_name,
                     'image' => URL::to('/images/user/' . $data->user->avatar),
+                    "is_merchant" => true,
                 ];
             })
         ];

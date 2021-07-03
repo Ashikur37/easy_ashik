@@ -11,6 +11,7 @@ use App\Services\Datatable;
 use App\Services\LanguageService;
 use Illuminate\Support\Facades\URL;
 use Cache;
+
 class FlashSaleController extends Controller
 {
     /**
@@ -20,53 +21,52 @@ class FlashSaleController extends Controller
      */
     public function index()
     {
-        $route="flash-sale";
-        $user=auth()->user();
+        $route = "flash-sale";
+        $user = auth()->user();
         if (request()->ajax()) {
-            $table=new Datatable('FlashSale','flash-sale');
-            return $table->get()  ->addColumn('index', function($row){
+            $table = new Datatable('FlashSale', 'flash-sale');
+            return $table->get()->addColumn('index', function ($row) {
                 return '<div class="icheck-primary d-inline">
-                <input data-id="'.$row->id.'" class="check-element check-id"  type="checkbox" id="checkboxPrimary'.$row->id.'" >
-                <label for="checkboxPrimary'.$row->id.'">
+                <input data-id="' . $row->id . '" class="check-element check-id"  type="checkbox" id="checkboxPrimary' . $row->id . '" >
+                <label for="checkboxPrimary' . $row->id . '">
                 </label>
               </div>';
-
             })
-            ->editColumn('image',function($row){
-                return "<img class='data-table-img' src='".asset('images/flash-sale/'.$row->image)."'>";
-            })
-            ->addColumn('status',function($row){
-                $checked="";
-                if($row->is_active==1){
-                    $checked="checked";
-                }
-                return '<label class="ts-swich-label d-inline">
-                <input data-href="'.URL::to('admin/flash-sale/status/'.$row->id).'"  type="checkbox"'.$checked.' class="switch-status switch ts-swich-input" name="status" id="" value="1">
+                ->editColumn('image', function ($row) {
+                    return "<img class='data-table-img' src='" . asset('images/flash-sale/' . $row->image) . "'>";
+                })
+                ->addColumn('status', function ($row) {
+                    $checked = "";
+                    if ($row->is_active == 1) {
+                        $checked = "checked";
+                    }
+                    return '<label class="ts-swich-label d-inline">
+                <input data-href="' . URL::to('admin/flash-sale/status/' . $row->id) . '"  type="checkbox"' . $checked . ' class="switch-status switch ts-swich-input" name="status" id="" value="1">
                 <span class="ts-swich-body"></span>
               </label>';
-            })
-            ->addColumn('created',function($row){
-                return $row->created_at->diffForHumans();
-            })
-            ->addColumn('action', function($row) use($user,$route){
-                $btn='';
-                if($user->can($route.'.edit')){
-                    $btn.='<span class="ts-action-btn mr-2">
-                    <a href="'.route($route.".edit",$row->id).'"><i class="ri-pencil-line"></i></a>
+                })
+                ->addColumn('created', function ($row) {
+                    return $row->created_at->diffForHumans();
+                })
+                ->addColumn('action', function ($row) use ($user, $route) {
+                    $btn = '';
+                    if ($user->can($route . '.edit')) {
+                        $btn .= '<span class="ts-action-btn mr-2">
+                    <a href="' . route($route . ".edit", $row->id) . '"><i class="ri-pencil-line"></i></a>
                 </span> ';
-                }
-                
-            if($user->can($route.'.destroy')){
-                $btn.='<span class="ts-action-btn">
-                <a class="delete-button" href="#" data-href="'.route($route.".destroy",$row->id).'"><i class="ri-delete-bin-line"></i></a>
-            </span>';    
-            }
+                    }
+
+                    if ($user->can($route . '.destroy')) {
+                        $btn .= '<span class="ts-action-btn">
+                <a class="delete-button" href="#" data-href="' . route($route . ".destroy", $row->id) . '"><i class="ri-delete-bin-line"></i></a>
+            </span>';
+                    }
                     return $btn;
-            })->rawColumns(['action','index','image','status'])
-            ->make(true);
-      }
-      
-        return view('admin.flash-sale.index'); 
+                })->rawColumns(['action', 'index', 'image', 'status'])
+                ->make(true);
+        }
+
+        return view('admin.flash-sale.index');
     }
 
     /**
@@ -76,8 +76,8 @@ class FlashSaleController extends Controller
      */
     public function create()
     {
-        $products=Product::orderBy('name')->get();
-        return view('admin.flash-sale.create',compact('products')); 
+        $products = Product::orderBy('name')->get();
+        return view('admin.flash-sale.create', compact('products'));
     }
 
     /**
@@ -88,24 +88,26 @@ class FlashSaleController extends Controller
      */
     public function store(FlashSaleRequest $request)
     {
-        $flashSale=FlashSale::create([
-            "title"=>$request->title,
-            "is_active"=>1,
-            "image"=>$request->image,
-            "end"=>$request->end,
+        $flashSale = FlashSale::create([
+            "title" => $request->title,
+            "is_active" => 1,
+            "image" => $request->image,
+            "end" => $request->end,
 
         ]);
-        for($i=0;$i<count($request->product);$i++)
-        {
-            if($request->price[$i]){
+        for ($i = 0; $i < count($request->product); $i++) {
+            if ($request->price[$i]) {
+                $product = Product::find($request->product[$i]);
+                $product->update([
+                    "special_price" => $request->price[$i],
+                    "special_price_end" => $request->end
+                ]);
                 $flashSale->products()->create([
-                    "product_id"=>$request->product[$i],
-                    "price"=>$request->price[$i],
-                    "qty"=>$request->qty[$i],
+                    "product_id" => $request->product[$i],
+                    "price" => $request->price[$i],
+                    "qty" => $request->qty[$i],
                 ]);
             }
-           
-            
         }
         $flashSale = FlashSale::where('is_active', 1)->where('end', '>', today())->with(['products', 'flashProducts'])->orderBy('id', 'desc')->first();
         if ($flashSale) {
@@ -113,7 +115,7 @@ class FlashSaleController extends Controller
         }
         Cache::put('flashSale', $flashSale, now()->addMinutes(10));
         Cache::put('flashSaleProducts', $flashSaleProducts, now()->addMinutes(10));
-        return redirect()->route('flash-sale.index')->with('success',LanguageService::getTranslate('FlashSaleCreatedSuccessfully'));
+        return redirect()->route('flash-sale.index')->with('success', LanguageService::getTranslate('FlashSaleCreatedSuccessfully'));
     }
 
 
@@ -125,8 +127,8 @@ class FlashSaleController extends Controller
      */
     public function edit(FlashSale $flashSale)
     {
-        $products=Product::orderBy('name')->get();
-        return view('admin.flash-sale.edit',compact('flashSale','products')); 
+        $products = Product::orderBy('name')->get();
+        return view('admin.flash-sale.edit', compact('flashSale', 'products'));
     }
 
     /**
@@ -138,25 +140,29 @@ class FlashSaleController extends Controller
      */
     public function update(FlashSaleRequest $request, FlashSale $flashSale)
     {
-     $flashSale->update([
-        "title"=>$request->title,
-        "is_active"=>1,
-        "image"=>$request->image,
-        "end"=>$request->end,
+        $flashSale->update([
+            "title" => $request->title,
+            "is_active" => 1,
+            "image" => $request->image,
+            "end" => $request->end,
 
-    ]);
-    foreach ($flashSale->products as $product) {
-        $product->delete();
-    }
-    for($i=0;$i<count($request->product);$i++)
-        {
-            if($request->price[$i]){
-            $flashSale->products()->create([
-                "product_id"=>$request->product[$i],
-                "price"=>$request->price[$i],
-                "qty"=>$request->qty[$i],
-            ]);
-            } 
+        ]);
+        foreach ($flashSale->products as $product) {
+            $product->delete();
+        }
+        for ($i = 0; $i < count($request->product); $i++) {
+            if ($request->price[$i]) {
+                $product = Product::find($request->product[$i]);
+                $product->update([
+                    "special_price" => $request->price[$i],
+                    "special_price_end" => $request->end
+                ]);
+                $flashSale->products()->create([
+                    "product_id" => $request->product[$i],
+                    "price" => $request->price[$i],
+                    "qty" => $request->qty[$i],
+                ]);
+            }
         }
         $flashSale = FlashSale::where('is_active', 1)->where('end', '>', today())->with(['products', 'flashProducts'])->orderBy('id', 'desc')->first();
         if ($flashSale) {
@@ -164,7 +170,7 @@ class FlashSaleController extends Controller
         }
         Cache::put('flashSale', $flashSale, now()->addMinutes(10));
         Cache::put('flashSaleProducts', $flashSaleProducts, now()->addMinutes(10));
-    return redirect()->route('flash-sale.index')->with('success',LanguageService::getTranslate('FlashSaleUpdatedSuccessfully'));   
+        return redirect()->route('flash-sale.index')->with('success', LanguageService::getTranslate('FlashSaleUpdatedSuccessfully'));
     }
 
     /**
@@ -184,10 +190,10 @@ class FlashSaleController extends Controller
         Cache::put('flashSaleProducts', $flashSaleProducts, now()->addMinutes(10));
         return LanguageService::getTranslate("FlashSaleDeletedSuccessfully");
     }
-    public function multiDelete( $ids)
+    public function multiDelete($ids)
     {
-        foreach(json_decode($ids) as $id){
-            $flashSale=FlashSale::find($id);
+        foreach (json_decode($ids) as $id) {
+            $flashSale = FlashSale::find($id);
             $flashSale->delete();
         }
         $flashSale = FlashSale::where('is_active', 1)->where('end', '>', today())->with(['products', 'flashProducts'])->orderBy('id', 'desc')->first();
@@ -198,12 +204,13 @@ class FlashSaleController extends Controller
         Cache::put('flashSaleProducts', $flashSaleProducts, now()->addMinutes(10));
         return LanguageService::getTranslate("FlashSaleDeletedSuccessfully");
     }
-    public function updateStatus(FlashSale $flashSale,$status){
-        if($status==1){
-            FlashSale::where('is_active',1)->update(['is_active' => 0]);
+    public function updateStatus(FlashSale $flashSale, $status)
+    {
+        if ($status == 1) {
+            // FlashSale::where('is_active', 1)->update(['is_active' => 0]);
         }
         $flashSale->update([
-            "is_active"=>$status
+            "is_active" => $status
         ]);
         $flashSale = FlashSale::where('is_active', 1)->where('end', '>', today())->with(['products', 'flashProducts'])->orderBy('id', 'desc')->first();
         if ($flashSale) {
@@ -213,12 +220,13 @@ class FlashSaleController extends Controller
         Cache::put('flashSaleProducts', $flashSaleProducts, now()->addMinutes(10));
         return LanguageService::getTranslate("FlashSaleUpdatedSuccessfully");
     }
-    
-    public function multiStatus($status,$ids){
-        foreach(json_decode($ids) as $id){
-            $flashSale=FlashSale::find($id);
+
+    public function multiStatus($status, $ids)
+    {
+        foreach (json_decode($ids) as $id) {
+            $flashSale = FlashSale::find($id);
             $flashSale->update([
-                "is_active"=>$status
+                "is_active" => $status
             ]);
         }
         $flashSale = FlashSale::where('is_active', 1)->where('end', '>', today())->with(['products', 'flashProducts'])->orderBy('id', 'desc')->first();
@@ -229,8 +237,9 @@ class FlashSaleController extends Controller
         Cache::put('flashSaleProducts', $flashSaleProducts, now()->addMinutes(10));
         return LanguageService::getTranslate("FlashSaleUpdatedSuccessfully");
     }
-    public function removeFlashProduct($id){
-        $flashProduct=FlashSaleProduct::find($id);
+    public function removeFlashProduct($id)
+    {
+        $flashProduct = FlashSaleProduct::find($id);
         $flashProduct->delete();
         $flashSale = FlashSale::where('is_active', 1)->where('end', '>', today())->with(['products', 'flashProducts'])->orderBy('id', 'desc')->first();
         if ($flashSale) {

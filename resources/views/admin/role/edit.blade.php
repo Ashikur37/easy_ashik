@@ -219,7 +219,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label >{{$lng->FlashSale}}</label>
+                        <label >Offer</label>
                         <select  name="permission[]" class="select2 form-control" multiple="multiple" data-placeholder="Select permissions" >
                             @php($all=false)
                             <option

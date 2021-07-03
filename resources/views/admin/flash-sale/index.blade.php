@@ -1,9 +1,9 @@
-@extends('layouts.admin',['headerText' => $lng->FlashSaleList])
-@section('title', "$lng->FlashSaleList")
+@extends('layouts.admin',['headerText' => "Offer List"])
+@section('title', "Offer List")
 @section('breadcrumb')
     <li class="breadcrumb-item">
         <i class="ri-arrow-right-s-line"></i>
-        <a href="#">{{$lng->FlashSaleList}}</a>
+        <a href="#">Offer List</a>
     </li>
 @endsection
 @section('style')

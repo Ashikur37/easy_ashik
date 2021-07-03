@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Utility\CategoryUtility;
 use Illuminate\Support\Facades\URL;
 
-class ShopCollection extends ResourceCollection
+class BrandCollection extends ResourceCollection
 {
     public function toArray($request)
     {
@@ -16,10 +16,8 @@ class ShopCollection extends ResourceCollection
                 return [
                     'id' => $data->id,
                     'name' => $data->name,
-                    'image' => URL::to('/images/shop/' . $data->image),
-                    'phone' => $data->phone,
-                    'location' => $data->location,
-                    'is_merchant' => false,
+                    'image' => URL::to('/images/brand/' . $data->logo),
+
                 ];
             })
         ];

@@ -16,6 +16,7 @@ use App\Model\ProductSize;
 use App\Model\ShippingMethod;
 use App\Model\Size;
 use App\Model\UserAddress;
+use App\Services\MailService;
 use Log;
 
 class CheckoutController extends Controller
@@ -122,6 +123,7 @@ class CheckoutController extends Controller
             "title" => "Pending",
             "details" => "Order placed successfully ",
         ]);
+        $data =  MailService::singleSms($address->mobile, "Your order placed successfully. Order ID " . $item_number, uniqid());
         return [
             "id" => $order->id
         ];
