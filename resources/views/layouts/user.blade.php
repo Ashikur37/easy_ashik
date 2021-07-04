@@ -58,6 +58,9 @@
                                         class="ri-clipboard-line"></i>{{ $lng->MyOrder }}</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="index-tab" href="#"><i class="ri-mail-open-line"></i>Inbox</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->route()->getName() == 'user.wishlist'
                                     ? 'active'
                                     : '' }}" id="messages-tab" href="{{ route('user.wishlist') }}"><i

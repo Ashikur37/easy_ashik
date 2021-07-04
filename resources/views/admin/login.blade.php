@@ -27,7 +27,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="password">{{ $lng->Password }} *</label>
-                                            <div class="show-password-wrap">
+                                            <div class="show-password-wrap position-r">
                                             <input required name="password" type="password" class="form-control"
                                                 id="password" placeholder="{{ $lng->Password }}" />
                                         <span> 
