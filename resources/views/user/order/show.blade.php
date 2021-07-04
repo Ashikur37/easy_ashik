@@ -62,10 +62,7 @@
                         <div class="info-label">{{$lng->Discount}}</div>
                         <div class="info-value">{{App\Model\Product::currencyPriceRate($order->discount)}}</div>
                     </div>
-                    <div class="info-row">
-                        <div class="info-label">{{$lng->Tax}}</div>
-                        <div class="info-value">{{App\Model\Product::currencyPriceRate($order->tax)}}</div>
-                    </div>
+                  
                      <div class="info-row">
                         <div class="info-label">Cashback</div>
                         <div class="info-value">{{App\Model\Product::currencyPriceRate($order->cashback)}}</div>
@@ -80,8 +77,22 @@
                     </div>
                     <div class="info-row">
                         <div class="info-label">{{$lng->GrandTotal}}</div>
-                        <div class="info-value grand-total">{{App\Model\Product::currencyPriceRate($order->shipping_cost+$order->total)}}</div>
+                        <div class="info-value grand-total">{{App\Model\Product::currencyPriceRate($order->total)}}</div>
                     </div>
+                    <div class="info-row">
+                        <div class="info-label">Paid Amount</div>
+                        <div class="info-value">{{$order->paid_amount}}</div>
+                    </div>
+                    <div class="info-row">
+                        @if($order->paid_amount<$order->total)
+                                <button onclick="" class="btn btn-info" id="pay-btn">Pay Now</button>
+                        @endif
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Due Amount</div>
+                        <div class="info-value">{{$order->total-$order->paid_amount}}</div>
+                    </div>
+                    
                 </div>
             </div>
             <hr>
@@ -178,4 +189,41 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="order-modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content"> 
+       <div class="modal-body p-5">
+          <h2 class="mb-4 text-center">Pay Now</h2>
+          <span class="close modal-close-btn" data-dismiss="modal"><i class="ri-close-line"></i></span>
+          <form method="post" action="{{URL::to('/user/order/partial-payment/'.$order->id)}}">
+            <div class="form-group">
+              @csrf
+
+            <div class="form-group">
+                <label for="subject">Amount *</label>
+                <input value="{{$order->total-$order->paid_amount}}" required placeholder="Amount" type="text" class="form-control" name="amount">
+            </div>
+        
+            <div class="form-group mb-0">    
+                <button  class="default-btn px-4 mt-4">{{$lng->Submit}}</button>          
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
+
+
+@section('pageScripts')
+<script>
+  $(function () {
+    $("#pay-btn").on('click', function() {
+      $('#order-modal').modal('show');
+      return;
+    });
+  });
+    </script>
+
+
+    @endsection

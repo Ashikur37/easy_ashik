@@ -14,47 +14,28 @@
             </div>
             <div class="row">
                 <div class="col-md-10 offset-md-1 checkout-form white-bg p-20 pb-25 ">
-                    <form action="{{ route('checkout.submit') }}" method="post" onsubmit="return validateCheckout()"
+                    <form action="{{ route('checkout.submit') }}" method="post" 
                             class="require-validation" data-cc-on-file="false"
                             data-stripe-publishable-key="{{ $paymentSetting->stripe_key }}" id="payment-form">
                             @csrf
                         <div class="row">
                             <div class="col-12">
-                                <h4>{{ $lng->PersonalInfo }}</h4>
+                                <h4>Billing Address</h4>
+                                <a class="btn btn-success" href="{{route('user-address.create')}}">Add new</a>
                             </div>
-                            <div class="col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="fname">{{ $lng->Name }} <span>*</span></label>
-                                    <input value="{{ auth()->check() ? auth()->user()->name : '' }}" id="fname"
-                                        name="customer_first_name" type="text" class="require-field form-control">
-                                    <div class="has-error-text">{{ $lng->TheNameIsRequired }}</div>
-                                </div>
+                            <div class="form-group">
+                                <select name="address_id" id="" class="form-control" required>
+                                    <option value=""> Select Address
+                                    @foreach($addresses as $address)
+                                        <option value="{{$address->id}}">
+                                                {{$address->first_name}} {{$address->lastname}} {{$address->mobile}}  
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="phone">{{ $lng->Phone }}*</label>
-                                    <input id="phone" name="customer_phone" type="text" class="require-field form-control">
-                                    <div class="has-error-text">{{ $lng->RequiredValidPhone }}</div>
-                                </div>
-                            </div>
-                            <div class="col-12 mt-20">
-                                <h4>{{ $lng->BillingAddress }}</h4>
-                            </div>
-                            <div class="col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label for="address">{{ $lng->AddressLine1 }} <span>*</span></label>
-                                    <input name="billing_address_1" id="address" type="text" class="form-control require-field">
-                                    <div class="has-error-text">{{ $lng->TheAddressLine1IsRequired }}</div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="shipping-order-note">{{ $lng->OrderNote }}</label>
-                                    <textarea name="note" id="shipping-order-note" rows="3" class="form-control"></textarea>
-                                </div>
-                            </div>
+                           
                         </div>
-                        <div class="row mt-15">
+                        {{-- <div class="row mt-15">
                             <div class="col-md-5 col-sm-6 col-12 md-pr-10">
                                 <div class="shipping-method-section">
                                     <h4 class="mb-25">{{ $lng->ShippingMethod }} </h4>
@@ -151,7 +132,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="row mt-15" id="payment-additional"></div>
                         <div class="row mt-15">
                             <div id="stripe-field" class="d-none col-12">
@@ -191,7 +172,7 @@
                         <div class="row mt-20">
                             <div id="checkout-cart" class="checkout-process col-12">
                                 <div class="row">
-                                    <div class="col-lg-3 col-4 lg-coupon-section pl-10">
+                                    {{-- <div class="col-lg-3 col-4 lg-coupon-section pl-10">
                                         <h4>{{ $lng->HaveCoupon }}?</h4>
                                         @if (Session::has('coupon'))
                                             <div class="applied-coupon">
@@ -211,7 +192,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6 col-md-5 col-12 ">
                                         <div class="checkout-process-content">
                                             <div class="flex-item">
@@ -224,7 +205,7 @@
                                             </div>
                                             <div class="flex-item">
                                                 <p class="mb-md-0">{{ $lng->SubTotal }}</p>
-                                                <span>{{ App\Model\Product::currencyPriceRate(Cart::subtotal()) }}</span>
+                                                <span>৳{{ App\Model\Product::currencyPriceRate(Cart::subtotal()) }}</span>
                                             </div>
                                             <div class="sm-grand-total">
                                                 <div class="grand-total">
@@ -232,7 +213,7 @@
                                                     <span
                                                         class="total-price">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
                                                 </div>
-                                                <div>
+                                                {{-- <div>
                                                     @if (Session::has('coupon'))
                                                         <div class="applied-coupon sm-applied-coupon">
                                                             <span class="coupon-content">
@@ -255,8 +236,8 @@
                                                             </div>
                                                         </div>
                                                     @endif
-                                                </div>
-                                                <button class="btn-checkout default-btn">{{ $lng->Order }}</button>
+                                                </div> --}}
+                                                <button class="btn-checkout default-btn">Process Order</button>
                                             </div>
                                         </div>
                                     </div>
@@ -264,9 +245,9 @@
                                         <div class="grand-total">
                                             <p class="mb-4">{{ $lng->GrandTotal }}</p>
                                             <span
-                                                class="total-price">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
+                                                class="total-price">৳{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
                                         </div>
-                                        <button class="default-btn btn-checkout">{{ $lng->Order }}</button>
+                                        <button class="default-btn btn-checkout">Process Order</button>
                                     </div>
                                 </div>
                             </div>

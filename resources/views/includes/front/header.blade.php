@@ -45,43 +45,43 @@
                         <img alt="{{$setting->title}}" src="{{asset('images/banner/'.$setting->header_logo)}}">
                     </a>
                    <div class="position-relative active-sticky-category">
-                         <span class="ts__dropdown__trigger"><i class="ri-menu-unfold-line"></i></span>
-                    <nav class="ts__dropdown dropdown-category">
-                            <a href="#0" class="ts__close">{{$lng->Close}}</a>
-                            <ul class="ts__dropdown__content">
-                                @foreach($categories as $category)
-                                @if($category->subCategories->count()>0)
-                                <li class="has-children">                                
-                                    <a href="{{route('category',[$category->slug])}}">
-                                        <img src="{{URL::to('/images/category/'.$category->image)}}" alt="{{$category->name}}">{{$category->name}}</a>
-                                    <ul class="{{$category->childCategories->count()==0?'ts__primary__dropdown':'ts__secondary__dropdown'}} is-hidden">
-                                        <li class="go-back"><a href="#0">{{$lng->Menu}}</a></li>
-                                        @foreach($category->subCategories as $subCategory)
-                                        @if($category->subCategories->count()>0)
-                                        <li class="{{$subCategory->childCategories->count()==0?'':'has-children'}} ">
-                                            <a href="{{route('category',[$category->slug,$subCategory->slug])}}">{{$subCategory->name}}</a>
-                                            <ul class="is-hidden">
-                                                @foreach($subCategory->childCategories as $childCategory)
-                                                <li><a href="{{route('category',[$category->slug,$subCategory->slug,$childCategory->slug])}}">{{$childCategory->name}}</a>
-                                                </li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-                                        @else
-                                        <li>
-                                            <a href="{{route('category',[$category->slug,$subCategory->slug])}}">{{$subCategory->name}}</a>
-                                        </li>
-                                        @endif
-                                        @endforeach
-                                    </ul> 
-                                </li> 
-                                @else
-                                <li><a href="{{route('category',[$category->slug])}}"><img src="{{URL::to('/images/category/'.$category->image)}}" alt="{{$category->name}}">{{$category->name}}</a></li>
-                                @endif
-                                @endforeach
-                                <li><a href="{{ route('categories') }}"><i class="ri-add-circle-line"></i>{{$lng->AllCategories}}</a></li>
-                            </ul> 
-                        </nav>                
+                        {{-- <span class="ts__dropdown__trigger"><i class="ri-menu-unfold-line"></i></span>
+                        <nav class="ts__dropdown dropdown-category">
+                                <a href="#0" class="ts__close">{{$lng->Close}}</a>
+                                <ul class="ts__dropdown__content">
+                                    @foreach($categories as $category)
+                                    @if($category->subCategories->count()>0)
+                                    <li class="has-children">                                
+                                        <a href="{{route('category',[$category->slug])}}">
+                                            <img src="{{URL::to('/images/category/'.$category->image)}}" alt="{{$category->name}}">{{$category->name}}</a>
+                                        <ul class="{{$category->childCategories->count()==0?'ts__primary__dropdown':'ts__secondary__dropdown'}} is-hidden">
+                                            <li class="go-back"><a href="#0">{{$lng->Menu}}</a></li>
+                                            @foreach($category->subCategories as $subCategory)
+                                            @if($category->subCategories->count()>0)
+                                            <li class="{{$subCategory->childCategories->count()==0?'':'has-children'}} ">
+                                                <a href="{{route('category',[$category->slug,$subCategory->slug])}}">{{$subCategory->name}}</a>
+                                                <ul class="is-hidden">
+                                                    @foreach($subCategory->childCategories as $childCategory)
+                                                    <li><a href="{{route('category',[$category->slug,$subCategory->slug,$childCategory->slug])}}">{{$childCategory->name}}</a>
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                            </li>
+                                            @else
+                                            <li>
+                                                <a href="{{route('category',[$category->slug,$subCategory->slug])}}">{{$subCategory->name}}</a>
+                                            </li>
+                                            @endif
+                                            @endforeach
+                                        </ul> 
+                                    </li> 
+                                    @else
+                                    <li><a href="{{route('category',[$category->slug])}}"><img src="{{URL::to('/images/category/'.$category->image)}}" alt="{{$category->name}}">{{$category->name}}</a></li>
+                                    @endif
+                                    @endforeach
+                                    <li><a href="{{ route('categories') }}"><i class="ri-add-circle-line"></i>{{$lng->AllCategories}}</a></li>
+                                </ul> 
+                            </nav>                 --}}
                    </div>
                 </div>
                 <div class="searchbox-wrapper">
@@ -128,8 +128,58 @@
                     @include('load.front.header')
                 </div>            
             </div>
+            <div class="d-flex align-items-center">
+                <div class="position-relative sticky-nav-trigger">
+                    <h5 class="ts__dropdown__trigger"><span ><i class="ri-function-line"></i></span> ALL CATEGORIES<span ><i class="ri-arrow-down-s-line"></i></span></h5>
+                    <nav class="ts__dropdown dropdown-category">
+                            <a href="#0" class="ts__close">{{$lng->Close}}</a>
+                            <ul class="ts__dropdown__content">
+                                @foreach($categories as $category)
+                                @if($category->subCategories->count()>0)
+                                <li class="has-children">                                
+                                    <a href="{{route('category',[$category->slug])}}">
+                                        <img src="{{URL::to('/images/category/'.$category->image)}}" alt="{{$category->name}}">{{$category->name}}</a>
+                                    <ul class="{{$category->childCategories->count()==0?'ts__primary__dropdown':'ts__secondary__dropdown'}} is-hidden">
+                                        <li class="go-back"><a href="#0">{{$lng->Menu}}</a></li>
+                                        @foreach($category->subCategories as $subCategory)
+                                        @if($category->subCategories->count()>0)
+                                        <li class="{{$subCategory->childCategories->count()==0?'':'has-children'}} ">
+                                            <a href="{{route('category',[$category->slug,$subCategory->slug])}}">{{$subCategory->name}}</a>
+                                            <ul class="is-hidden">
+                                                @foreach($subCategory->childCategories as $childCategory)
+                                                <li><a href="{{route('category',[$category->slug,$subCategory->slug,$childCategory->slug])}}">{{$childCategory->name}}</a>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                        @else
+                                        <li>
+                                            <a href="{{route('category',[$category->slug,$subCategory->slug])}}">{{$subCategory->name}}</a>
+                                        </li>
+                                        @endif
+                                        @endforeach
+                                    </ul> 
+                                </li> 
+                                @else
+                                <li><a href="{{route('category',[$category->slug])}}"><img src="{{URL::to('/images/category/'.$category->image)}}" alt="{{$category->name}}">{{$category->name}}</a></li>
+                                @endif
+                                @endforeach
+                                <li><a href="{{ route('categories') }}"><i class="ri-add-circle-line"></i>{{$lng->AllCategories}}</a></li>
+                            </ul> 
+                        </nav>        
+                </div>
+                <div class="offers-wrapper">
+                    <ul class="d-flex">
+                        <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Voucher Shops</span></a></li>
+                        <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Prime Shops</span></a></li>
+                        <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""><span>Easymert Rocket</span></a></li>
+                        <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Easymert Offers</span></a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>  
+    </div>
+    
 </div>
 <!-- mobile header -->
 <div class="d-lg-none">

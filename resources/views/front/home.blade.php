@@ -7,9 +7,18 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="hero-section mt-20 sm-mt-10">
+        <div class="offers-wrapper">
+            <ul class="d-flex">
+                <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Voucher Shops</span></a></li>
+                <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Prime Shops</span></a></li>
+                <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""><span>Easymert Rocket</span></a></li>
+                <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Easymert Offers</span></a></li>
+            </ul>
+        </div>
+        <div class="hero-section">
             <div class="position-relative"> 
                 <nav class="ts__dropdown d-none d-lg-block category-home">
+                    <h5 class="category-title">Categories</h5>
                     <a href="#0" class="ts__close">{{$lng->Close}}</a>
                     <ul class="ts__dropdown__content">
                         @foreach($categories as $category)
@@ -117,7 +126,7 @@
                 <div class="flash-deal-wrapper ">
                     <div class="flash-deal-lg-content">
                         <h5 class="item-section-info mb-0"><span>
-                        <i class="ri-shield-flash-line flash-icon"></i></span>{{ $flashSale->title }}</h5>
+                        <i class="ri-shield-flash-line flash-icon"></i></span>Offer</h5>
                         <div class="flash-deal-counter">
                             <span>end in</span>
                             <div id="flashClock">
@@ -136,7 +145,7 @@
                             </div>
                         </div>
                         <div>
-                            <a href="{{ route('flash-sale') }}" class="see-all-product">{{ $lng->ViewAll }}
+                            <a href="{{URL::to('offers')}}" class="see-all-product">{{ $lng->ViewAll }}
                                 <i class="ri-arrow-right-line see-all-arrow"></i>
                             </a>
                         </div>

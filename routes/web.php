@@ -381,6 +381,8 @@ Route::group(['prefix' => 'user',  'middleware' => 'is_user'], function () {
 
     /*OrderRoutes*/
     Route::get('/order', 'User\OrderController@index')->name('user.order');
+    Route::post('/order/partial-payment/{order}', 'User\OrderController@partialPayment');
+
     Route::get('/order/{number}', 'User\OrderController@show')->name('user.order.show');
     Route::get('/order/status/{id}', 'User\OrderController@status')->name('user.order.status');
 
@@ -389,6 +391,10 @@ Route::group(['prefix' => 'user',  'middleware' => 'is_user'], function () {
     Route::get('/load-ticket/{ticket}', 'User\TicketController@loadTicket')->name('user.load-ticket');
     Route::post('/ticket-message/{ticket}', 'User\TicketController@postMessage')->name('user.ticket-message');
     Route::post('/ticket/create', 'User\TicketController@store')->name('user.ticket-store');
+
+
+    Route::resource('/user-address', 'User\UserAddressController');
+    Route::get('/address/delete/{userAddress}', 'User\UserAddressController@deleteAddress');
 });
 
 Route::group(['prefix' => 'vendor',  'middleware' => 'is_vendor'], function () {
@@ -518,7 +524,7 @@ Route::post('/category/{category:slug?}/{subCategory:slug?}/{childCategory:slug?
 Route::get('/categories', 'Front\CategoryController@categories')->name('categories');
 
 /*Flash Sale Routes*/
-Route::get('/sale', 'Front\CategoryController@flashSale')->name('flash-sale');
+Route::get('/offer/{name}', 'Front\CategoryController@flashSale')->name('flash-sale');
 Route::post('/sale', 'Front\CategoryController@flashSaleSort');
 
 /*Best Sale Routes*/
@@ -559,6 +565,12 @@ Route::get('/cart/load', 'Front\CartController@loadCart');
 /*Compare Routes*/
 Route::get('/compare/add-item', 'Front\CompareListController@addItem')->name('compare.add');
 Route::get('/compare/remove/{row}', 'Front\CompareListController@removeItem');
+
+// offer shop
+Route::get('/single-voucher', 'Front\OfferController@singleVoucher')->name('single-voucher');
+Route::get('/rocket-shop', 'Front\OfferController@rocketShop')->name('rocket-shop');
+Route::get('/offers', 'Front\OfferController@campaigns')->name('offers');
+Route::get('/single-campaign', 'Front\OfferController@singleCampaign');
 
 /*Auth Routes*/
 Auth::routes();

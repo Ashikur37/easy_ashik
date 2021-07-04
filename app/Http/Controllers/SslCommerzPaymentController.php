@@ -217,9 +217,17 @@ class SslCommerzPaymentController extends Controller
                     "title" => "Payment",
                     "details" => "BDT " . $payment->amount . " paid successfully",
                 ]);
+                if ($order->paid_amount >= $order->total) {
+                    $order->tracks()->create([
+                        "title" => "Process",
+                        "details" => "Order processing",
+                    ]);
+                }
                 $payment->update([
                     "status" => 1
                 ]);
+
+                return redirect('/user/order/' . $order->order_number)->with('success', "BDT " . $payment->amount . " paid successfully");
             } else {
                 $order = Order::where('delivery_trx_id', $tran_id)->first();
                 if ($order) {

@@ -58,6 +58,12 @@
                                         class="ri-clipboard-line"></i>{{ $lng->MyOrder }}</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link {{ request()->route()->getName() == 'user-address.index'
+                                    ? 'active'
+                                    : '' }}" id="messages-tab" href="{{ route('user-address.index') }}"><i
+                                        class="ri-heart-line"></i>Address</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->route()->getName() == 'user.wishlist'
                                     ? 'active'
                                     : '' }}" id="messages-tab" href="{{ route('user.wishlist') }}"><i
