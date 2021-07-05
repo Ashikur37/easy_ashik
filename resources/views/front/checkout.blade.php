@@ -10,36 +10,77 @@
     <section class="checkout-section">
         <div class="container white-bg">
             <div class="row">
-                <div class="col-md-10 offset-md-1 white-bg">
+                <div class="col-xl-10 offset-xl-1 white-bg">
                     <h2>{{ $lng->Checkout }} </h2>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-10 offset-md-1 checkout-form white-bg p-20 pb-25 ">
+                <div class="col-xl-10 offset-xl-1 checkout-form white-bg p-20 pb-25 ">
                     <form action="{{ route('checkout.submit') }}" method="post" 
                             class="require-validation" data-cc-on-file="false"
                             data-stripe-publishable-key="{{ $paymentSetting->stripe_key }}" id="payment-form">
                             @csrf
                         <div class="row">
-                            <div class="col-12">
-                                <h4>Billing Address</h4>
-                                <a class="btn btn-success" href="{{route('user-address.create')}}">Add new</a>
+                           <div class="col-lg-6 col-12 after-border"> 
+                            <h4>Billing Address</h4>
+                                <div class="d-flex after-m-r">
+                                    <div class="form-group" style="flex: 1">
+                                        <select onchange="changeAddress(this.value)" name="address_id" id="" class="form-control" required>
+                                            <option value=""> Select Address
+                                            @foreach($addresses as $address)
+                                                <option value="{{$address->id}}">
+                                                        {{$address->first_name}} {{$address->lastname}} {{$address->mobile}}  
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <a class="default-btn " href="{{route('user-address.create')}}" style="color: #fff;width: 110px;margin-left: 10px;">Add new</a>
+                                    </div>
+                                </div>
+                                <div id="my-address"></div>
                             </div>
-                            <div class="form-group">
-                                <select onchange="changeAddress(this.value)" name="address_id" id="" class="form-control" required>
-                                    <option value=""> Select Address
-                                    @foreach($addresses as $address)
-                                        <option value="{{$address->id}}">
-                                                {{$address->first_name}} {{$address->lastname}} {{$address->mobile}}  
-                                        </option>
-                                    @endforeach
-                                </select>
+                           <div class="col-6 d-none d-lg-block">
+                            <div id="checkout-cart" class="checkout-process">
+                                <div class="row">
+                                    <div class="col-lg-7 col-md-5 col-12 ">
+                                        <div class="checkout-process-content">
+                                            <div class="flex-item">
+                                                <p>{{ $lng->Discount }}</p>
+                                                <span>{{ App\Model\Product::currencyPriceRate(Cart::discount()) }}</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <p>{{ $lng->Tax }}</p>
+                                                <span>{{ App\Model\Product::currencyPriceRate(Cart::tax()) }}</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <p class="mb-md-0">{{ $lng->SubTotal }}</p>
+                                                <span>৳{{ App\Model\Product::currencyPriceRate(Cart::subtotal()) }}</span>
+                                            </div>
+                                            <div class="sm-grand-total">
+                                                <div class="grand-total">
+                                                    <p class="mb-0">{{ $lng->GrandTotal }}</p>
+                                                    <span
+                                                        class="total-price">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
+                                                </div>
+                                                <button class="btn-checkout default-btn">Process Order</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 lg-grand-total pr-10">
+                                        <div class="grand-total">
+                                            <p class="mb-4">{{ $lng->GrandTotal }}</p>
+                                            <span
+                                                class="total-price">৳{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
+                                        </div>
+                                        <button class="default-btn btn-checkout">Process Order</button>
+                                    </div>
+                                </div>
                             </div>
+                           </div>
                            
                         </div> 
-                        <div id="my-address">
-
-                        </div>
+                        
                         <div id="dynamic-cart">
                             @include('load.front.check-cart')
                         </div>
@@ -177,7 +218,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-20">
+                        <div class="row mt-20 d-lg-none">
                             <div id="checkout-cart" class="checkout-process col-12">
                                 <div class="row">
                                     {{-- <div class="col-lg-3 col-4 lg-coupon-section pl-10">
@@ -249,7 +290,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-3 lg-grand-total pr-10">
+                                    <div class="col-6 lg-grand-total pr-10">
                                         <div class="grand-total">
                                             <p class="mb-4">{{ $lng->GrandTotal }}</p>
                                             <span
