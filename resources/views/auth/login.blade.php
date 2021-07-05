@@ -15,8 +15,8 @@
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="email">Email/Phone *</label>
-                                        <input required name="email" type="text" @if(Session::has('old_email')) value="{{ Session::get('old_email') }}" @endif class="form-control" id="email" placeholder="Email address or Phone Number" />
+                                        <label for="email">Phone *</label>
+                                        <input required name="email" type="text" @if(Session::has('old_email')) value="{{ Session::get('old_email') }}" @endif class="form-control" id="email" placeholder=" Phone Number" />
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

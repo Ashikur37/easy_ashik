@@ -15,7 +15,8 @@ class UserAddressController extends Controller
 {
     public function index()
     {
-        $addresses = UserAddress::all();
+        $user = Auth::user();
+        $addresses = UserAddress::where('user_id', $user->id)->all();
         return view('user.address.index', compact('addresses'));
     }
     public function create()

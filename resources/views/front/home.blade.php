@@ -10,7 +10,7 @@
         <div class="offers-wrapper">
             <ul class="d-flex">
                 <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Voucher Shops</span></a></li>
-                <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Prime Shops</span></a></li>
+                <li><a href="{{route('shop')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Easy Shops</span></a></li>
                 <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""><span>Easymert Rocket</span></a></li>
                 <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Easymert Offers</span></a></li>
             </ul>

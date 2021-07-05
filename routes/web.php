@@ -527,6 +527,11 @@ Route::get('/categories', 'Front\CategoryController@categories')->name('categori
 Route::get('/offer/{name}', 'Front\CategoryController@flashSale')->name('flash-sale');
 Route::post('/sale', 'Front\CategoryController@flashSaleSort');
 
+
+/*Shope Routes*/
+Route::get('/shop/{name}', 'Front\CategoryController@shop')->name('single-shop');
+Route::post('/shop/{name}', 'Front\CategoryController@shopSort');
+
 /*Best Sale Routes*/
 Route::get('/best-sale', 'Front\CategoryController@bestSale')->name('best-sale');
 Route::post('/best-sale', 'Front\CategoryController@bestSaleSort');
@@ -570,6 +575,8 @@ Route::get('/compare/remove/{row}', 'Front\CompareListController@removeItem');
 Route::get('/single-voucher', 'Front\OfferController@singleVoucher')->name('single-voucher');
 Route::get('/rocket-shop', 'Front\OfferController@rocketShop')->name('rocket-shop');
 Route::get('/offers', 'Front\OfferController@campaigns')->name('offers');
+Route::get('/easy-shop', 'Front\OfferController@shops')->name('shop');
+
 Route::get('/single-campaign', 'Front\OfferController@singleCampaign');
 Route::get('/load-address/{userAddress}', 'User\UserAddressController@loadAddress');
 /*Auth Routes*/
