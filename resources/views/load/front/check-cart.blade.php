@@ -1,5 +1,5 @@
 <div class="row lg-cart-table">
-    <div class="col-lg-10 offset-lg-1">
+    <div class="col">
         <div class="cart-table">
             <table class="table scrollTable">
                 <thead>
@@ -123,42 +123,3 @@
     </div>
 </div>
 
-<div class="row py-40">
-    <div class="checkout-process col-lg-10 offset-lg-1">
-        <div class="row">
-   
-            <div class="col-lg-6 col-md-5 col-12 ">
-                <div class="checkout-process-content">
-                    <div class="flex-item">
-                        <p>{{ $lng->Discount }}</p>
-                        <span class="cart-discount">{{ App\Model\Product::currencyPriceRate(Cart::discount()) }}</span>
-                    </div>
-                    <div class="flex-item">
-                        <p>{{ $lng->Tax }}</p>
-                        <span class="cart-tax">{{ App\Model\Product::currencyPriceRate(Cart::tax()) }}</span>
-                    </div>
-                    <div class="flex-item">
-                        <p class="mb-md-0">{{ $lng->SubTotal }}</p>
-                        <span class="cart-sub-total">{{ App\Model\Product::currencyPriceRate(Cart::subtotal()) }}</span>
-                    </div>
-                    <div class="sm-grand-total">
-                        <div class="grand-total">
-                            <p class="mb-0">{{ $lng->GrandTotal }}</p>
-                            <span
-                                class="cart-grand-total">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
-                        </div>
-                  
-                        <a href="{{ route('checkout') }}" class="btn-checkout default-btn">{{ $lng->Checkout }}</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3 lg-grand-total">
-                <div class="grand-total">
-                    <p class="mb-4">{{ $lng->GrandTotal }}</p>
-                    <span class="cart-grand-total">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
-                </div>
-                <a href="{{ route('checkout') }}" class="btn-checkout default-btn">{{ $lng->Checkout }}</a>
-            </div>
-        </div>
-    </div>
-</div>
