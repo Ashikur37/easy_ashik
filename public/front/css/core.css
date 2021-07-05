@@ -676,6 +676,7 @@ img {
         -webkit-box-shadow: none;
         box-shadow: none;
         top: 0;
+        left:0;
     }
 }
 
@@ -4014,4 +4015,17 @@ body {
     line-height: 40px;
     cursor: pointer;
     text-align: center;
+}
+
+@media (max-width:991px) {
+    .offers-wrapper {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        padding-top: 10px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+
+    }
 }
