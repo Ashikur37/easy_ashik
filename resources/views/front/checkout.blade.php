@@ -3,7 +3,9 @@
 @section('pageStyle')
     <link rel="stylesheet" href="{{ asset('front') }}/css/vendor/select2.min.css">
     <link rel="stylesheet" href="{{ asset('front') }}/css/page/checkout.css">
+    <link rel="stylesheet" href="{{asset('front')}}/css/page/cart.css">
 @endsection
+
 @section('content')
     <section class="checkout-section">
         <div class="container white-bg">
@@ -24,7 +26,7 @@
                                 <a class="btn btn-success" href="{{route('user-address.create')}}">Add new</a>
                             </div>
                             <div class="form-group">
-                                <select name="address_id" id="" class="form-control" required>
+                                <select onchange="changeAddress(this.value)" name="address_id" id="" class="form-control" required>
                                     <option value=""> Select Address
                                     @foreach($addresses as $address)
                                         <option value="{{$address->id}}">
@@ -34,6 +36,12 @@
                                 </select>
                             </div>
                            
+                        </div> 
+                        <div id="my-address">
+
+                        </div>
+                        <div id="dynamic-cart">
+                            @include('load.front.check-cart')
                         </div>
                         {{-- <div class="row mt-15">
                             <div class="col-md-5 col-sm-6 col-12 md-pr-10">
@@ -262,4 +270,12 @@
     <script src="{{ asset('assets/admin/js/vendor/select2.full.min.js') }}"></script>
     <script src="{{ asset('front/js/page/checkout.js') }}"></script>
     <script src="{{ asset('front/js/vendor/stripe.min.js') }}"></script>
+    <script>
+       
+        function changeAddress(id){
+            if(id){
+                $("#my-address").load("{{URL::to('load-address')}}/"+id);
+            }
+        }
+    </script>
 @endsection

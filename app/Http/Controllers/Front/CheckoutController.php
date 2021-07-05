@@ -77,7 +77,9 @@ class CheckoutController extends Controller
         $shippingMethods = ShippingMethod::where('is_active', 1)->get();
         $paymentSetting = PaymentSetting::first();
         $addresses = UserAddress::where('user_id', auth()->id())->get();
-        return view('front.checkout', compact('countries', 'addresses', 'paymentGateways', 'shippingMethods', 'paymentSetting'));
+        $items = Cart::content();
+
+        return view('front.checkout', compact('items', 'countries', 'addresses', 'paymentGateways', 'shippingMethods', 'paymentSetting'));
     }
     public function checkoutSubmit(OrderRequest $request)
     {

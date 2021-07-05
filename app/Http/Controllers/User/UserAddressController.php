@@ -46,4 +46,9 @@ class UserAddressController extends Controller
         }
         return back()->with('success', 'Address Deleted');
     }
+
+    public function loadAddress(UserAddress $userAddress)
+    {
+        return view('load.user.address', compact('userAddress'));
+    }
 }

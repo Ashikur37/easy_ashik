@@ -571,7 +571,7 @@ Route::get('/single-voucher', 'Front\OfferController@singleVoucher')->name('sing
 Route::get('/rocket-shop', 'Front\OfferController@rocketShop')->name('rocket-shop');
 Route::get('/offers', 'Front\OfferController@campaigns')->name('offers');
 Route::get('/single-campaign', 'Front\OfferController@singleCampaign');
-
+Route::get('/load-address/{userAddress}', 'User\UserAddressController@loadAddress');
 /*Auth Routes*/
 Auth::routes();
 Auth::routes([
