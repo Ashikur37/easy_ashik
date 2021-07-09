@@ -393,6 +393,14 @@ $("#searchProduct").on('focus', function () {
     }, 500)
 })
 
+
+$("#smSearchBar").on('focus', function () {
+    $('#smSuggestedProduct').addClass("active-suggested");
+}).on('blur', function (e) {
+    setTimeout(function () {
+        $('#smSuggestedProduct').removeClass("active-suggested");
+    }, 500)
+})
 $(function () {
     function debounce(func, wait, immediate) {
         var timeout;
@@ -433,6 +441,7 @@ $(function () {
     }, 200))
     const smSuggestedHTML = $("#smSuggestedProduct").html();
     $(document).on("keyup", "#smSearchBar", debounce(function (e) {
+        // $("#smSuggestedProduct").addClass("active-suggested");
         if (e.which == 13) {
             window.location.href = mainUrl + "/category?key=" + $(this).val();
         }
