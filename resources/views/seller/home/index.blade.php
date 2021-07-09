@@ -246,7 +246,7 @@
                                             <span>{{ $product->viewed }}</span>
                                         </td>
                                         <td><span
-                                                class="price">{{ App\Model\Product::currencyPriceRate($product->price) }}</span>
+                                                class="price">৳{{ App\Model\Product::currencyPriceRate($product->price) }}</span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -287,7 +287,7 @@
                                             <span class="text-{{ $order->statusClass() }}">{{ $order->statusText() }}</span>
                                         </td>
                                         <td>
-                                            <span>{{ App\Model\Product::currencyPriceRate($order->total) }}</span>
+                                            <span>৳{{ App\Model\Product::currencyPriceRate($order->total) }}</span>
                                         </td>
                                     </tr>
                                 @endforeach

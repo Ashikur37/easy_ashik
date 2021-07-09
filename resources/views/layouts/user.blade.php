@@ -37,7 +37,7 @@
                             <span class="name">{{ auth()->user()->name." ".auth()->user()->lastname }}</span>
                             <span class="balance">
                                 {{ $lng->Balance }}:
-                                {{ App\Model\Product::currencyPriceRate(auth()->user()->affiliate_balance) }}
+                                ৳{{ App\Model\Product::currencyPriceRate(auth()->user()->affiliate_balance) }}
                             </span>
                         </div>
                         <button class="default-btn signOut_btn"

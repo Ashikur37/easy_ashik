@@ -16,7 +16,7 @@
                 <span class="status-title">{{ $lng->BalanceStatus }}</span>
                 <div class="status-row">
                     <span>{{ $lng->TotalEarned }}</span>
-                    <span>{{ App\Model\Product::currencyPriceRate(
+                    <span>৳{{ App\Model\Product::currencyPriceRate(
                         auth()->user()->withdrawAmount() +
                             auth()->user()->spent() +
                             auth()->user()->affiliate_balance,
@@ -24,19 +24,19 @@
                 </div>
                 <div class="status-row">
                     <span>{{ $lng->BoughtProducts }}</span>
-                    <span>{{ App\Model\Product::currencyPriceRate(
+                    <span>৳{{ App\Model\Product::currencyPriceRate(
                         auth()->user()->spent(),
                     ) }}</span>
                 </div>
                 <div class="status-row">
                     <span>{{ $lng->Withdrawn }}</span>
-                    <span>{{ App\Model\Product::currencyPriceRate(
+                    <span>৳{{ App\Model\Product::currencyPriceRate(
                         auth()->user()->withdrawAmount(),
                     ) }}</span>
                 </div>
                 <div class="status-row">
                     <span>{{ $lng->CurrentBalance }}</span>
-                    <span>{{ App\Model\Product::currencyPriceRate(auth()->user()->affiliate_balance) }}</span>
+                    <span>৳{{ App\Model\Product::currencyPriceRate(auth()->user()->affiliate_balance) }}</span>
                 </div>
             </div>
         </div>

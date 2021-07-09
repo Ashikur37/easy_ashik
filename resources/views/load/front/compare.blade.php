@@ -16,7 +16,7 @@
                 <div class="full-stars" style="width:{{ $item->options->rating* 20 }}%"></div>
             </div>
         </div>
-        <div class="price same-height">{{ App\Model\Product::currencyPriceRate($item->price) }}</div>
+        <div class="price same-height">৳{{ App\Model\Product::currencyPriceRate($item->price) }}</div>
 
         <div
             class="availability gray same-height {{ App\Model\Product::find($item->id)->inStock() ? '' : 'out-of-stock' }}">

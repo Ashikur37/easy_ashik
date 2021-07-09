@@ -14,10 +14,10 @@
                                     <span class="product-title">
                                         {{ Str::limit($product->name, 45) }}
                                     </span>
-                                    <div class="price-cart">{{ App\Model\Product::currencyPrice($product->price) }}
+                                    <div class="price-cart">৳{{ App\Model\Product::currencyPrice($product->price) }}
                                         @if ($product->actualPrice() != $product->price)
                                             <div class="old-price">
-                                                <span>{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
+                                                <span>৳{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
                                                
                                             </div>
                                         @endif
@@ -150,10 +150,10 @@
                                         </div>
                                         <div class="product-prices">
                                             <span
-                                                class="new-price">{{ App\Model\Product::currencyPrice($product->price) }}</span>
+                                                class="new-price">৳{{ App\Model\Product::currencyPrice($product->price) }}</span>
                                             @if ($product->actualPrice() != $product->price)
                                                 <span
-                                                    class="old-price">{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
+                                                    class="old-price">৳{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
                                             @endif
                                         </div>
                                         <div class="ratings">
@@ -187,10 +187,10 @@
                                         </div>
                                         <div class="product-prices">
                                             <span
-                                                class="new-price">{{ App\Model\Product::currencyPrice($product->price) }}</span>
+                                                class="new-price">৳{{ App\Model\Product::currencyPrice($product->price) }}</span>
                                             @if ($product->actualPrice() != $product->price)
                                                 <span
-                                                    class="old-price">{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
+                                                    class="old-price">৳{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
                                             @endif
                                         </div>
                                         <div class="ratings">

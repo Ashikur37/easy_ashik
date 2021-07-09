@@ -67,8 +67,8 @@
                                             </td>
                                             <td>{{ $order->no_order }}</td>
                                             <td>{{ $order->product_count }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($order->total) }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($order->discount) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($order->total) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($order->discount) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -95,10 +95,10 @@
                                                 {{ $order->no_order }}
                                             </td>
                                             <td>{{ $order->product_count }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($order->shipping_cost) }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($order->discount) }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($order->tax) }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($order->total) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($order->shipping_cost) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($order->discount) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($order->tax) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($order->total) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -120,7 +120,7 @@
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->order_count }}</td>
                                             <td>{{ $product->sold }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($product->total) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($product->total) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -147,8 +147,8 @@
                                             <td>{{ $coupon->end }}</td>
                                             <td>{{ $coupon->limit }}</td>
                                             <td>{{ $coupon->order_count }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($coupon->discount) }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($coupon->total) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($coupon->discount) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($coupon->total) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -171,10 +171,10 @@
                                         <tr>
                                             <td>{{ $gateway->payment_method }}</td>
                                             <td>{{ $gateway->order_count }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($gateway->discount) }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($gateway->total) }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($gateway->paid) }}</td>
-                                            <td>{{ App\Model\Product::currencyPriceRate($gateway->unpaid) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($gateway->discount) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($gateway->total) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($gateway->paid) }}</td>
+                                            <td>৳{{ App\Model\Product::currencyPriceRate($gateway->unpaid) }}</td>
 
                                         </tr>
                                     @endforeach

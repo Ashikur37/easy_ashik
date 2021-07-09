@@ -23,10 +23,10 @@
                 </div>
             </div>
             <div class="d-md-none d-flex align-items-sm-center">
-                <span class="item-price">{{ App\Model\Product::currencyPrice($product->price) }}</span>
+                <span class="item-price">৳{{ App\Model\Product::currencyPrice($product->price) }}</span>
                 @if ($product->actualPrice() != $product->price)
                     <div class="item-old-price">
-                        <span>{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
+                        <span>৳{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
                     </div>
                 @endif
             </div>

@@ -82,15 +82,15 @@
                             </div>
                             <div class="info-row">
                                 <div class="info-label">{{ $lng->Discount }}</div>
-                                <div class="info-value">{{ App\Model\Product::currencyPriceRate($order->discount) }}</div>
+                                <div class="info-value">৳{{ App\Model\Product::currencyPriceRate($order->discount) }}</div>
                             </div>
                             <div class="info-row">
                                 <div class="info-label">{{ $lng->Tax }}</div>
-                                <div class="info-value">{{ App\Model\Product::currencyPriceRate($order->tax) }}</div>
+                                <div class="info-value">৳{{ App\Model\Product::currencyPriceRate($order->tax) }}</div>
                             </div>
                             <div class="info-row">
                                 <div class="info-label">{{ $lng->SubTotal }}</div>
-                                <div class="info-value">{{ App\Model\Product::currencyPriceRate($order->total) }}</div>
+                                <div class="info-value">৳{{ App\Model\Product::currencyPriceRate($order->total) }}</div>
                             </div>
                             <div class="info-row">
                                 <div class="info-label">{{ $lng->Shipping }}</div>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="info-row">
                                 <div class="info-label">{{ $lng->GrandTotal }}</div>
-                                <div class="info-value grand-total">
+                                <div class="info-value grand-total">৳
                                     {{ App\Model\Product::currencyPriceRate($order->shipping_cost + $order->total) }}</div>
                             </div>
                         </div>
@@ -166,9 +166,9 @@
                                         </p>
                                     </div>
                                 </td>
-                                <td><span>{{ App\Model\Product::currencyPriceRate($item->price) }}</span></td>
+                                <td><span>৳{{ App\Model\Product::currencyPriceRate($item->price) }}</span></td>
                                 <td><span>{{ $item->qty }}</span></td>
-                                <td><span>{{ App\Model\Product::currencyPriceRate($item->subtotal) }}</span></td>
+                                <td><span>৳{{ App\Model\Product::currencyPriceRate($item->subtotal) }}</span></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -188,8 +188,8 @@
                                     <span class="qnt">x {{ $item->qty }}</span>
                                 </div>
                                 <div class="product-price">
-                                    <span>{{ App\Model\Product::currencyPriceRate($item->price) }}</span>
-                                    <span>{{ App\Model\Product::currencyPriceRate($item->subtotal) }}</span>
+                                    <span>৳{{ App\Model\Product::currencyPriceRate($item->price) }}</span>
+                                    <span>৳{{ App\Model\Product::currencyPriceRate($item->subtotal) }}</span>
                                 </div>
                                 <div class="product-attributes">
                                     {!! $item->options->size ? '<span> $lng->Size :' . $item->options->size . '</span>' : ''

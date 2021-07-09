@@ -19,9 +19,9 @@
     <div class="item-content cart-item-{{ $product->id }} {{ array_key_exists($product->id, $cartProducts) ? 'in-cart' : '' }}">
         <div class="item-price-ratings">
             <div class="item-price">
-                <span class="new-price">{{ App\Model\Product::currencyPrice($product->price) }}</span>
+                <span class="new-price">৳{{ App\Model\Product::currencyPrice($product->price) }}</span>
                 @if ($product->actualPrice() != $product->price)
-                    <span class="old-price">{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
+                    <span class="old-price">৳{{ App\Model\Product::currencyPrice($product->actualPrice()) }}</span>
                 @endif
             </div>
         </div>

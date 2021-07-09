@@ -25,7 +25,7 @@
                                 </a>
                             </div>
                         </td>
-                        <td><span>{{App\Model\Product::currencyPrice($product->price)}}</span></td>
+                        <td><span>৳{{App\Model\Product::currencyPrice($product->price)}}</span></td>
                         <td>
                             @if($product->inStock())
                             <span class="status-badge success">{{$lng->InStock}}</span>
@@ -60,7 +60,7 @@
                             {{Str::limit($product->name,50)}}
                         </p>
                         <div class="price-status">
-                            <span>{{App\Model\Product::currencyPrice($product->price)}}</span>
+                            <span>৳{{App\Model\Product::currencyPrice($product->price)}}</span>
                             @if($product->inStock())
                             <span class="status-badge success">{{$lng->InStock}}</span>
                             @else

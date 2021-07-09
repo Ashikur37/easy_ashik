@@ -36,7 +36,7 @@
                                 </div>
                             </td>
                             <td>
-                                <p class="product-price">{{ App\Model\Product::currencyPriceRate($item->price) }}</p>
+                                <p class="product-price">৳{{ App\Model\Product::currencyPriceRate($item->price) }}</p>
                             </td>
                             <td>
                                 <div class="product-count">
@@ -57,7 +57,7 @@
                             </td>
                             <td>
                                 <p class="product-total row-total-{{ $item->rowId }}">
-                                    {{ App\Model\Product::currencyPriceRate($item->priceTotal) }}</p>
+                                    ৳{{ App\Model\Product::currencyPriceRate($item->priceTotal) }}</p>
                             </td>
                             <td><span data-id="{{ $item->id }}" data-row="{{ $item->rowId }}"
                                     class="product-remove cart-view"><i class="ri-delete-bin-line"></i>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="flex-item">
                             <div class="product-attributes">
-                                <p class="product-price">{{ App\Model\Product::currencyPriceRate($item->price) }}</p>
+                                <p class="product-price">৳{{ App\Model\Product::currencyPriceRate($item->price) }}</p>
                                 @if ($item->options->size)
                                     <span>Size : {{ $item->options->size }}</span>
                                 @endif
@@ -149,21 +149,21 @@
                 <div class="checkout-process-content">
                     <div class="flex-item">
                         <p>{{ $lng->Discount }}</p>
-                        <span class="cart-discount">{{ App\Model\Product::currencyPriceRate(Cart::discount()) }}</span>
+                        <span class="cart-discount">৳{{ App\Model\Product::currencyPriceRate(Cart::discount()) }}</span>
                     </div>
                     <div class="flex-item">
                         <p>{{ $lng->Tax }}</p>
-                        <span class="cart-tax">{{ App\Model\Product::currencyPriceRate(Cart::tax()) }}</span>
+                        <span class="cart-tax">৳{{ App\Model\Product::currencyPriceRate(Cart::tax()) }}</span>
                     </div>
                     <div class="flex-item">
                         <p class="mb-md-0">{{ $lng->SubTotal }}</p>
-                        <span class="cart-sub-total">{{ App\Model\Product::currencyPriceRate(Cart::subtotal()) }}</span>
+                        <span class="cart-sub-total">৳{{ App\Model\Product::currencyPriceRate(Cart::subtotal()) }}</span>
                     </div>
                     <div class="sm-grand-total">
                         <div class="grand-total">
                             <p class="mb-0">{{ $lng->GrandTotal }}</p>
                             <span
-                                class="cart-grand-total">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
+                                class="cart-grand-total">৳{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
                         </div>
                         <div>
                             @if (Session::has('coupon'))
@@ -196,7 +196,7 @@
             <div class="col-3 lg-grand-total">
                 <div class="grand-total">
                     <p class="mb-4">{{ $lng->GrandTotal }}</p>
-                    <span class="cart-grand-total">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
+                    <span class="cart-grand-total">৳{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
                 </div>
                 <a href="{{ route('checkout') }}" class="btn-checkout default-btn">{{ $lng->Checkout }}</a>
             </div>

@@ -89,6 +89,9 @@ class ProductController extends Controller
                                  <a href="' . route($route . ".edit", $row->id) . '"><i class="ri-pencil-line"></i></a>
                                  </span> ';
                     }
+                    $btn .= '<span class="ts-action-btn mr-2">
+                                 <a href="' . URL::to('/admin/product/' . $row->id . '/duplicate') . '"><i class="ri-file-copy-line"></i></a>
+                                 </span> ';
                     if ($user->can($route . '.destroy')) {
                         $btn .= '<span class="ts-action-btn">
                                  <a class="delete-button" href="#" data-href="' . route($route . ".destroy", $row->id) . '"><i class="ri-delete-bin-line"></i></a>
@@ -280,6 +283,23 @@ class ProductController extends Controller
         $sizes = Size::orderBy('name')->get();
         $shops = Shop::all();
         return view('admin.product.edit', compact('productTags', 'shops', 'productBadges', 'colors', 'sizes', 'brands', 'badges', 'categories', 'tags', 'attributeSets', 'product'));
+    }
+
+
+    public function duplicate(Product $product)
+    {
+
+        $productTags = $product->tags->pluck("tag_id")->toArray();
+        $productBadges = $product->badges->pluck("badge_id")->toArray();
+        $brands = Brand::orderBy('name')->get();
+        $badges = Badge::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
+        $attributeSets = AttributeSet::orderBy('name')->with('attributes')->get();
+        $colors = Color::orderBy('name')->get();
+        $sizes = Size::orderBy('name')->get();
+        $shops = Shop::all();
+        return view('admin.product.duplicate', compact('productTags', 'shops', 'productBadges', 'colors', 'sizes', 'brands', 'badges', 'categories', 'tags', 'attributeSets', 'product'));
     }
 
     /**

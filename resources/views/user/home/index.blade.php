@@ -27,11 +27,11 @@
                     </div>
                     <div class="info">
                         <span class="label">{{$lng->Balance}}</span>
-                        <span class="value">{{App\Model\Product::currencyPriceRate(auth()->user()->affiliate_balance)}}</span>
+                        <span class="value">৳ {{App\Model\Product::currencyPriceRate(auth()->user()->affiliate_balance)}}</span>
                     </div>
                     <div class="info">
                         <span class="label">{{$lng->Spent}}</span>
-                        <span class="value">{{App\Model\Product::currencyPriceRate(auth()->user()->spent())}}</span>
+                        <span class="value">৳ {{App\Model\Product::currencyPriceRate(auth()->user()->spent())}}</span>
                     </div>
                 </div>
             </div>
@@ -74,23 +74,23 @@
                         <div class="legend-info">
                             <span class="legend-bg earned"></span>
                             <span class="legend-text">{{$lng->Earned}}</span>
-                            <span class="legend-value">{{App\Model\Product::currencyPriceRate(auth()->user()->withdrawAmount()+auth()->user()->spent()+auth()->user()->affiliate_balance)}}</span>
+                            <span class="legend-value">৳ {{App\Model\Product::currencyPriceRate(auth()->user()->withdrawAmount()+auth()->user()->spent()+auth()->user()->affiliate_balance)}}</span>
                         </div>
                         <div class="legend-info">
                             <span class="legend-bg balance"></span>
                             <span class="legend-text">{{$lng->Balance}}</span>
-                            <span class="legend-value">{{App\Model\Product::currencyPriceRate(auth()->user()->affiliate_balance)}}</span>
+                            <span class="legend-value">৳ {{App\Model\Product::currencyPriceRate(auth()->user()->affiliate_balance)}}</span>
                         </div>
                         <div class="legend-info">
                             <span class="legend-bg spent"></span>
                             <span class="legend-text">{{$lng->Withdraw}}</span>
-                            <span class="legend-value">{{App\Model\Product::currencyPriceRate(auth()->user()->withdrawAmount())}}</span>
+                            <span class="legend-value">৳ {{App\Model\Product::currencyPriceRate(auth()->user()->withdrawAmount())}}</span>
                         </div>
                     </div>
                     <svg id="pie-chart2" width="200" height="150">
                         <text x="53%" y="50%" class="text" text-anchor="middle">
                             <tspan dx="0" dy="0">{{$lng->Spent}}</tspan>
-                            <tspan dx="52%" x="0" dy="1.6em">{{App\Model\Product::currencyPriceRate(auth()->user()->spent())}}</tspan>
+                            <tspan dx="52%" x="0" dy="1.6em">৳ {{App\Model\Product::currencyPriceRate(auth()->user()->spent())}}</tspan>
                         </text>
                     </svg>
                 </div>
@@ -113,7 +113,7 @@
                 <tr class="table-row" data-href="{{route('user.order.show', $order->order_number)}}">
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->created_at->format('Md,Y')}}</td>
-                    <td>{{App\Model\Product::currencyPriceRate($order->total)}}</td>
+                    <td>৳{{App\Model\Product::currencyPriceRate($order->total)}}</td>
                     <td><span class="status-badge {{$order->statusClass()}}">{{$order->statusText()}}</span></td>
                 </tr>
                 @endforeach
@@ -132,7 +132,7 @@
                 </div>
                 <div class="md-card-row">
                     <span>{{$lng->Total}}</span>
-                    <span>{{App\Model\Product::currencyPriceRate($order->total)}}</span>
+                    <span>৳{{App\Model\Product::currencyPriceRate($order->total)}}</span>
                 </div>
                 <div class="md-card-row">
                     <span>{{$lng->Status}}</span>

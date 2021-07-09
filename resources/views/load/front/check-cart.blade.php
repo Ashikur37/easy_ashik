@@ -36,7 +36,7 @@
                                 </div>
                             </td>
                             <td>
-                                <p class="product-price">{{ App\Model\Product::currencyPriceRate($item->price) }}</p>
+                                <p class="product-price">৳{{ App\Model\Product::currencyPriceRate($item->price) }}</p>
                             </td>
                             <td>
                                 <div class="product-count">
@@ -56,7 +56,7 @@
                                 </div>
                             </td>
                             <td>
-                                <p class="product-total row-total-{{ $item->rowId }}">
+                                <p class="product-total row-total-{{ $item->rowId }}">৳
                                     {{ App\Model\Product::currencyPriceRate($item->priceTotal) }}</p>
                             </td>
                             <td><span data-id="{{ $item->id }}" data-row="{{ $item->rowId }}"

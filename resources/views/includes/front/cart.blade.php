@@ -33,7 +33,7 @@
             </div>
             <div class="content-flex mt-3">
                 <div class="product-attributes">
-                    <p>{{App\Model\Product::currencyPriceRate($item->price)}} </p>
+                    <p>৳{{App\Model\Product::currencyPriceRate($item->price)}} </p>
                     @if($item->options->size)
                         <span>{{$lng->Size}} : {{$item->options->size}}</span>
                     @endif
@@ -66,7 +66,7 @@
 <div class="cart-footer">
     <div class="cart-subtotal">
         <h4 class="mb-0">{{$lng->SubTotal}}</h4>
-        <span class="cart-sub-total">{{App\Model\Product::currencyPriceRate(Cart::subtotal())}}</span>
+        <span class="cart-sub-total">৳{{App\Model\Product::currencyPriceRate(Cart::subtotal())}}</span>
     </div>
     <div class="cart-action-btn">
         <a href="{{route('cart')}}" class="default-btn cart-btn">

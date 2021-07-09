@@ -18,7 +18,7 @@
                 <tr class="table-row" data-href="{{route('user.order.show', $order->order_number)}}">
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->created_at->format('Md,Y')}}</td>
-                    <td>{{App\Model\Product::currencyPriceRate($order->total)}}</td>
+                    <td>৳{{App\Model\Product::currencyPriceRate($order->total)}}</td>
                     <td><span class="status-badge {{$order->statusClass()}}">{{$order->statusText()}}</span></td>
                 </tr>
                 @endforeach
@@ -37,7 +37,7 @@
                 </div>
                 <div class="md-card-row">
                     <span>{{$lng->Total}}</span>
-                    <span>{{App\Model\Product::currencyPriceRate($order->total)}}</span>
+                    <span>৳{{App\Model\Product::currencyPriceRate($order->total)}}</span>
                 </div>
                 <div class="md-card-row">
                     <span>{{$lng->Status}}</span>

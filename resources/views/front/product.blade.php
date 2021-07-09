@@ -10,6 +10,234 @@
 @section('pageStyle')
 <link rel="stylesheet" href="{{asset('front')}}/css/vendor/slick.min.css">
 <link rel="stylesheet" href="{{ asset('front') }}/css/page/product.css">
+<style>
+
+.ticket {
+  position: fixed;
+  right: 0%;
+  bottom: 0%;
+  width: 370px;
+  height: 380px;
+  border-radius: 4px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 30px 48px rgba(50, 54, 70, 0.30);
+          box-shadow: 0 30px 48px rgba(50, 54, 70, 0.30);
+  z-index: 999;
+  display: none;
+}
+
+.ticket-header {
+  padding-left: 23px;
+  background-color: #fff;
+  font-size: 15px;
+  line-height: 44px;
+  text-transform: uppercase;
+  width: 100%;
+  height: 43px;
+  color: #0088ff;
+  -webkit-box-shadow: 0px 5px 5px #2946780f;
+          box-shadow: 0px 5px 5px #2946780f;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.ticket-closer {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 18px;
+  color: #4e4e4e;
+  opacity: .8;
+  cursor: pointer;
+}
+
+.ticket-closer:hover {
+  color: #db2c2c;
+}
+
+.ticket-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44px;
+  bottom: 82px;
+  overflow-y: auto;
+  padding: 20px 25px 20px 25px;
+  background-color: #fff;
+}
+
+li.message-left,
+li.message-right {
+  position: relative;
+}
+
+li.message-left>.message-avatar {
+  float: left;
+  width: 40px;
+}
+
+li.message-right>.message-avatar {
+  float: right;
+  width: 40px;
+}
+
+.avatar {
+  font-size: 22px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+li.message-left .avatar {
+  color: #0088ff95;
+  background-color: #0088ff40;
+}
+
+li.message-right .avatar {
+  color: #777;
+  background-color: #DFE2E6;
+}
+
+.name {
+  font-size: 10px;
+  color: #7d7a7a;
+  text-align: center;
+}
+
+.message-text {
+  font-size: 14px;
+  max-width: calc(100% - 60px);
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #F1F3F6;
+  line-height: 1.1;
+  color: #4e4e4e;
+}
+
+li.message-left>.message-text {
+  text-align: left;
+  margin-left: 60px;
+}
+
+li.message-right>.message-text {
+  text-align: right;
+}
+
+.message-text:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 10px;
+  border: 8px solid;
+}
+
+li.message-left>.message-text:before {
+  left: 44px;
+  border-color: transparent #F1F3F6 transparent transparent;
+}
+
+li.message-right>.message-text:before {
+  right: 45px;
+  border-color: transparent transparent transparent #F1F3F6;
+}
+
+.attachment>a {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.attachment img {
+  width: 100%;
+  height: 100%;
+}
+
+li.message-right>.attachment {
+  text-align: right;
+  margin-right: 60px;
+}
+
+li.message-left>.attachment {
+  text-align: left;
+  margin-left: 60px;
+}
+
+.message-hour {
+  max-width: calc(100% - 60px);
+  padding: 2px;
+  color: #7d7a7a;
+  font-size: 10px;
+  margin-bottom: 12px;
+}
+
+.message-hour>span {
+  color: #0088ff;
+}
+
+li.message-left>.message-hour {
+  text-align: left;
+  margin-left: 60px;
+}
+
+li.message-right>.message-hour {
+  text-align: right;
+}
+
+#ticket-form {
+  padding: 20px 25px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #2946780f;
+}
+
+.ticket-form-wrapper {
+  height: 42px;
+  background-color: #fff;
+}
+
+.input-group>.input-group-append>.input-group-text {
+  background: #f4f4f4;
+  border: 1px solid #eaeaea;
+  border-left: medium;
+  cursor: pointer;
+}
+
+.ticket-form-wrapper .input-group .form-control {
+  border: 1px solid #eaeaea;
+  border-right: medium;
+}
+
+.ticket-form-wrapper .input-group .form-control:focus {
+  border: 1px solid #eaeaea;
+  border-right: medium;
+}
+
+.ticket-form-wrapper #submit-btn {
+  background: #0088ff;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media(max-width:575px) {
+  .ticket {
+      width: calc(100% - 30px);
+      height: calc(100% - 85px);
+      margin-right: 15px;
+  }
+}
+
+</style>
+
 @endsection
 @section('content')
 <div class="product-page white-bg"> 
@@ -60,9 +288,9 @@
                                 </div> 
                             </div>
                             <div class="product-price">
-                                <span id="product-price" class="new-price"> {{App\Model\Product::currencyPrice($product->price)}}</span>
+                                <span id="product-price" class="new-price"> ৳{{App\Model\Product::currencyPrice($product->price)}}</span>
                                 @if($product->price!=$product->actualPrice())
-                                <span class="old-price">{{App\Model\Product::currencyPrice($product->actualPrice())}} </span>
+                                <span class="old-price">৳{{App\Model\Product::currencyPrice($product->actualPrice())}} </span>
                                 @endif
                             </div>
                             <div class='product-short-desc'>
@@ -89,7 +317,7 @@
                                     <input data-val="{{$size->size->id}}" class="product-variant size-product" type="radio" name="size" />
                                     {{$size->size->name}}
                                     @if($size->price>0)
-                                    &nbsp;+ <b>{{App\Model\Product::currencyPriceRate($size->price)}}</b>
+                                    &nbsp;+ <b>৳{{App\Model\Product::currencyPriceRate($size->price)}}</b>
                                     @endif
                                 </label>
                                 @endforeach
@@ -101,7 +329,7 @@
                                 @foreach($option->option->values as $value)
                                 <label>
                                     <input {{$loop->first&&$option->option->required?'checked':''}} class="product-variant option-input" data-id="{{$option->option_id}}" data-val="{{$value->id}}" type="radio" name="option[{{$option->option_id}}]" />
-                                    {{$value->label}} &nbsp;+ <b>{{App\Model\Product::currencyPriceRate($value->price)}}</b>
+                                    {{$value->label}} &nbsp;+ <b>৳{{App\Model\Product::currencyPriceRate($value->price)}}</b>
                                 </label>
                                 @endforeach
                             </div>
@@ -180,7 +408,7 @@
                             @endif
                             <span class="store-status">{{\App\Model\Product::where('user_id',$product->user_id)->count()}} items</span>
                             <a href="{{route('seller')}}?id={{$product->user_id}}" class="store-btn">Visit Seller Store</a> 
-                            
+                            <button id="show-chat-btn">Chat</button>
                         </div>
                     </div>
                 </div>
@@ -431,10 +659,10 @@
             class="item-content cart-item-{{ $relatedProduct->id }} {{ array_key_exists($relatedProduct->id, $cartProducts) ? 'in-cart' : '' }}">
             <div class="item-price-ratings">
                 <div class="item-price">
-                    <span class="new-price">{{ App\Model\Product::currencyPrice($relatedProduct->price) }}</span>
+                    <span class="new-price">৳{{ App\Model\Product::currencyPrice($relatedProduct->price) }}</span>
                     @if ($relatedProduct->actualPrice() != $relatedProduct->price)
                         <span
-                            class="old-price">{{ App\Model\Product::currencyPrice($relatedProduct->actualPrice()) }}</span>
+                            class="old-price">৳{{ App\Model\Product::currencyPrice($relatedProduct->actualPrice()) }}</span>
                     @endif
                 </div>
                 <div class="ratings">
@@ -506,6 +734,9 @@
             </div>
         </div>
     </div>
+    <div class="ticket" id="chat-box" >
+        
+    </div>
 </div>
 @endsection
 @section('pageScripts')
@@ -513,6 +744,55 @@
 <script src="{{asset('front/js/vendor/jquery-zoom.js')}}"></script> 
 <script src="{{asset('front/js/page/product.js')}}"></script> 
 <script>
+    $(function(){
+
+            
+    $("#show-chat-btn").on('click',function() {
+        if (!loggedIn) {
+            $('#login-modal').modal('show');
+            return;
+        }
+      let id = "{{$product->id}}";
+      $("#chat-box").load("{{URL::to('/user/get-messages')}}/" + id, function() {
+        $("#chat-box").css('display', 'block')
+        setTimeout(function(){
+            $('#ticket-body').scrollTop($('#ticket-body')[0].scrollHeight);
+          },300)
+      });
+    })
+    $(document).on('click', '.ticket-closer', {}, function() {
+      $("#chat-box").css('display', 'none')
+    })
+
+    $(document).on('submit', "form#ticket-form", {}, function(e) { 
+      e.preventDefault();
+      var formData = new FormData(this);
+      showLoader()
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+        url: $(this).attr("action"),
+        type: 'POST',
+        data: formData,
+        success: function(data) {
+          $("#chat-box").html(data);
+          setTimeout(function(){
+            $('#ticket-body').scrollTop($('#ticket-body')[0].scrollHeight);
+          },300)
+          hideLoader()
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+    });
+
+
+    
+    })
         function updatePrice() {
             let size = "";
             let color = "";

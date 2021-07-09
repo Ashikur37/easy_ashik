@@ -47,11 +47,11 @@
                                         <div class="checkout-process-content">
                                             <div class="flex-item">
                                                 <p>{{ $lng->Discount }}</p>
-                                                <span>{{ App\Model\Product::currencyPriceRate(Cart::discount()) }}</span>
+                                                <span>৳{{ App\Model\Product::currencyPriceRate(Cart::discount()) }}</span>
                                             </div>
                                             <div class="flex-item">
                                                 <p>{{ $lng->Tax }}</p>
-                                                <span>{{ App\Model\Product::currencyPriceRate(Cart::tax()) }}</span>
+                                                <span>৳{{ App\Model\Product::currencyPriceRate(Cart::tax()) }}</span>
                                             </div>
                                             <div class="flex-item">
                                                 <p class="mb-md-0">{{ $lng->SubTotal }}</p>
@@ -61,7 +61,7 @@
                                                 <div class="grand-total">
                                                     <p class="mb-0">{{ $lng->GrandTotal }}</p>
                                                     <span
-                                                        class="total-price">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
+                                                        class="total-price">৳{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
                                                 </div>
                                                 <button class="btn-checkout default-btn">Process Order</button>
                                             </div>
@@ -246,11 +246,11 @@
                                         <div class="checkout-process-content">
                                             <div class="flex-item">
                                                 <p>{{ $lng->Discount }}</p>
-                                                <span>{{ App\Model\Product::currencyPriceRate(Cart::discount()) }}</span>
+                                                <span>৳{{ App\Model\Product::currencyPriceRate(Cart::discount()) }}</span>
                                             </div>
                                             <div class="flex-item">
                                                 <p>{{ $lng->Tax }}</p>
-                                                <span>{{ App\Model\Product::currencyPriceRate(Cart::tax()) }}</span>
+                                                <span>৳{{ App\Model\Product::currencyPriceRate(Cart::tax()) }}</span>
                                             </div>
                                             <div class="flex-item">
                                                 <p class="mb-md-0">{{ $lng->SubTotal }}</p>
@@ -260,7 +260,7 @@
                                                 <div class="grand-total">
                                                     <p class="mb-0">{{ $lng->GrandTotal }}</p>
                                                     <span
-                                                        class="total-price">{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
+                                                        class="total-price">৳{{ App\Model\Product::currencyPriceRate(Cart::total()) }}</span>
                                                 </div>
                                                 {{-- <div>
                                                     @if (Session::has('coupon'))

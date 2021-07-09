@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="d-flex order-track-subtitle">
                                 <span class="">{{$lng->Amount}}</span>
-                                    <span class="ml-auto">{{App\Model\Product::currencyPriceRate($order->shipping_cost+$order->total)}}</span>
+                                    <span class="ml-auto">৳{{App\Model\Product::currencyPriceRate($order->shipping_cost+$order->total)}}</span>
                                 </div>                           
                             </div>
                             </div>

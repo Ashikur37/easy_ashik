@@ -103,7 +103,7 @@
                                     <div class="product-title">
                                         <a href="{{route('front-product.show',$product->slug)}}">{{ $product->name}}
                                             <br>
-                                            <span class="product-price">{{App\Model\Product::currencyPrice($product->price)}}</span>
+                                            <span class="product-price">৳{{App\Model\Product::currencyPrice($product->price)}}</span>
                                         </a>
                                     </div>
                                     <div class="product-img">
@@ -255,7 +255,7 @@
                         <div class="suggested-products-info">
                             <div class="product-title">
                                 <a href="{{route('front-product.show',$product->slug)}}">{{$product->name}}
-                                <span class="product-price">{{App\Model\Product::currencyPrice($product->price)}}</span>
+                                <span class="product-price">৳{{App\Model\Product::currencyPrice($product->price)}}</span>
                                 </a>
                             </div>
                             <div class="product-img">

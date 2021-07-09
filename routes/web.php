@@ -153,6 +153,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'is_admin'], function () {
     /*Product Routes*/
     Route::resource('product', 'Admin\ProductController');
     Route::get('product-import', 'Admin\ProductController@import');
+    Route::get('product/{product}/duplicate', 'Admin\ProductController@duplicate');
+
     Route::post('product-import', 'Admin\ProductController@importSubmit');
 
 
@@ -395,6 +397,10 @@ Route::group(['prefix' => 'user',  'middleware' => 'is_user'], function () {
 
     Route::resource('/user-address', 'User\UserAddressController');
     Route::get('/address/delete/{userAddress}', 'User\UserAddressController@deleteAddress');
+
+
+    Route::get('get-messages/{product}', 'User\MessageController@getMessages');
+    Route::post('send-message/{product}', 'User\MessageController@sendMessage')->name('user.product-message');
 });
 
 Route::group(['prefix' => 'vendor',  'middleware' => 'is_vendor'], function () {

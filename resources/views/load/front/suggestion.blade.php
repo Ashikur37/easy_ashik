@@ -7,7 +7,7 @@
                 <a href="{{ route('front-product.show', $product->slug) }}">{!!
                     App\Model\Product::highlight(Str::limit($product->name, 60, '..'), $key) !!}
                     <br>
-                    <span class="product-price">{{ App\Model\Product::currencyPrice($product->price) }}</span>
+                    <span class="product-price">৳{{ App\Model\Product::currencyPrice($product->price) }}</span>
                 </a>
             </div>
             <div class="product-img">
