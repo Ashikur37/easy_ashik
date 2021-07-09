@@ -183,13 +183,52 @@
 </div>
 <!-- mobile header -->
 <div class="d-lg-none">
-    <div class="sm-top-header-section">
-        <div class="container white-bg">
+    <div class="sm-top-header-section white-bg">
+        <div class="container">
             <div class="brand-name">
                 <a href="{{URL::to('/')}}">
                     <img alt="{{$setting->title}}" src="{{asset('images/banner/'.$setting->header_logo)}}"/>             
                 </a>
+               <div class="sm-easymert-search-box-wrapper ">
+                <div class='sm-easymert-search-box'>
+                    <form class='sm-easymert-form'>
+                      <input class='form-control' placeholder='Search Goods...' type='text'  id="smSearchBar">
+                      <button class='btn btn-link search-btn'>
+                          <i class="ri-search-line"></i>
+                      </button>
+                    </form>
+                  </div>
+                  <div class="search-suggestion-wrapper custom-scrollbar" id="smSuggestedProduct">
+                    <span class="popular-product">{{$lng->PopularProduct}}</span>
+                        @foreach($topProducts as $product)
+                        <div class="suggested-products-info">
+                            <div class="product-title">
+                                <a href="{{route('front-product.show',$product->slug)}}">{{$product->name}}
+                                <span class="product-price">{{App\Model\Product::currencyPrice($product->price)}}</span>
+                                </a>
+                            </div>
+                            <div class="product-img">
+                                <a href="{{route('front-product.show',$product->slug)}}">
+                                    <img src="{{asset('images/product/'.$product->image)}}" alt="{{$product->name}}">
+                                </a>
+                            </div>
+                        </div>
+                        @endforeach
+                        <strong class="top-search">{{$lng->TopSearch}}</strong>
+                        @foreach($topKeys as $key)
+                        <a class="link top-keyword" href="{{route('category')}}?key={{urlencode ( $key->term)}}">{{$key->term}}</a>
+                        @endforeach
+                    </div>
+               </div>
             </div>
+        </div>
+        <div class="offers-wrapper">
+            <ul>
+                <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""></a></li>
+                <li><a href="{{route('shop')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""></a></li>
+                <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""></a></li>
+                <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""></a></li>
+            </ul>
         </div>
     </div>
     <div class="sm-bottom-nav">
@@ -243,10 +282,10 @@
                     <span class="counter-badge">{{Cart::instance('default')->content()->count()}}</span>
                     @endif 
                 </span>                             
-                <span class="sm-nav-item sm-search-trigger">
+                {{-- <span class="sm-nav-item sm-search-trigger">
                     <i class="ri-search-line"></i>
-                </span>
-                <div class="sm-search-container custom-scrollbar">
+                </span> --}}
+                {{-- <div class="sm-search-container custom-scrollbar">
                     <input type="text" id="smSearchBar" placeholder="{{$lng->SearchGoods}}" />
                     <span class="sm-search-closer"> <i class="ri-close-line"></i></span>
                     <div class="search-suggestion-wrapper active-suggested" id="smSuggestedProduct">
@@ -270,7 +309,7 @@
                         <a class="link top-keyword" href="{{route('category')}}?key={{urlencode ( $key->term)}}">{{$key->term}}</a>
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
                 <span class="sm-nav-item sm-main-menu-trigger">
                     <i class="ri-user-line"></i>
                 </span>
@@ -311,14 +350,12 @@
                                 </select>
                             </div>
                             <div class="checkout_process_option" id="sm-all-counter">
-                                
                                 <a href="{{route('user.wishlist')}}">
                                     <i class="ri-heart-line"></i>
                                     @if($wishCount)
                                     <span class="counter-badge">{{$wishCount}}</span>
                                     @endif
                                 </a>
-                                
                                 <a href="{{route('compare')}}"><i class="ri-shuffle-line"></i>
                                     @if(Cart::instance('compare-list')->content()->count())
                                     <span class="counter-badge">

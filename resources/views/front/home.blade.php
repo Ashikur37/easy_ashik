@@ -7,8 +7,8 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="offers-wrapper">
-            <ul class="d-flex">
+        <div class="offers-wrapper lg-offers-wrapper">
+            <ul>
                 <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Voucher Shops</span></a></li>
                 <li><a href="{{route('shop')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Easy Shops</span></a></li>
                 <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""><span>Easymert Rocket</span></a></li>
