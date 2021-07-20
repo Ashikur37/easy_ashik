@@ -170,10 +170,13 @@
                 </div>
                 <div class="offers-wrapper">
                     <ul class="d-flex">
-                        <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Voucher Shops</span></a></li>
-                        <li><a href="{{route('shop')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Easy Shops</span></a></li>
-                        <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""><span>Easymert Rocket</span></a></li>
-                        <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Easymert Offers</span></a></li>
+                        {{-- <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Voucher Shops</span></a></li> --}}
+                        <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Doodle Offer</span></a></li>
+                        <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Regular Shop</span></a></li>
+                        <li><a href="{{route('shop')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Door To Door</span></a></li>
+                        <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Prime Shop</span></a></li>
+                        <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""><span>Voucher</span></a></li>
+                        <li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Voucher Shops</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -224,7 +227,7 @@
         </div>
         <div class="offers-wrapper">
             <ul>
-                <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""></a></li>
+                <li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""></a></li>
                 <li><a href="{{route('shop')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""></a></li>
                 <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""></a></li>
                 <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""></a></li>
