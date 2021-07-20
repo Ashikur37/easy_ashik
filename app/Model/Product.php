@@ -115,7 +115,7 @@ use Cache;
 class Product extends Model
 {
     protected $fillable = [
-        'shop_id', 'name', 'inside_charge', 'outside_charge', 'brand_id', 'slug', 'price', 'special_price', 'special_price_start', 'special_price_end', 'selling_price', 'sku', 'manage_stock', 'qty', 'in_stock', 'viewed', 'is_active', 'details', 'special_price_type', 'category_id', 'sub_category_id', 'child_category_id', 'meta_title', 'meta_description', 'image', 'price_type', 'is_trending', 'is_hot', 'is_top', 'best_deal', 'rating', 'user_id', 'cashback'
+        'shop_id', 'is_cod', 'advance_delivery_charge', 'is_offer', 'name', 'inside_charge', 'outside_charge', 'brand_id', 'slug', 'price', 'special_price', 'special_price_start', 'special_price_end', 'selling_price', 'sku', 'manage_stock', 'qty', 'in_stock', 'viewed', 'is_active', 'details', 'special_price_type', 'category_id', 'sub_category_id', 'child_category_id', 'meta_title', 'meta_description', 'image', 'price_type', 'is_trending', 'is_hot', 'is_top', 'best_deal', 'rating', 'user_id', 'cashback'
     ];
     public function user()
     {
