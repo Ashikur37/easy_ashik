@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // ************************************ ADMIN SECTION **********************************************
+
 Route::group(['prefix' => 'admin',  'middleware' => 'is_admin'], function () {
     /*Admin Dashboard*/
     Route::get('/', 'Admin\HomeController@index');
@@ -324,6 +325,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'is_admin'], function () {
     Route::post('send-email', 'Admin\EmailController@sendEmail');
     Route::get('subscriber', 'Admin\EmailController@subscriber');
 });
+
+Route::get('/coming_soon',function(){
+    return view('comming_soon\comming_soon');
+})->name('coming_soon');
 // ************************************End ADMIN SECTION **********************************************
 Route::get('admin/load-sub-category/{category}', 'Admin\CategoryController@loadSubCategory');
 Route::get('admin/load-child-category/{subcategory}', 'Admin\SubCategoryController@loadChildCategory');
@@ -342,6 +347,8 @@ Route::view('password/mobile', 'auth.passwords.mobile');
 
 Route::view('password/select', 'auth.passwords.set');
 /*Admin login*/
+Route::get('/admin/login', 'HomeController@adminLogin');
+
 Route::get('/admin/login', 'HomeController@adminLogin');
 
 
