@@ -126,20 +126,20 @@ class AppServiceProvider extends ServiceProvider
                 view()->share('lng', $lang);
             }
         });
-        $es = EmailSetting::first();
-        $config = array(
-            'driver'     => 'smtp',
-            'host'       => $es->smtp_host,
-            'port'       => $es->smtp_port,
-            'from'       => array('address' => $es->from_email, 'name' => $es->from_name),
-            'encryption' => $es->mail_encryption,
-            'username'   => $es->smtp_user,
-            'password'   => $es->smtp_pass,
-            'sendmail'   => '/usr/sbin/sendmail -bs',
-            'pretend'    => false,
-        );
-        Config::set('mail', $config);
-        $setting = Setting::first();
-        Config::set('app.timezone', $setting->default_timezone);
+        // $es = EmailSetting::first();
+        // $config = array(
+        //     'driver'     => 'smtp',
+        //     'host'       => $es->smtp_host,
+        //     'port'       => $es->smtp_port,
+        //     'from'       => array('address' => $es->from_email, 'name' => $es->from_name),
+        //     'encryption' => $es->mail_encryption,
+        //     'username'   => $es->smtp_user,
+        //     'password'   => $es->smtp_pass,
+        //     'sendmail'   => '/usr/sbin/sendmail -bs',
+        //     'pretend'    => false,
+        // );
+        // Config::set('mail', $config);
+        // $setting = Setting::first();
+        // Config::set('app.timezone', $setting->default_timezone);
     }
 }

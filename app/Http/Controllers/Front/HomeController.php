@@ -61,7 +61,7 @@ class HomeController extends Controller
             ->orderBy('product_count', 'desc')->limit(4)->get();
         $blogs = Blog::where('show', 1)->orderBy('created_at', 'desc')->limit(4)->get();
         $brands = Brand::whereStatus(1)->orderBy('name')->get();
-        $newProducts = Product::latest()->limit(4)->get();
+        $newProducts = Product::where('is_offer', 0)->latest()->limit(4)->get();
 
         $trendCategories = Category::get()->sortByDesc('product_view')->take(6);
         $cartProducts = [];

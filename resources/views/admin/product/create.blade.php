@@ -168,6 +168,24 @@
                                     <label for="checkTopRated">{{ $lng->TopRated }}
                                     </label>
                                 </div>
+                                <div class="icheck-primary">
+                                    <input checked value="1" name="is_cod" type="checkbox" id="checkCod">
+                                    <label for="checkCod">COD
+                                    </label>
+                                </div>
+                                <div class="icheck-primary">
+                                    <input value="1" name="advance_delivery_charge" type="checkbox" id="advanceDelivery">
+                                    <label for="advanceDelivery">Advance Delivery Charge
+                                    </label>
+                                </div>
+                                <div class="icheck-primary">
+                                    <input value="1" name="is_offer" type="checkbox" id="isOffer">
+                                    <label for="isOffer">Offer Product
+                                    </label>
+                                </div>
+                                
+
+            
                             </div>
                             <div class="form-group mt-3">
                                 <label>{{ $lng->HighlightIn }}</label>
