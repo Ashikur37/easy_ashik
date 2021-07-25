@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
+use App\Model\Campaign;
 use App\Model\FlashSale;
 use App\Model\Shop;
 use Illuminate\Http\Request;
@@ -11,30 +12,36 @@ class OfferController extends Controller
 {
     public function singleVoucher()
     {
-        return view('Front/single-voucher');
+        return view('front/single-voucher');
     }
 
     public function rocketShop()
     {
-        return view('Front/rocketshop');
+        return view('front/rocketshop');
     }
 
     public function campaigns()
     {
 
         $offers = FlashSale::where('is_active', 1)->where('end', '>=', today())->get();
-        return view('Front/campaigns', compact('offers'));
+        return view('front/campaigns', compact('offers'));
+    }
+
+    public function campaignList()
+    {
+        $campaigns = Campaign::where('is_active', 1)->get();
+        return view('front/campaign-list', compact('campaigns'));
     }
 
     public function shops()
     {
         $shops = Shop::all();
 
-        return view('Front/shop', compact('shops'));
+        return view('front/shop', compact('shops'));
     }
 
     public function singleCampaign()
     {
-        return view('Front/single-campaign');
+        return view('front/single-campaign');
     }
 }

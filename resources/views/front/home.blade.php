@@ -9,6 +9,7 @@
     <div class="container">
         <div class="offers-wrapper lg-offers-wrapper">
             <ul>
+                <li><a href="{{route('campaigns')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Campaigns</span></a></li>
                 
                      <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Doddle Offers</span></a></li>
                      <li><a href="{{route('category')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Regular Shop</span></a></li>

@@ -170,6 +170,8 @@
                 </div>
                 <div class="offers-wrapper">
                     <ul class="d-flex">
+                <li><a href="{{route('campaigns')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Campaigns</span></a></li>
+
                         {{-- <li><a href="{{route('single-voucher')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Voucher Shops</span></a></li> --}}
                         <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Doddle Offers</span></a></li>
                         <li><a href="{{route('category')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Regular Shop</span></a></li>

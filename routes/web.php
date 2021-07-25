@@ -326,7 +326,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'is_admin'], function () {
     Route::get('subscriber', 'Admin\EmailController@subscriber');
 });
 
-Route::get('/coming_soon',function(){
+Route::get('/coming_soon', function () {
     return view('comming_soon\comming_soon');
 })->name('coming_soon');
 // ************************************End ADMIN SECTION **********************************************
@@ -588,6 +588,10 @@ Route::get('/compare/remove/{row}', 'Front\CompareListController@removeItem');
 Route::get('/single-voucher', 'Front\OfferController@singleVoucher')->name('single-voucher');
 Route::get('/rocket-shop', 'Front\OfferController@rocketShop')->name('rocket-shop');
 Route::get('/offers', 'Front\OfferController@campaigns')->name('offers');
+Route::get('/campaigns', 'Front\OfferController@campaignList')->name('campaigns');
+Route::get('/campaign/{title}', 'Front\OfferController@singleCampaign')->name('single-campaign');
+
+
 Route::get('/easy-shop', 'Front\OfferController@shops')->name('shop');
 
 Route::get('/single-campaign', 'Front\OfferController@singleCampaign');
