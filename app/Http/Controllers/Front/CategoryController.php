@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Attribute;
 use App\Model\AttributeValue;
 use App\Model\Brand;
+use App\Model\Campaign;
 use App\Model\Category;
 use App\Model\ChildCategory;
 use App\Model\Color;
@@ -341,6 +342,46 @@ class CategoryController extends Controller
         }
         return view('front.flash-sale', compact('cartProducts', 'products', 'flashSale'));
     }
+
+    //singleCampaign
+    public function singleCampaign($title)
+    {
+        $campaign = Campaign::where('title', $title)->first();
+        $products = $campaign->campaignProducts;
+        $cartProducts = [];
+        $items = Cart::content();
+        foreach ($items as $item) {
+            $cartProducts[$item->id] = [
+                "qty" => $item->qty,
+                "rowId" => $item->rowId,
+            ];
+        }
+        return view('front.single-campaign', compact('cartProducts', 'products', 'campaign'));
+    }
+    public function singleCampaignSort($title, Request $request)
+    {
+
+        $sort = [["id", "0"], ["id", "1"], ["price", "0"], ["price", "1"], ["name", "0"], ["name", "1"], ["rating_percent", "1"], ["viewed", "1"]][$request->sort];
+        $campaign = Campaign::where('title', $title)->first();
+        $products = $campaign->campaignProducts;
+        if ($sort[1] == 0) {
+            $products = $products->sortBy($sort[0]);
+        } else {
+            $products = $products->sortByDesc($sort[0]);
+        }
+        $cartProducts = [];
+        $items = Cart::content();
+        foreach ($items as $item) {
+            $cartProducts[$item->id] = [
+                "qty" => $item->qty,
+                "rowId" => $item->rowId,
+            ];
+        }
+        return view('load.front.flash-sale', compact('cartProducts', 'products'));
+    }
+
+
+
     public function flashSaleSort(Request $request)
     {
 
@@ -362,10 +403,6 @@ class CategoryController extends Controller
         }
         return view('load.front.flash-sale', compact('cartProducts', 'products'));
     }
-
-
-
-
 
 
     public function bestSale()

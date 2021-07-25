@@ -391,7 +391,7 @@ Route::group(['prefix' => 'user',  'middleware' => 'is_user'], function () {
     /*OrderRoutes*/
     Route::get('/order', 'User\OrderController@index')->name('user.order');
     Route::post('/order/partial-payment/{order}', 'User\OrderController@partialPayment');
-
+    Route::get('/order/cash-on-delivery/{order}', 'User\OrderController@cashOnDelivery');
     Route::get('/order/{number}', 'User\OrderController@show')->name('user.order.show');
     Route::get('/order/status/{id}', 'User\OrderController@status')->name('user.order.status');
 
@@ -541,6 +541,8 @@ Route::get('/offer/{name}', 'Front\CategoryController@flashSale')->name('flash-s
 Route::post('/sale', 'Front\CategoryController@flashSaleSort');
 
 
+Route::get('/campaign/{title}', 'Front\CategoryController@singleCampaign')->name('single-campaign');
+Route::post('/campaign/{title}', 'Front\CategoryController@singleCampaign');
 /*Shope Routes*/
 Route::get('/shop/{name}', 'Front\CategoryController@shop')->name('single-shop');
 Route::post('/shop/{name}', 'Front\CategoryController@shopSort');
@@ -589,7 +591,7 @@ Route::get('/single-voucher', 'Front\OfferController@singleVoucher')->name('sing
 Route::get('/rocket-shop', 'Front\OfferController@rocketShop')->name('rocket-shop');
 Route::get('/offers', 'Front\OfferController@campaigns')->name('offers');
 Route::get('/campaigns', 'Front\OfferController@campaignList')->name('campaigns');
-Route::get('/campaign/{title}', 'Front\OfferController@singleCampaign')->name('single-campaign');
+
 
 
 Route::get('/easy-shop', 'Front\OfferController@shops')->name('shop');

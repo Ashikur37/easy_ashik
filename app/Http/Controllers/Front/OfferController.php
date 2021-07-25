@@ -7,6 +7,8 @@ use App\Model\Campaign;
 use App\Model\FlashSale;
 use App\Model\Shop;
 use Illuminate\Http\Request;
+use Cart;
+use Illuminate\Support\Collection;
 
 class OfferController extends Controller
 {
@@ -40,8 +42,21 @@ class OfferController extends Controller
         return view('front/shop', compact('shops'));
     }
 
-    public function singleCampaign()
+    public function singleCampaign($title)
     {
-        return view('front/single-campaign');
+        $campaign = Campaign::where('title', $title)->first();
+        $products = $campaign->campaignProducts;
+
+        $view = "grid";
+        $cartProducts = [];
+        $items = Cart::content();
+        foreach ($items as $item) {
+            $cartProducts[$item->id] = [
+                "qty" => $item->qty,
+                "rowId" => $item->rowId,
+            ];
+        }
+        $products = (new Collection($products))->paginate(12);
+        return view('front/single-campaign', compact('view', 'products', 'cartProducts'));
     }
 }

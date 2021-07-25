@@ -33,12 +33,20 @@ class CheckoutController extends Controller
         $charge = 0;
         $address = UserAddress::find($request->address_id);
         $cashback = 0;
+        $advanceCharge = 0;
         foreach ($request->products as $prod) {
             $product = Product::find($prod["id"]);
             if ($address->region == "Inside Dhaka") {
                 $charge += $product->inside_charge;
             } else {
                 $charge += $product->outside_charge;
+            }
+            if ($product->advance_delivery_charge) {
+                if ($address->region == "Inside Dhaka") {
+                    $advanceCharge += $product->inside_charge;
+                } else {
+                    $advanceCharge += $product->outside_charge;
+                }
             }
             //generate id for variation
             $colorCode = "";
@@ -79,6 +87,7 @@ class CheckoutController extends Controller
         //create the order
 
         $order = Order::create([
+            'advance_shipping_cost' => $advanceCharge,
             'order_number' => $item_number,
             'customer_id' => auth()->user()->id,
             'customer_email' => $address->email,

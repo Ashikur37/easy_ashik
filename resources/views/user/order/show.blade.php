@@ -60,37 +60,42 @@
                     </div>
                     <div class="info-row">
                         <div class="info-label">{{$lng->Discount}}</div>
-                        <div class="info-value">৳৳{{App\Model\Product::currencyPriceRate($order->discount)}}</div>
+                        <div class="info-value">৳{{App\Model\Product::currencyPriceRate($order->discount)}}</div>
                     </div>
                   
                      <div class="info-row">
                         <div class="info-label">Cashback</div>
-                        <div class="info-value">৳৳{{App\Model\Product::currencyPriceRate($order->cashback)}}</div>
+                        <div class="info-value">৳{{App\Model\Product::currencyPriceRate($order->cashback)}}</div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">{{$lng->SubTotal}}</div>
-                        <div class="info-value">৳৳{{App\Model\Product::currencyPriceRate($order->total)}}</div>
+                        <div class="info-value">৳{{App\Model\Product::currencyPriceRate($order->total)}}</div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">{{$lng->Shipping}}</div>
-                        <div class="info-value">৳৳{{App\Model\Product::currencyPriceRate($order->shipping_cost)}}</div>
+                        <div class="info-value">৳{{App\Model\Product::currencyPriceRate($order->shipping_cost)}}</div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">{{$lng->GrandTotal}}</div>
-                        <div class="info-value grand-total">৳৳{{App\Model\Product::currencyPriceRate($order->total)}}</div>
+                        <div class="info-value grand-total">৳{{App\Model\Product::currencyPriceRate($order->total)}}</div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">Paid Amount</div>
                         <div class="info-value">{{$order->paid_amount}}</div>
                     </div>
                     <div class="info-row">
-                        @if($order->paid_amount<$order->total)
+                      
+                        
+                        @if($order->paid_amount<$order->total && $order->payment_method!="Cash On Delivery")
                                 <button onclick="" class="btn btn-info" id="pay-btn">Pay Now</button>
+                        @endif
+                        @if($order->paid_amount==0&&$order->payment_method!="Cash On Delivery")
+                         <a href="{{URL::to('/user/order/cash-on-delivery/'.$order->id)}}" style="margin-left:20px;color:white"  class="btn btn-primary" >Cash On Delivery</a>
                         @endif
                     </div>
                     <div class="info-row">
                         <div class="info-label">Due Amount</div>
-                        <div class="info-value">{{$order->total-$order->paid_amount}}</div>
+                        <div class="info-value">৳{{$order->total-$order->paid_amount}}</div>
                     </div>
                     
                 </div>

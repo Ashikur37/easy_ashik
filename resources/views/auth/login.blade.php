@@ -76,20 +76,8 @@
                                 <div class="title color-white">{{$lng->CreateAccount}}</div>
                                 <a class="mail__address" href="{{route('register')}}">
                                     <i class="ri-mail-fill"></i>
-                                    <span>Continue With Mail Or Mobile</span>
+                                    <span>Continue With  Mobile</span>
                                 </a>                        
-                                @if($socialSetting->is_google)
-                                <a class="google" href="{{ route('social.oauth', 'google') }}">
-                                    <i class="ri-google-fill"></i>
-                                    <span>{{$lng->ContinueWithGoogle}}</span>
-                                </a>
-                                @endif
-                                @if($socialSetting->is_facebook)
-                                <a class="facebook" href="{{ route('social.oauth', 'facebook') }}">
-                                    <i class="ri-facebook-fill"></i>
-                                    <span>{{$lng->ContinueWithFacebook}}</span>
-                                </a>
-                                @endif
                             </div>
                         </div>
                     </div>

@@ -56,7 +56,21 @@ class OrderController extends Controller
         $items = unserialize(bzdecompress(utf8_decode($order->cart)));
         return view('user.order.print', compact('order', 'items'));
     }
-
+    public function cashOnDelivery(Order $order)
+    {
+        //check cash on delivery
+        if (auth()->user()->id != $order->customer_id) {
+            return;
+        }
+        $order->update([
+            "payment_method" => "Cash On Delivery",
+        ]);
+        $order->tracks()->create([
+            "title" => "Cash on delivery",
+            "details" => "Payment set to cash on delivery",
+        ]);
+        return back()->with('success', "Payment update to cash on delivery");
+    }
     public function partialPayment(Order $order, Request $request)
     {
         $tid = uniqid();

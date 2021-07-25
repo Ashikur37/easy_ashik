@@ -83,7 +83,7 @@ class CheckoutController extends Controller
     }
     public function checkoutSubmit(OrderRequest $request)
     {
-        $charge = 0;
+
         $address = UserAddress::find($request->address_id);
         $cashback = 0;
 
@@ -93,7 +93,28 @@ class CheckoutController extends Controller
         $curr = Currency::first();
         $item_number = "EMT" . rand(100000, 999999) . date('d');
         $shippingMethod = ShippingMethod::first();
+        $charge = 0;
+        $advanceCharge = 0;
+        foreach (Cart::content() as $item) {
+            $product = Product::find($item->options->productId);
+            if ($address->region == "Inside Dhaka") {
+                $charge += $product->inside_charge;
+            } else {
+                $charge += $product->outside_charge;
+            }
+
+            if ($product->advance_delivery_charge) {
+                if ($address->region == "Inside Dhaka") {
+                    $advanceCharge += $product->inside_charge;
+                } else {
+                    $advanceCharge += $product->outside_charge;
+                }
+            }
+
+            $cashback += $item->qty * $product->cashback;
+        }
         $order = Order::create([
+            'advance_shipping_cost' => $advanceCharge,
             'order_number' => $item_number,
             'customer_id' => auth()->user()->id,
             'customer_email' => $address->email,
