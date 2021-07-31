@@ -34,8 +34,12 @@ class CheckoutController extends Controller
         $address = UserAddress::find($request->address_id);
         $cashback = 0;
         $advanceCharge = 0;
+        $cod = 1;
         foreach ($request->products as $prod) {
             $product = Product::find($prod["id"]);
+            if ($product->campaign_id != 0 || $product->is_cod == 0) {
+                $cod = 0;
+            }
             if ($address->region == "Inside Dhaka") {
                 $charge += $product->inside_charge;
             } else {
@@ -87,6 +91,7 @@ class CheckoutController extends Controller
         //create the order
 
         $order = Order::create([
+            'is_cod' => $cod,
             'advance_shipping_cost' => $advanceCharge,
             'order_number' => $item_number,
             'customer_id' => auth()->user()->id,

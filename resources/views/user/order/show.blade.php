@@ -86,10 +86,10 @@
                     <div class="info-row">
                       
                         
-                        @if($order->paid_amount<$order->total && $order->payment_method!="Cash On Delivery")
+                        @if( $order->paid_amount<$order->total && $order->payment_method!="Cash On Delivery")
                                 <button onclick="" class="btn btn-info" id="pay-btn">Pay Now</button>
                         @endif
-                        @if($order->paid_amount==0&&$order->payment_method!="Cash On Delivery")
+                        @if($order->is_cod==1&& $order->paid_amount==0&&$order->payment_method!="Cash On Delivery")
                          <a href="{{URL::to('/user/order/cash-on-delivery/'.$order->id)}}" style="margin-left:20px;color:white"  class="btn btn-primary" >Cash On Delivery</a>
                         @endif
                     </div>

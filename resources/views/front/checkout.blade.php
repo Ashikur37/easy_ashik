@@ -39,8 +39,21 @@
                                     </div>
                                 </div>
                                 <div id="my-address"></div>
+                                
                             </div>
-                           <div class="col-6 d-none d-lg-block">
+                             
+                           <div class="col-6  d-lg-block">
+                               <div class="form-group custom-checkbox">
+                                <label>
+                                    <input  type="checkbox" class="require-field" id="term">
+                                    <span class="box"></span>
+                                {{$lng->IAccept}} <a href="{{URL::to('/terms-condition')}}" class="terms-conditions"> {{$lng->TermsAndCondition}}</a> ,
+                                    <a href="{{URL::to('/page/privacy-policy')}}" class="terms-conditions"> Privacy and policy</a> ,
+                                    <a href="{{URL::to('/page/refund')}}" class="terms-conditions"> Refund policy</a> 
+                                
+                                </label>
+                                <div class="has-error-text" id="term-error">{{$lng->YouNeedToAcceptTermsAndCondition}}</div>
+                            </div>
                             <div id="checkout-cart" class="checkout-process">
                                 <div class="row">
                                     <div class="col-lg-7 col-md-5 col-12 ">

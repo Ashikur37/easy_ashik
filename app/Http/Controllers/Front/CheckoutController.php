@@ -95,8 +95,12 @@ class CheckoutController extends Controller
         $shippingMethod = ShippingMethod::first();
         $charge = 0;
         $advanceCharge = 0;
+        $cod = 1;
         foreach (Cart::content() as $item) {
             $product = Product::find($item->options->productId);
+            if ($product->campaign_id != 0 || $product->is_cod == 0) {
+                $cod = 0;
+            }
             if ($address->region == "Inside Dhaka") {
                 $charge += $product->inside_charge;
             } else {
@@ -114,6 +118,7 @@ class CheckoutController extends Controller
             $cashback += $item->qty * $product->cashback;
         }
         $order = Order::create([
+            'is_cod' => $cod,
             'advance_shipping_cost' => $advanceCharge,
             'order_number' => $item_number,
             'customer_id' => auth()->user()->id,

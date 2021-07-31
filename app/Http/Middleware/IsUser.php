@@ -16,17 +16,16 @@ class IsUser
      */
     public function handle($request, Closure $next)
     {
-        $setting=Setting::first();
-        if(auth()->user()){
-            if(!auth()->user()->email_verified_at&&$setting->email_verification){
-                return redirect()->route('login')->with('error','Please verify your email');
+        $setting = Setting::first();
+        if (auth()->user()) {
+            if (!auth()->user()->email_verified_at && $setting->email_verification) {
+                return redirect()->route('login')->with('error', 'Please verify your email');
             }
             return $next($request);
-        }
-        else if(auth()->user()&&auth()->user()->type==3){
+        } else if (auth()->user() && auth()->user()->type == 3) {
             return redirect('/admin');
         }
-       
-        return redirect('home')->with('',"You don't have admin access.");
+
+        return redirect('/login');
     }
 }

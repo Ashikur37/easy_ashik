@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\Order;
 use App\Http\Controllers\Controller;
+use App\Model\CampaignProduct;
+use App\Model\FlashSaleProduct;
 use App\Model\Product;
 use App\Services\AffiliateService;
 use App\Services\Datatable;
@@ -128,6 +130,45 @@ class OrderController extends Controller
     public function updateStatus(Order $order, $status)
     {
 
+
+        /**
+         * Update stock if order completed
+         */
+        if ($status == 2) {
+            $items = unserialize(bzdecompress(utf8_decode($order->cart)));
+            foreach ($items as $item) {
+                $product = Product::find($item->options->productId);
+                $campaignProducts = CampaignProduct::where('product_id', $product->id)->get();
+                foreach ($campaignProducts as $campProduct) {
+                    $campProduct->qty -= $item->qty;
+                    $campProduct->save();
+                }
+                $flashProducts = FlashSaleProduct::where('product_id', $product->id)->get();
+                foreach ($flashProducts as $flashProduct) {
+                    $flashProduct->qty -= $item->qty;
+                    $flashProduct->save();
+                }
+                $product->qty -= $item->qty;
+                $product->save();
+            }
+        } else if ($status == 6 && $order->status > 2) {
+            $items = unserialize(bzdecompress(utf8_decode($order->cart)));
+            foreach ($items as $item) {
+                $product = Product::find($item->options->productId);
+                $campaignProducts = CampaignProduct::where('product_id', $product->id)->get();
+                foreach ($campaignProducts as $campProduct) {
+                    $campProduct->qty += $item->qty;
+                    $campProduct->save();
+                }
+                $flashProducts = FlashSaleProduct::where('product_id', $product->id)->get();
+                foreach ($flashProducts as $flashProduct) {
+                    $flashProduct->qty += $item->qty;
+                    $flashProduct->save();
+                }
+                $product->qty += $item->qty;
+                $product->save();
+            }
+        }
         $order->update([
             "status" => $status
         ]);
@@ -139,25 +180,6 @@ class OrderController extends Controller
          * Notify user
          */
         Notification::orderUpdateUser($order->id);
-        /**
-         * Update stock if order completed
-         */
-        if ($status == 3) {
-            $items = unserialize(bzdecompress(utf8_decode($order->cart)));
-            foreach ($items as $item) {
-                $product = Product::find($item->options->productId);
-                $product->qty -= $item->qty;
-                $product->save();
-                if (Session::get('flashSaleProducts')) {
-                    if (in_array($this->attributes["id"], Session::get('flashSaleProducts'))) {
-                        $flashSale = FlashSale::where('is_active', 1)->first();
-                        $flashSaleProduct = $flashSale->products->where('product_id', $this->attributes["id"])->first();
-                        $flashSaleProduct->qty -= $item->qty;
-                        $flashSaleProduct->save();
-                    }
-                }
-            }
-        }
         // if ($status == 5) {
         //     $user = User::find($order->customer_id);
 

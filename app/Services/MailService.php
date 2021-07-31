@@ -36,7 +36,7 @@ class MailService
     {
         $params = [
             "api_token" => "easymert-35405327-b328-4903-8393-4533f0cef537",
-            "sid" => "EASYMERTAPI",
+            "sid" => "DOODLEMARTAPI",
             "msisdn" => $msisdn,
             "sms" => $messageBody,
             "csms_id" => $csmsId

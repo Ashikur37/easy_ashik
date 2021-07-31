@@ -24,6 +24,8 @@ class HomeController extends Controller
 
     public function index()
     {
+        
+         
         if (request()->user) {
             $user = User::where('affiliate_link', request()->user)->first();
             if ($user) {

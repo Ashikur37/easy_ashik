@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
+use App\Model\CampaignProduct;
+use App\Model\FlashSaleProduct;
 use App\Model\Order;
 use App\Model\PartialPayment;
+use App\Model\Product;
 use App\Model\Transaction;
 use App\Services\AffiliateService;
 use App\User;
@@ -222,6 +225,22 @@ class SslCommerzPaymentController extends Controller
                         "title" => "Process",
                         "details" => "Order processing",
                     ]);
+                    $items = unserialize(bzdecompress(utf8_decode($order->cart)));
+                    foreach ($items as $item) {
+                        $product = Product::find($item->options->productId);
+                        $campaignProducts = CampaignProduct::where('product_id', $product->id)->get();
+                        foreach ($campaignProducts as $campProduct) {
+                            $campProduct->qty -= $item->qty;
+                            $campProduct->save();
+                        }
+                        $flashProducts = FlashSaleProduct::where('product_id', $product->id)->get();
+                        foreach ($flashProducts as $flashProduct) {
+                            $flashProduct->qty -= $item->qty;
+                            $flashProduct->save();
+                        }
+                        $product->qty -= $item->qty;
+                        $product->save();
+                    }
                 }
                 $payment->update([
                     "status" => 1

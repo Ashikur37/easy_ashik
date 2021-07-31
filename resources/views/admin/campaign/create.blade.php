@@ -55,12 +55,20 @@
                     </div>
                 </div>
             </div>
+            <label for="">Shop</label>
+            <select class="form-control" name="shop" id="">
+                <option value="">Select Shop</option>
+                @foreach($shops as $shop)
+                        <option value="{{$shop->id}}">{{$shop->name}}</option>p
+                @endforeach
+        </select>
+        <input type="number" placeholder="percentage" name="percentage" class="form-control">
             <div id="product-wrapper">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group permission-wrapper d-none">
                             <label>{{ $lng->Product }} </label>
-                            <select required name="product[]" class="select2 select2-wide" data-placeholder="{{ $lng->SelectProducts }}">
+                            <select  name="product[]" class="select2 select2-wide" data-placeholder="{{ $lng->SelectProducts }}">
                                 <option value="">{{ $lng->SelectProducts }}</option>
                                 @foreach ($products as $product)
                                     <option value="{{ $product->id }}">#{{ $product->id }} {{ $product->name }}
@@ -72,7 +80,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>{{ $lng->Price }} </label>
-                            <input required type="number" name="price[]" class="form-control"
+                            <input  type="number" name="price[]" class="form-control"
                                 placeholder="{{ $lng->Price }}">
                         </div>
                     </div>
@@ -80,7 +88,7 @@
                         <div class="form-group">
                             <label>{{ $lng->Quantity }} </label>
                             <div class="d-flex">
-                               <div class="w-100"><input required type="number" name="qty[]" class="form-control"
+                               <div class="w-100"><input  type="number" name="qty[]" class="form-control"
                                     placeholder="{{ $lng->Quantity }}"></div>
                                 <span class="remove-extra-feature" onclick="removeProductRow(this)"><i
                                         class="ri-delete-bin-line"></i></span>
@@ -90,6 +98,7 @@
                 </div>
             </div>
             <button type="button" id="moreProduct" class="add-extra-feature ml-0">{{ $lng->AddMore }}</button>
+        
         </form>
     </div>
 @endsection

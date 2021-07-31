@@ -12,14 +12,16 @@
                 <li><a href="{{route('campaigns')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Campaigns</span></a></li>
                 
                      <li><a href="{{route('offers')}}"><img src="{{asset('images/voucher/index3.jpg')}}" alt="" style=""><span>Doddle Offers</span></a></li>
+                     
+                     <li><a href="{{URL::to('user/order')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Order</span></a></li>
                      <li><a href="{{route('category')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Regular Shop</span></a></li>
 
-                     <li><a href="{{route('shop')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Prime Shops</span></a></li>
-                <li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Boucher</span></a></li>
-                <li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Boucher Shop</span></a></li>
-                <li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Doddle Ride</span></a></li>
-                <li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Doddle Food</span></a></li>
-                <li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Doddle Courier</span></a></li>
+                <!--     <li><a href="{{route('shop')}}"><img src="{{asset('images/voucher/index1.svg')}}" alt="" style=""><span>Prime Shops</span></a></li>-->
+                <!--<li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Boucher</span></a></li>-->
+                <!--<li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Boucher Shop</span></a></li>-->
+                <!--<li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Doddle Ride</span></a></li>-->
+                <!--<li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Doddle Food</span></a></li>-->
+                <!--<li><a href="{{route('coming_soon')}}"><img src="{{asset('images/voucher/index.svg')}}" alt="" style=""><span>Doddle Courier</span></a></li>-->
 
                 {{-- <li><a href="{{route('rocket-shop')}}"><img src="{{asset('images/voucher/index2.svg')}}" alt="" style=""><span>Easymert Rocket</span></a></li> --}}
             </ul>

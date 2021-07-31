@@ -401,7 +401,7 @@ li.message-right>.message-hour {
                             <div class="seller-info">
                                 <span class="avater">
                                     <img alt="avatar"
-                                    src="{{ auth()->user()->provider ? auth()->user()->avatar : asset('images/avatar.png') }}" />
+                                    src="{{ $product->user->provider ? $product->user->avatar : asset('images/avatar.png') }}" />
                                 </span>
                                 <span class="seller-name">{{\App\Model\Vendor::where('user_id',$product->user_id)->first()->store_name}}<span class="is-verify"> <img style="width:70px" src="{{URL::to('images/verified.png')}}">  </span></span>
                             </div>
@@ -620,7 +620,7 @@ li.message-right>.message-hour {
                             <div class="seller-info">
                                 <span class="avater">
                                     <img alt="avatar"
-                                    src="{{ auth()->user()->provider ? auth()->user()->avatar : asset('images/avatar.png') }}" />
+                                    src="{{ $product->user->provider ? $product->user->avatar : asset('images/avatar.png') }}" />
                                 </span>
                                 <span class="seller-name">{{\App\Model\Vendor::where('user_id',$product->user_id)->first()->store_name}}<span class="is-verify"> (verified) </span></span>
                             </div>
@@ -831,7 +831,7 @@ li.message-right>.message-hour {
                     submit: true
                 }
             }).always(function(data) {
-                $("#product-price").html(data)
+                $("#product-price").html("৳"+data)
             });
         }
     </script>
